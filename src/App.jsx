@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-
+import { motion, useScroll, useSpring } from "framer-motion";
 import heroImage from "./assets/hero.webp";
 import uvImage from "./assets/uv-sterilization.webp";
 import familyImage from "./assets/family-allergy.webp";
@@ -9,391 +8,602 @@ import appControlImage from "./assets/app-control.webp";
 import filterSystemImage from "./assets/filter-system.webp";
 import warrantyImage from "./assets/warranty.webp";
 
-const WHATSAPP_LINK = "https://wa.me/77066060985";
-const INSTAGRAM_LINK = "https://www.instagram.com/aireco.kz/";
+const ease = [0.16, 1, 0.3, 1];
 
-const translations = {
+const DICT = {
   ru: {
+    brand: "aireco",
     nav: {
       technology: "технологии",
-      filter: "фильтрация",
+      filtration: "фильтрация",
       comfort: "комфорт",
       control: "управление",
       specs: "характеристики",
       faq: "вопросы",
-      order: "заказать",
+      contact: "заказать",
     },
-    hero: {
-      badge: "очиститель воздуха нового поколения",
-      titleTop: "aireco — чистый воздух",
-      titleAccent: "дома, в офисе",
-      titleBottom: "и в спальне",
-      description:
-        "5-ступенчатая система очистки, HEPA H13, датчик PM2.5, автоматический режим, тихая работа ночью и управление через приложение Tuya.",
-      priceLabel: "цена",
-      priceValue: "129 000 ₸",
-      availability: "подходит для постоянной работы",
-      whatsapp: "написать в WhatsApp",
-      instagram: "Instagram",
-      h1: "Очиститель воздуха aireco для дома и офиса",
-    },
-    stats: [
-      { value: "500 м³/ч", label: "производительность CADR" },
-      { value: "HEPA H13", label: "основной фильтр" },
-      { value: "< 45 дБ", label: "тихий ночной режим" },
-      { value: "Wi-Fi", label: "управление через Tuya" },
+    topBadge: "очиститель воздуха нового поколения",
+    heroTitle1: "чистый воздух",
+    heroTitle2: "дома, в офисе",
+    heroTitle3: "и в спальне",
+    heroText:
+      "5-ступенчатая система очистки, HEPA H13, датчик PM2.5, автоматический режим, тихая работа ночью и управление через приложение Tuya.",
+    price: "129 000 ₸",
+    priceLabel: "цена",
+    permanent: "подходит для постоянной работы",
+    whatsapp: "написать в WhatsApp",
+    instagram: "instagram",
+    facts: [
+      ["500 м³/ч", "производительность"],
+      ["HEPA H13", "фильтрация"],
+      ["PM2.5", "умный датчик"],
+      ["Wi-Fi", "управление"],
     ],
     sections: {
-      technology: {
-        eyebrow: "главная технология",
-        title: "УФ-стерилизация воздуха внутри очистителя",
-        text: "УФ-излучение работает внутри корпуса и не выходит наружу. Воздух проходит обработку в безопасной зоне внутри устройства.",
-      },
-      filtration: {
-        eyebrow: "система фильтрации",
-        title: "5 ступеней очистки для пыли, аллергенов и запахов",
-        text: "Моющийся пре-фильтр задерживает шерсть, волосы и крупную пыль. Основной HEPA H13 улавливает мельчайшие частицы, а фотокаталитический слой и УФ-лампа дополняют глубокую очистку воздуха.",
-      },
-      family: {
-        eyebrow: "для дома и семьи",
-        title: "Комфортный воздух для дома, детей и аллергиков",
-        text: "Подходит для ежедневной работы в спальне, гостиной и детской. Снижает количество частиц и аллергенов в воздухе, помогая создать более чистую среду дома.",
-      },
-      comfort: {
-        eyebrow: "комфорт",
-        title: "Подогреваемая верхняя площадка и продуманный дизайн",
-        text: "Верхняя площадка может использоваться как тёплая зона для уюта или как декоративная поверхность. Устройство выглядит аккуратно и вписывается в интерьер.",
-      },
-      control: {
-        eyebrow: "управление",
-        title: "Полный контроль через приложение, пульт и сенсорную панель",
-        text: "Изменяй скорость, включай подсветку, переключай режимы и следи за качеством воздуха. Управление доступно с панели, пульта и смартфона.",
-      },
-      warranty: {
-        eyebrow: "гарантия и поддержка",
-        title: "12 месяцев официальной гарантии",
-        text: "При обнаружении заводского дефекта устройство бесплатно ремонтируется или заменяется. Также доступна поддержка после покупки.",
-      },
+      technologyTag: "главная технология",
+      technologyTitle: "УФ-стерилизация воздуха внутри очистителя",
+      technologyText:
+        "Помогает снижать количество бактерий и вирусов внутри системы очистки и усиливает общий эффект фильтрации.",
+      filtrationTag: "система очистки",
+      filtrationTitle: "5 ступеней фильтрации",
+      filtrationText:
+        "Моющийся пре-фильтр задерживает шерсть, крупную пыль и волосы. Основной HEPA H13 улавливает мелкие частицы, а фотокаталитический слой и УФ-модуль работают внутри системы.",
+      comfortTag: "для семьи",
+      comfortTitle: "Комфортный воздух для дома, детей и аллергиков",
+      comfortText:
+        "aireco помогает поддерживать более чистый воздух в помещении, снижать уровень мелких частиц и аллергенов и создавать более комфортную среду дома.",
+      heatingTag: "особенность модели",
+      heatingTitle: "Подогреваемая верхняя площадка",
+      heatingText:
+        "Верхнюю площадку можно использовать как дополнительную удобную функцию или отключить и оставить прибор как стильный элемент интерьера.",
+      controlTag: "управление",
+      controlTitle:
+        "Полный контроль через приложение, пульт и сенсорную панель",
+      controlText:
+        "Подключение по Wi-Fi через Tuya, удобный пульт и сенсорное управление на корпусе. Можно включать и выключать нужные функции, выбирать режимы и использовать таймер.",
+      specsTag: "характеристики",
+      specsTitle: "Технические данные aireco",
+      trustTag: "гарантия и доверие",
+      trustTitle: "Гарантия 12 месяцев",
+      trustText:
+        "aireco рассчитан на постоянное использование дома и в офисе. Это полноценная система очистки с акцентом на безопасность, ресурс и удобство.",
+      faqTag: "частые вопросы",
+      faqTitle: "Всё, что важно знать перед покупкой",
+      finalTag: "заказать aireco",
+      finalTitle: "Готовы заказать очиститель воздуха?",
+      finalText:
+        "Напишите в WhatsApp или Instagram, и мы быстро подскажем по наличию, доставке и ответим на вопросы.",
     },
-    specsTitle: "Технические характеристики",
+    bullets: [
+      "5-ступенчатая система очистки",
+      "HEPA H13 + фотокатализ + УФ внутри системы",
+      "автоматическая регулировка мощности",
+      "подходит для постоянной работы",
+      "безопасен для домашнего использования",
+      "управление через приложение и пульт",
+    ],
+    comfortCards: [
+      ["HEPA H13", "улавливает PM2.5, пыльцу и аллергены"],
+      ["< 45 дБ", "тихая работа ночью без лишнего шума"],
+    ],
+    heatingCards: [
+      "функцию можно отключить",
+      "подходит и для декора, и для повседневного использования",
+    ],
+    controlCards: [
+      ["Wi-Fi / Tuya", "управление со смартфона"],
+      ["таймер 1–24 ч", "автоматическое отключение по расписанию"],
+    ],
     specs: [
-      ["Модель", "aireco"],
-      ["Производительность CADR", "до 500 м³/ч"],
-      ["Фильтрация", "5 ступеней"],
-      ["Основной фильтр", "HEPA H13"],
-      ["УФ-стерилизация", "есть"],
-      ["Датчик качества воздуха", "PM2.5"],
-      ["Управление", "панель / пульт / приложение Tuya"],
-      ["Ночной режим", "менее 45 дБ"],
-      ["Подключение", "Wi-Fi"],
-      ["Назначение", "дом / офис / спальня"],
+      "CADR: до 500 м³/ч",
+      "до 6 обновлений воздуха в час в комнате ~20 м²",
+      "поддержание чистоты до 180 м²",
+      "ночной режим: менее 45 дБ",
+      "4 скорости очистки",
+      "автоматический режим",
+      "таймер 1–24 часа",
+      "датчик PM2.5",
+      "Wi-Fi / Tuya",
+      "пульт дистанционного управления",
+      "сенсорная панель на корпусе",
+      "ионизация воздуха",
+      "колёсики для перемещения",
+      "подсветка с возможностью отключения",
+      "напоминание о замене фильтра",
     ],
-    faqTitle: "Частые вопросы",
+    featureGridTitle: "Почему aireco ощущается как премиальное решение",
+    featureGrid: [
+      ["реальный авто-режим", "PM2.5 датчик сам регулирует мощность"],
+      ["тихая работа", "комфортно для спальни и детской"],
+      ["удобное перемещение", "колёсики и продуманная конструкция"],
+      ["полный контроль", "каждая функция управляется отдельно"],
+      ["современное управление", "приложение, сенсорная панель и пульт"],
+      ["безопасность", "УФ-модуль полностью внутри корпуса"],
+    ],
+    useCasesTitle: "Где aireco особенно полезен",
+    useCases: [
+      "квартира и дом",
+      "детская и спальня",
+      "офис и кабинет",
+      "аллергики и семьи с детьми",
+      "салоны и магазины",
+      "пространства для постоянной работы",
+    ],
     faq: [
-      {
-        q: "УФ-излучение безопасно?",
-        a: "Да. УФ-обработка происходит внутри корпуса, излучение не выходит наружу при нормальной эксплуатации.",
-      },
-      {
-        q: "Подходит ли для спальни?",
-        a: "Да. Есть тихий ночной режим, устройство рассчитано на постоянную работу дома.",
-      },
-      {
-        q: "Можно ли управлять со смартфона?",
-        a: "Да. Поддерживается управление через приложение Tuya по Wi-Fi.",
-      },
-      {
-        q: "Есть ли гарантия?",
-        a: "Да. На устройство действует официальная гарантия 12 месяцев.",
-      },
+      [
+        "Подходит ли для квартиры?",
+        "Да. aireco подходит для квартиры, дома, спальни, детской и офиса.",
+      ],
+      [
+        "Можно ли использовать постоянно?",
+        "Да. Устройство подходит для постоянной работы. Есть автоматический режим, ночной режим и защитные функции.",
+      ],
+      [
+        "Безопасен ли УФ-модуль?",
+        "Да. УФ-модуль находится внутри корпуса и полностью изолирован.",
+      ],
+      [
+        "Как управлять устройством?",
+        "Через сенсорную панель, пульт или приложение Tuya по Wi-Fi.",
+      ],
+      [
+        "Есть ли напоминание о замене фильтра?",
+        "Да, система напоминает о необходимости обслуживания.",
+      ],
     ],
-    cta: {
-      title: "Готовы заказать aireco?",
-      text: "Напишите нам в WhatsApp или перейдите в Instagram, чтобы получить консультацию и оформить заказ.",
-      primary: "написать в WhatsApp",
-      secondary: "перейти в Instagram",
-    },
-    footer: {
-      rights: "Все права защищены",
-      made: "Очиститель воздуха для дома и офиса в Казахстане",
-    },
+    trustPhoneLabel: "связь и заказ через WhatsApp",
+    finalCardTitle: "связаться сейчас",
+    finalCardPrice: "цена",
+    finalCardWhatsApp: "WhatsApp",
+    openInstagram: "открыть Instagram",
+    goWhatsApp: "перейти в WhatsApp",
+    scrollHint: "листай ниже",
   },
-
   kz: {
+    brand: "aireco",
     nav: {
       technology: "технология",
-      filter: "сүзгілеу",
+      filtration: "сүзгілеу",
       comfort: "жайлылық",
       control: "басқару",
       specs: "сипаттама",
       faq: "сұрақтар",
-      order: "тапсырыс",
+      contact: "тапсырыс",
     },
-    hero: {
-      badge: "жаңа буын ауа тазартқышы",
-      titleTop: "aireco — таза ауа",
-      titleAccent: "үйде, кеңседе",
-      titleBottom: "және жатын бөлмеде",
-      description:
-        "5 сатылы тазарту жүйесі, HEPA H13, PM2.5 датчигі, автоматты режим, түнгі тыныш жұмыс және Tuya қолданбасы арқылы басқару.",
-      priceLabel: "бағасы",
-      priceValue: "129 000 ₸",
-      availability: "үздіксіз жұмысқа жарайды",
-      whatsapp: "WhatsApp-қа жазу",
-      instagram: "Instagram",
-      h1: "Үй мен кеңсеге арналған aireco ауа тазартқышы",
-    },
-    stats: [
-      { value: "500 м³/сағ", label: "CADR өнімділігі" },
-      { value: "HEPA H13", label: "негізгі сүзгі" },
-      { value: "< 45 дБ", label: "тыныш түнгі режим" },
-      { value: "Wi-Fi", label: "Tuya арқылы басқару" },
+    topBadge: "жаңа буындағы ауа тазартқыш",
+    heroTitle1: "таза ауа",
+    heroTitle2: "үйде, кеңседе",
+    heroTitle3: "және жатын бөлмеде",
+    heroText:
+      "5 сатылы тазарту жүйесі, HEPA H13, PM2.5 датчигі, автоматты режим, түнгі тыныш жұмыс және Tuya қолданбасы арқылы басқару.",
+    price: "129 000 ₸",
+    priceLabel: "бағасы",
+    permanent: "үздіксіз жұмысқа жарайды",
+    whatsapp: "WhatsApp-қа жазу",
+    instagram: "instagram",
+    facts: [
+      ["500 м³/сағ", "өнімділік"],
+      ["HEPA H13", "сүзгілеу"],
+      ["PM2.5", "ақылды датчик"],
+      ["Wi-Fi", "басқару"],
     ],
     sections: {
-      technology: {
-        eyebrow: "негізгі технология",
-        title: "Тазартқыш ішіндегі УК-стерилизация",
-        text: "УК-сәуле құрылғының ішінде жұмыс істейді және сыртқа шықпайды. Ауа қауіпсіз аймақтың ішінде өңделеді.",
-      },
-      filtration: {
-        eyebrow: "сүзгілеу жүйесі",
-        title: "Шаң, аллергендер мен иістерге қарсы 5 саты",
-        text: "Жуылатын пре-сүзгі жүн, шаш және ірі шаңды ұстайды. HEPA H13 ұсақ бөлшектерді сүзеді, ал фотокаталитикалық қабат пен УК-шам тазартуды толықтырады.",
-      },
-      family: {
-        eyebrow: "үйге арналған",
-        title: "Үйге, балаларға және аллергиясы бар адамдарға қолайлы ауа",
-        text: "Жатын бөлмеде, қонақ бөлмеде және балалар бөлмесінде күнделікті пайдалануға жарайды. Ауадағы бөлшектер мен аллергендерді азайтуға көмектеседі.",
-      },
-      comfort: {
-        eyebrow: "жайлылық",
-        title: "Жылытылатын үстіңгі алаң және ойластырылған дизайн",
-        text: "Үстіңгі алаңды жылы жайлылық аймағы немесе декоративті бет ретінде пайдалануға болады. Құрылғы интерьерге ұқыпты үйлеседі.",
-      },
-      control: {
-        eyebrow: "басқару",
-        title: "Қолданба, пульт және сенсорлы панель арқылы толық басқару",
-        text: "Жылдамдықты өзгертіңіз, жарықты қосыңыз, режимдерді ауыстырыңыз және ауа сапасын бақылаңыз.",
-      },
-      warranty: {
-        eyebrow: "кепілдік",
-        title: "12 ай ресми кепілдік",
-        text: "Зауыттық ақау анықталса, құрылғы тегін жөнделеді немесе жаңасына ауыстырылады.",
-      },
+      technologyTag: "негізгі технология",
+      technologyTitle: "Тазартқыш ішіндегі УФ-стерилизация",
+      technologyText:
+        "Жүйе ішінде бактериялар мен вирустардың мөлшерін азайтуға көмектеседі және сүзгілеу әсерін күшейтеді.",
+      filtrationTag: "тазарту жүйесі",
+      filtrationTitle: "5 сатылы сүзгілеу",
+      filtrationText:
+        "Жуылатын пре-сүзгі жүнді, ірі шаңды және шашты ұстайды. Негізгі HEPA H13 ұсақ бөлшектерді сүзеді, ал фотокаталитикалық қабат пен УФ-модуль жүйе ішінде жұмыс істейді.",
+      comfortTag: "отбасы үшін",
+      comfortTitle: "Үйге, балаларға және аллергиясы барларға жайлы ауа",
+      comfortText:
+        "aireco бөлмедегі ауаны таза ұстауға, ұсақ бөлшектер мен аллергендерді азайтуға және үйде жайлы орта қалыптастыруға көмектеседі.",
+      heatingTag: "модель ерекшелігі",
+      heatingTitle: "Жылытылатын жоғарғы алаң",
+      heatingText:
+        "Жоғарғы алаңды қосымша ыңғайлы функция ретінде пайдалануға болады немесе өшіріп, құрылғыны интерьер элементі ретінде қалдыруға болады.",
+      controlTag: "басқару",
+      controlTitle: "Қолданба, пульт және сенсорлық панель арқылы толық басқару",
+      controlText:
+        "Tuya арқылы Wi-Fi қосылуы, ыңғайлы пульт және корпустағы сенсорлық басқару. Қажетті функцияларды қосып-өшіруге, режимдерді таңдауға және таймерді қолдануға болады.",
+      specsTag: "сипаттама",
+      specsTitle: "aireco техникалық деректері",
+      trustTag: "кепілдік және сенім",
+      trustTitle: "12 ай кепілдік",
+      trustText:
+        "aireco үйде және кеңседе тұрақты пайдалануға арналған. Бұл жай ғана әдемі құрылғы емес, қауіпсіздікке, ресурсқа және ыңғайлылыққа мән берілген толыққанды тазарту жүйесі.",
+      faqTag: "жиі қойылатын сұрақтар",
+      faqTitle: "Сатып алар алдында білу маңызды",
+      finalTag: "aireco тапсырыс беру",
+      finalTitle: "Ауа тазартқышқа тапсырыс беруге дайынсыз ба?",
+      finalText:
+        "WhatsApp немесе Instagram арқылы жазыңыз, біз бар-жоғын, жеткізуді айтып, сұрақтарға жылдам жауап береміз.",
     },
-    specsTitle: "Техникалық сипаттамалар",
+    bullets: [
+      "5 сатылы тазарту жүйесі",
+      "HEPA H13 + фотокатализ + жүйе ішіндегі УФ",
+      "қуатты автоматты реттеу",
+      "үздіксіз жұмысқа жарайды",
+      "үйде қолдануға қауіпсіз",
+      "қолданба және пульт арқылы басқару",
+    ],
+    comfortCards: [
+      ["HEPA H13", "PM2.5, тозаң және аллергендерді ұстайды"],
+      ["< 45 дБ", "түнде тыныш жұмыс істейді"],
+    ],
+    heatingCards: [
+      "функцияны өшіруге болады",
+      "декорға да, күнделікті қолдануға да ыңғайлы",
+    ],
+    controlCards: [
+      ["Wi-Fi / Tuya", "смартфоннан басқару"],
+      ["таймер 1–24 сағ", "кесте бойынша автоматты өшіру"],
+    ],
     specs: [
-      ["Модель", "aireco"],
-      ["CADR өнімділігі", "500 м³/сағ дейін"],
-      ["Сүзгілеу", "5 саты"],
-      ["Негізгі сүзгі", "HEPA H13"],
-      ["УК-стерилизация", "бар"],
-      ["Ауа сапасы датчигі", "PM2.5"],
-      ["Басқару", "панель / пульт / Tuya қолданбасы"],
-      ["Түнгі режим", "45 дБ төмен"],
-      ["Қосылу", "Wi-Fi"],
-      ["Қолдану", "үй / кеңсе / жатын бөлме"],
+      "CADR: 500 м³/сағ дейін",
+      "шамамен 20 м² бөлмеде сағатына 6 ретке дейін ауаны жаңарту",
+      "180 м² дейін тазалықты сақтау",
+      "түнгі режим: 45 дБ-ден төмен",
+      "4 тазарту жылдамдығы",
+      "автоматты режим",
+      "таймер 1–24 сағат",
+      "PM2.5 датчигі",
+      "Wi-Fi / Tuya",
+      "қашықтан басқару пульті",
+      "корпустағы сенсорлық панель",
+      "иондау",
+      "жылжытуға арналған дөңгелектер",
+      "өшіруге болатын жарық",
+      "сүзгіні ауыстыру еске салғышы",
     ],
-    faqTitle: "Жиі қойылатын сұрақтар",
+    featureGridTitle: "Неге aireco премиум шешім болып сезіледі",
+    featureGrid: [
+      ["нақты авто-режим", "PM2.5 датчигі қуатты өзі реттейді"],
+      ["тыныш жұмыс", "жатын бөлме мен балалар бөлмесіне ыңғайлы"],
+      ["оңай жылжыту", "дөңгелектер мен ойластырылған құрылым"],
+      ["толық бақылау", "әр функция бөлек қосылады"],
+      ["заманауи басқару", "қолданба, сенсорлық панель және пульт"],
+      ["қауіпсіздік", "УФ-модуль корпус ішінде орналасқан"],
+    ],
+    useCasesTitle: "aireco қай жерде әсіресе пайдалы",
+    useCases: [
+      "пәтер мен үй",
+      "балалар бөлмесі мен жатын бөлме",
+      "кеңсе мен кабинет",
+      "аллергиясы бар адамдар мен балалар бар отбасылар",
+      "салондар мен дүкендер",
+      "тұрақты жұмыс істейтін кеңістіктер",
+    ],
     faq: [
-      {
-        q: "УК-сәуле қауіпсіз бе?",
-        a: "Иә. УК өңдеу құрылғының ішінде жүреді және қалыпты пайдалану кезінде сыртқа шықпайды.",
-      },
-      {
-        q: "Жатын бөлмеге жарай ма?",
-        a: "Иә. Тыныш түнгі режимі бар және тұрақты жұмысқа арналған.",
-      },
-      {
-        q: "Смартфонмен басқаруға бола ма?",
-        a: "Иә. Tuya қолданбасы арқылы Wi-Fi басқару бар.",
-      },
-      {
-        q: "Кепілдік бар ма?",
-        a: "Иә. Құрылғыға 12 ай ресми кепілдік беріледі.",
-      },
+      [
+        "Пәтерге жарай ма?",
+        "Иә. aireco пәтерге, үйге, жатын бөлмеге, балалар бөлмесіне және кеңсеге жарайды.",
+      ],
+      [
+        "Үнемі қосып қоюға бола ма?",
+        "Иә. Құрылғы тұрақты жұмысқа жарайды. Автоматты режим, түнгі режим және қорғаныс функциялары бар.",
+      ],
+      [
+        "УФ-модуль қауіпсіз бе?",
+        "Иә. УФ-модуль корпус ішінде орналасқан және толық оқшауланған.",
+      ],
+      [
+        "Қалай басқарылады?",
+        "Сенсорлық панель, пульт немесе Tuya қолданбасы арқылы Wi-Fi көмегімен.",
+      ],
+      [
+        "Сүзгіні ауыстыру туралы ескерту бар ма?",
+        "Иә, қызмет көрсету қажет болғанда жүйе еске салады.",
+      ],
     ],
-    cta: {
-      title: "aireco-ға тапсырыс беруге дайынсыз ба?",
-      text: "Кеңес алу және тапсырыс беру үшін WhatsApp-қа жазыңыз немесе Instagram-ға өтіңіз.",
-      primary: "WhatsApp-қа жазу",
-      secondary: "Instagram-ға өту",
-    },
-    footer: {
-      rights: "Барлық құқықтар қорғалған",
-      made: "Қазақстандағы үй мен кеңсеге арналған ауа тазартқыш",
-    },
+    trustPhoneLabel: "WhatsApp арқылы байланыс және тапсырыс",
+    finalCardTitle: "қазір байланысу",
+    finalCardPrice: "бағасы",
+    finalCardWhatsApp: "WhatsApp",
+    openInstagram: "Instagram ашу",
+    goWhatsApp: "WhatsApp-қа өту",
+    scrollHint: "төмен сырғыт",
   },
-
   en: {
+    brand: "aireco",
     nav: {
       technology: "technology",
-      filter: "filtration",
+      filtration: "filtration",
       comfort: "comfort",
       control: "control",
       specs: "specs",
       faq: "faq",
-      order: "order",
+      contact: "order",
     },
-    hero: {
-      badge: "next-generation air purifier",
-      titleTop: "aireco — clean air",
-      titleAccent: "at home, in the office",
-      titleBottom: "and in the bedroom",
-      description:
-        "5-stage purification system, HEPA H13, PM2.5 sensor, auto mode, quiet night operation and control via the Tuya app.",
-      priceLabel: "price",
-      priceValue: "129 000 ₸",
-      availability: "suitable for continuous operation",
-      whatsapp: "message on WhatsApp",
-      instagram: "Instagram",
-      h1: "Aireco air purifier for home and office",
-    },
-    stats: [
-      { value: "500 m³/h", label: "CADR performance" },
-      { value: "HEPA H13", label: "main filter" },
-      { value: "< 45 dB", label: "quiet night mode" },
-      { value: "Wi-Fi", label: "Tuya app control" },
+    topBadge: "next-generation air purifier",
+    heroTitle1: "clean air",
+    heroTitle2: "for home, office",
+    heroTitle3: "and bedroom",
+    heroText:
+      "5-stage purification system, HEPA H13, PM2.5 sensor, automatic mode, quiet night operation and control via the Tuya app.",
+    price: "129 000 ₸",
+    priceLabel: "price",
+    permanent: "built for continuous use",
+    whatsapp: "message on WhatsApp",
+    instagram: "instagram",
+    facts: [
+      ["500 m³/h", "performance"],
+      ["HEPA H13", "filtration"],
+      ["PM2.5", "smart sensor"],
+      ["Wi-Fi", "control"],
     ],
     sections: {
-      technology: {
-        eyebrow: "core technology",
-        title: "UV air sterilization inside the purifier",
-        text: "UV treatment works inside the unit and does not escape outside. Air is processed in a protected internal zone.",
-      },
-      filtration: {
-        eyebrow: "filtration system",
-        title: "5 stages of purification for dust, allergens and odors",
-        text: "The washable pre-filter captures hair, fur and large dust. HEPA H13 traps fine particles, while the photocatalytic layer and UV lamp enhance deep purification.",
-      },
-      family: {
-        eyebrow: "for home and family",
-        title: "Comfortable air for home, children and allergy-sensitive spaces",
-        text: "Suitable for everyday use in bedrooms, living rooms and family spaces. Helps reduce airborne particles and allergens.",
-      },
-      comfort: {
-        eyebrow: "comfort",
-        title: "Heated top platform and refined design",
-        text: "The top platform can be used as a warm comfort zone or a decorative surface. The device is designed to fit neatly into modern interiors.",
-      },
-      control: {
-        eyebrow: "control",
-        title: "Full control via app, remote and touch panel",
-        text: "Adjust speed, switch modes, control lighting and monitor air quality from the panel, remote or smartphone.",
-      },
-      warranty: {
-        eyebrow: "warranty",
-        title: "12-month official warranty",
-        text: "If a factory defect is found, the unit is repaired or replaced free of charge.",
-      },
+      technologyTag: "core technology",
+      technologyTitle: "UV sterilization inside the purifier",
+      technologyText:
+        "Helps reduce bacteria and viruses inside the purification system and strengthens the overall filtration effect.",
+      filtrationTag: "purification system",
+      filtrationTitle: "5-stage filtration",
+      filtrationText:
+        "The washable pre-filter captures hair, fur and large dust. The main HEPA H13 filter traps fine particles, while the photocatalytic layer and UV module operate inside the system.",
+      comfortTag: "for family",
+      comfortTitle: "Comfortable air for home, kids and allergy-sensitive users",
+      comfortText:
+        "aireco helps maintain cleaner indoor air, reduce fine particles and allergens, and create a more comfortable environment at home.",
+      heatingTag: "model feature",
+      heatingTitle: "Heated top platform",
+      heatingText:
+        "The top platform can be used as an extra comfort feature or turned off while keeping the purifier as a stylish interior element.",
+      controlTag: "control",
+      controlTitle: "Full control via app, remote and touch panel",
+      controlText:
+        "Wi-Fi connection through Tuya, a convenient remote, and touch controls on the body. You can enable or disable functions, choose modes and use the timer.",
+      specsTag: "specifications",
+      specsTitle: "aireco technical data",
+      trustTag: "warranty & trust",
+      trustTitle: "12-month warranty",
+      trustText:
+        "aireco is designed for continuous use at home and in the office. It is not just a stylish device but a complete purification system focused on safety, durability and convenience.",
+      faqTag: "frequently asked questions",
+      faqTitle: "Everything important before you buy",
+      finalTag: "order aireco",
+      finalTitle: "Ready to order the air purifier?",
+      finalText:
+        "Message us on WhatsApp or Instagram and we will quickly help with availability, delivery and any questions.",
     },
-    specsTitle: "Technical specifications",
+    bullets: [
+      "5-stage purification system",
+      "HEPA H13 + photocatalysis + internal UV",
+      "automatic power adjustment",
+      "built for continuous use",
+      "safe for home use",
+      "app and remote control",
+    ],
+    comfortCards: [
+      ["HEPA H13", "captures PM2.5, pollen and allergens"],
+      ["< 45 dB", "quiet night operation"],
+    ],
+    heatingCards: [
+      "the function can be turned off",
+      "works both as a comfort feature and decor element",
+    ],
+    controlCards: [
+      ["Wi-Fi / Tuya", "smartphone control"],
+      ["1–24 h timer", "automatic scheduled shutdown"],
+    ],
     specs: [
-      ["Model", "aireco"],
-      ["CADR performance", "up to 500 m³/h"],
-      ["Filtration", "5 stages"],
-      ["Main filter", "HEPA H13"],
-      ["UV sterilization", "yes"],
-      ["Air quality sensor", "PM2.5"],
-      ["Control", "panel / remote / Tuya app"],
-      ["Night mode", "below 45 dB"],
-      ["Connectivity", "Wi-Fi"],
-      ["Use case", "home / office / bedroom"],
+      "CADR: up to 500 m³/h",
+      "up to 6 air refresh cycles per hour in a ~20 m² room",
+      "maintains cleanliness up to 180 m²",
+      "night mode: below 45 dB",
+      "4 purification speeds",
+      "automatic mode",
+      "1–24 hour timer",
+      "PM2.5 sensor",
+      "Wi-Fi / Tuya",
+      "remote control",
+      "touch panel on the body",
+      "ionization",
+      "wheels for movement",
+      "switchable lighting",
+      "filter replacement reminder",
     ],
-    faqTitle: "Frequently asked questions",
+    featureGridTitle: "Why aireco feels like a premium solution",
+    featureGrid: [
+      ["real auto mode", "PM2.5 sensor adjusts power automatically"],
+      ["quiet operation", "comfortable for bedroom and nursery"],
+      ["easy movement", "wheels and well-thought-out design"],
+      ["full control", "every function can be controlled separately"],
+      ["modern interface", "app, touch panel and remote"],
+      ["safety", "UV module is fully inside the body"],
+    ],
+    useCasesTitle: "Where aireco fits best",
+    useCases: [
+      "apartment and house",
+      "nursery and bedroom",
+      "office and workspace",
+      "allergy-sensitive users and families",
+      "salons and stores",
+      "spaces for continuous operation",
+    ],
     faq: [
-      {
-        q: "Is UV treatment safe?",
-        a: "Yes. UV treatment happens inside the unit and does not radiate outside during normal operation.",
-      },
-      {
-        q: "Is it suitable for the bedroom?",
-        a: "Yes. It has a quiet night mode and is designed for continuous home use.",
-      },
-      {
-        q: "Can I control it with my phone?",
-        a: "Yes. It supports Wi-Fi control through the Tuya app.",
-      },
-      {
-        q: "Is there a warranty?",
-        a: "Yes. The unit includes a 12-month official warranty.",
-      },
+      [
+        "Is it suitable for apartments?",
+        "Yes. aireco is suitable for apartments, homes, bedrooms, nurseries and offices.",
+      ],
+      [
+        "Can it run continuously?",
+        "Yes. The device is built for continuous use. It includes auto mode, night mode and safety functions.",
+      ],
+      [
+        "Is the UV module safe?",
+        "Yes. The UV module is placed inside the body and fully isolated.",
+      ],
+      [
+        "How is it controlled?",
+        "Through the touch panel, remote control or the Tuya app via Wi-Fi.",
+      ],
+      [
+        "Is there a filter replacement reminder?",
+        "Yes, the system reminds you when service is needed.",
+      ],
     ],
-    cta: {
-      title: "Ready to order aireco?",
-      text: "Message us on WhatsApp or visit Instagram to get consultation and place an order.",
-      primary: "message on WhatsApp",
-      secondary: "open Instagram",
-    },
-    footer: {
-      rights: "All rights reserved",
-      made: "Air purifier for home and office in Kazakhstan",
-    },
+    trustPhoneLabel: "contact and order via WhatsApp",
+    finalCardTitle: "contact now",
+    finalCardPrice: "price",
+    finalCardWhatsApp: "WhatsApp",
+    openInstagram: "open Instagram",
+    goWhatsApp: "go to WhatsApp",
+    scrollHint: "scroll down",
   },
 };
 
-const sectionMotion = {
-  hidden: { opacity: 0, y: 34 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
-  },
-};
+function Reveal({ children, variant = "up", className = "", delay = 0 }) {
+  const initial =
+    variant === "left"
+      ? { opacity: 0, x: -60, scale: 0.99, filter: "blur(10px)" }
+      : variant === "right"
+      ? { opacity: 0, x: 60, scale: 0.99, filter: "blur(10px)" }
+      : { opacity: 0, y: 50, scale: 0.99, filter: "blur(10px)" };
 
-function FadeIn({ children, className = "", delay = 0 }) {
+  const animate =
+    variant === "left" || variant === "right"
+      ? { opacity: 1, x: 0, scale: 1, filter: "blur(0px)" }
+      : { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" };
+
   return (
     <motion.div
       className={className}
-      variants={sectionMotion}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ delay }}
+      initial={initial}
+      whileInView={animate}
+      viewport={{ once: true, amount: 0.16, margin: "-60px" }}
+      transition={{ duration: 1.1, delay, ease }}
     >
       {children}
     </motion.div>
   );
 }
 
-function FloatingParticles() {
-  const particles = useMemo(
-    () =>
-      Array.from({ length: 18 }, (_, i) => ({
-        id: i,
-        size: 6 + ((i * 7) % 18),
-        left: `${(i * 5.4 + 7) % 100}%`,
-        duration: 12 + (i % 6) * 2,
-        delay: i * 0.45,
-        opacity: 0.08 + (i % 5) * 0.03,
-      })),
-    []
+function SectionTitle({ tag, title, text }) {
+  return (
+    <div className="mb-6 max-w-3xl min-w-0">
+      <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-sky-600">
+        {tag}
+      </div>
+      <h2 className="mt-3 break-words text-3xl font-black leading-[1.05] tracking-tight text-slate-950 md:text-5xl">
+        {title}
+      </h2>
+      {text ? (
+        <p className="mt-4 max-w-2xl break-words text-[16px] leading-7 text-slate-500">
+          {text}
+        </p>
+      ) : null}
+    </div>
   );
+}
 
+function VisualCard({
+  src,
+  alt,
+  maxWidth = "max-w-[420px]",
+  imageClassName = "",
+}) {
+  return (
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      className={`mx-auto w-full ${maxWidth}`}
+    >
+      <div className="overflow-hidden rounded-[1.8rem] bg-white shadow-[0_18px_55px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/80">
+        <motion.img
+          src={src}
+          alt={alt}
+          whileHover={{ scale: 1.025 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className={`block w-full h-auto ${imageClassName}`}
+        />
+      </div>
+    </motion.div>
+  );
+}
+
+function UvGallery({ src }) {
+  return (
+    <div className="mx-auto grid max-w-5xl gap-3 lg:grid-cols-[1.3fr_0.7fr]">
+      <div className="overflow-hidden rounded-[1.8rem] bg-white shadow-[0_18px_55px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/80">
+        <img
+          src={src}
+          alt="uv main"
+          className="block h-full max-h-[420px] w-full object-cover object-center"
+        />
+      </div>
+
+      <div className="grid gap-3">
+        <div className="overflow-hidden rounded-[1.4rem] bg-white shadow-[0_14px_35px_rgba(15,23,42,0.07)] ring-1 ring-slate-200/80">
+          <img
+            src={src}
+            alt="uv top"
+            className="block h-[203px] w-full object-cover object-[center_18%]"
+          />
+        </div>
+
+        <div className="overflow-hidden rounded-[1.4rem] bg-white shadow-[0_14px_35px_rgba(15,23,42,0.07)] ring-1 ring-slate-200/80">
+          <img
+            src={src}
+            alt="uv bottom"
+            className="block h-[203px] w-full object-cover object-[center_82%]"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FAQItem({ q, a }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="rounded-[1.3rem] border border-slate-200 bg-white shadow-sm">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+      >
+        <span className="font-bold text-slate-950">{q}</span>
+        <span className="text-xl text-slate-400">{open ? "−" : "+"}</span>
+      </button>
+      <motion.div
+        initial={false}
+        animate={{
+          height: open ? "auto" : 0,
+          opacity: open ? 1 : 0,
+        }}
+        transition={{ duration: 0.3, ease }}
+        className="overflow-hidden"
+      >
+        <div className="px-5 pb-4 text-slate-600 leading-7">{a}</div>
+      </motion.div>
+    </div>
+  );
+}
+
+function Particles() {
+  const items = Array.from({ length: 12 }, (_, i) => i);
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {particles.map((p) => (
+      {items.map((i) => (
         <motion.span
-          key={p.id}
-          className="absolute rounded-full bg-white"
+          key={i}
+          className="absolute h-2 w-2 rounded-full bg-white/70 blur-[1px]"
           style={{
-            width: p.size,
-            height: p.size,
-            left: p.left,
-            bottom: "-30px",
-            opacity: p.opacity,
-            filter: "blur(1px)",
+            left: `${8 + ((i * 89) % 82)}%`,
+            top: `${8 + ((i * 53) % 75)}%`,
           }}
           animate={{
-            y: [-10, -520],
-            x: [0, p.id % 2 === 0 ? 22 : -18, 0],
-            opacity: [0, p.opacity, 0],
+            y: [-8, 10, -8],
+            x: [0, 5, 0],
+            opacity: [0.1, 0.4, 0.1],
           }}
           transition={{
-            duration: p.duration,
+            duration: 6 + (i % 4),
             repeat: Infinity,
-            delay: p.delay,
-            ease: "linear",
+            ease: "easeInOut",
+            delay: i * 0.2,
           }}
         />
       ))}
@@ -401,440 +611,586 @@ function FloatingParticles() {
   );
 }
 
-function SectionHeading({ eyebrow, title, text, align = "left" }) {
-  const isCenter = align === "center";
-
+function FogLayers() {
   return (
-    <div className={isCenter ? "mx-auto max-w-3xl text-center" : "max-w-2xl"}>
-      <div className="mb-4 inline-flex rounded-full border border-sky-200 bg-white/80 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-700 shadow-sm backdrop-blur">
-        {eyebrow}
-      </div>
-      <h2 className="text-3xl font-bold leading-tight text-slate-900 md:text-5xl">
-        {title}
-      </h2>
-      <p className="mt-5 text-base leading-7 text-slate-600 md:text-lg">{text}</p>
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <motion.div
+        animate={{ x: [0, 30, 0], y: [0, 14, 0] }}
+        transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -left-24 top-0 h-72 w-72 rounded-full bg-sky-200/25 blur-3xl"
+      />
+      <motion.div
+        animate={{ x: [0, -40, 0], y: [0, 24, 0] }}
+        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute right-0 top-10 h-[22rem] w-[22rem] rounded-full bg-cyan-200/20 blur-3xl"
+      />
     </div>
   );
 }
 
-function VisualCard({ src, alt, className = "", imageClassName = "" }) {
+function WhatsAppIcon() {
   return (
-    <motion.div
-      whileHover={{ y: -6, scale: 1.01 }}
-      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-      className={`group overflow-hidden rounded-[2rem] border border-white/70 bg-white/85 shadow-[0_24px_80px_rgba(14,30,54,0.10)] backdrop-blur ${className}`}
-    >
-      <div className="relative overflow-hidden">
-        <motion.img
-          src={src}
-          alt={alt}
-          className={`block h-full w-full transition-transform duration-700 group-hover:scale-[1.03] ${imageClassName}`}
-        />
-      </div>
-    </motion.div>
+    <svg viewBox="0 0 32 32" className="h-5 w-5 fill-current" aria-hidden="true">
+      <path d="M19.11 17.39c-.27-.13-1.59-.78-1.84-.87-.25-.09-.43-.13-.62.13-.18.27-.71.87-.87 1.05-.16.18-.33.2-.6.07-.27-.13-1.16-.43-2.2-1.37-.81-.72-1.35-1.61-1.51-1.88-.16-.27-.02-.42.12-.55.13-.13.27-.33.4-.49.13-.16.18-.27.27-.45.09-.18.04-.35-.02-.49-.07-.13-.62-1.5-.84-2.05-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.49.07-.74.35-.25.27-.96.94-.96 2.29 0 1.35.98 2.65 1.12 2.84.13.18 1.92 2.94 4.65 4.12.65.28 1.16.45 1.55.58.65.2 1.25.17 1.72.1.53-.08 1.59-.65 1.82-1.28.22-.62.22-1.15.16-1.27-.07-.12-.25-.18-.53-.31Z" />
+      <path d="M16.03 3.2C8.97 3.2 3.25 8.92 3.25 15.98c0 2.24.58 4.42 1.69 6.34L3.16 28.8l6.64-1.74a12.72 12.72 0 0 0 6.23 1.62h.01c7.05 0 12.78-5.73 12.78-12.79 0-3.42-1.33-6.63-3.75-9.04A12.69 12.69 0 0 0 16.03 3.2Zm0 23.32h-.01a10.53 10.53 0 0 1-5.37-1.47l-.39-.23-3.94 1.03 1.05-3.84-.25-.4a10.58 10.58 0 0 1 1.61-13.11 10.48 10.48 0 0 1 7.49-3.1c2.83 0 5.49 1.1 7.49 3.1a10.53 10.53 0 0 1-7.68 18.02Z" />
+    </svg>
   );
 }
 
-function NavLink({ href, children }) {
+function InstagramIcon() {
   return (
-    <a
-      href={href}
-      className="transition-colors duration-300 hover:text-sky-700"
+    <svg
+      viewBox="0 0 24 24"
+      className="h-5 w-5 fill-none stroke-current"
+      strokeWidth="2"
+      aria-hidden="true"
     >
-      {children}
-    </a>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
   );
 }
 
-function App() {
+export default function App() {
   const [lang, setLang] = useState("ru");
-  const t = translations[lang];
+  const t = useMemo(() => DICT[lang], [lang]);
+
+  const whatsappMain =
+    "https://wa.me/77066060985?text=Здравствуйте,%20интересует%20очиститель%20воздуха%20aireco";
+  const whatsappOrder =
+    "https://wa.me/77066060985?text=Здравствуйте,%20хочу%20заказать%20aireco";
+  const instagramLink =
+    "https://www.instagram.com/aireco.kz?igsh=MWY1OHUycHIwYWJ3aQ==";
+
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 20,
+    mass: 0.25,
+  });
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#edf7ff_0%,#f7fbff_22%,#ffffff_52%,#f6fbff_78%,#eef7ff_100%)] text-slate-900">
-      <div className="fixed inset-x-0 top-0 z-50 border-b border-white/60 bg-white/70 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6 lg:px-8">
-          <a href="#top" className="text-xl font-bold tracking-tight text-slate-950">
+    <div className="min-h-screen overflow-x-hidden text-slate-900 bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.12),_transparent_25%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.10),_transparent_30%),linear-gradient(180deg,#fbfdff_0%,#f4f9ff_45%,#ffffff_100%)]">
+      <motion.div
+        style={{ scaleX: progress }}
+        className="fixed left-0 right-0 top-0 z-[80] h-[3px] origin-left bg-sky-500"
+      />
+
+      <header className="sticky top-0 z-[70] border-b border-slate-200/70 bg-white/75 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-8">
+          <a href="#top" className="text-lg font-black tracking-tight text-slate-950">
             aireco
           </a>
 
-          <nav className="hidden items-center gap-6 text-sm font-medium text-slate-600 lg:flex">
-            <NavLink href="#technology">{t.nav.technology}</NavLink>
-            <NavLink href="#filter">{t.nav.filter}</NavLink>
-            <NavLink href="#comfort">{t.nav.comfort}</NavLink>
-            <NavLink href="#control">{t.nav.control}</NavLink>
-            <NavLink href="#specs">{t.nav.specs}</NavLink>
-            <NavLink href="#faq">{t.nav.faq}</NavLink>
+          <nav className="hidden items-center gap-5 text-sm font-semibold text-slate-600 lg:flex">
+            <a href="#technology" className="hover:text-slate-950">{t.nav.technology}</a>
+            <a href="#filtration" className="hover:text-slate-950">{t.nav.filtration}</a>
+            <a href="#comfort" className="hover:text-slate-950">{t.nav.comfort}</a>
+            <a href="#control" className="hover:text-slate-950">{t.nav.control}</a>
+            <a href="#specs" className="hover:text-slate-950">{t.nav.specs}</a>
+            <a href="#faq" className="hover:text-slate-950">{t.nav.faq}</a>
+            <a href="#contact" className="hover:text-slate-950">{t.nav.contact}</a>
           </nav>
 
           <div className="flex items-center gap-2">
-            {["ru", "kz", "en"].map((item) => (
+            {["ru", "kz", "en"].map((code) => (
               <button
-                key={item}
-                onClick={() => setLang(item)}
-                className={`rounded-full px-3 py-1.5 text-xs font-semibold uppercase transition-all ${
-                  lang === item
-                    ? "bg-slate-950 text-white shadow-md"
-                    : "bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-slate-50"
+                key={code}
+                onClick={() => setLang(code)}
+                className={`rounded-xl px-3 py-2 text-sm font-bold transition ${
+                  lang === code
+                    ? "bg-slate-950 text-white"
+                    : "bg-white text-slate-600 ring-1 ring-slate-200 hover:text-slate-950"
                 }`}
               >
-                {item}
+                {code.toUpperCase()}
               </button>
             ))}
           </div>
         </div>
-      </div>
+      </header>
 
-      <main id="top" className="relative overflow-hidden">
-        <section className="relative pt-28 md:pt-32">
-          <div className="absolute inset-0">
-            <div className="absolute left-1/2 top-16 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-sky-200/40 blur-3xl" />
-            <div className="absolute right-[-120px] top-32 h-[360px] w-[360px] rounded-full bg-cyan-200/30 blur-3xl" />
-            <div className="absolute left-[-140px] bottom-0 h-[300px] w-[300px] rounded-full bg-blue-100/40 blur-3xl" />
-            <FloatingParticles />
-          </div>
+      <main id="top">
+        <section className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,_rgba(56,189,248,0.10),_transparent_25%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.08),_transparent_28%),linear-gradient(180deg,#fbfdff_0%,#f7fbff_45%,#ffffff_100%)]">
+          <FogLayers />
+          <Particles />
 
-          <div className="relative mx-auto grid max-w-7xl gap-10 px-4 pb-12 md:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:px-8">
-            <FadeIn>
-              <div className="max-w-2xl">
-                <div className="mb-5 inline-flex rounded-full border border-sky-200 bg-white/85 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.20em] text-sky-700 shadow-sm backdrop-blur">
-                  {t.hero.badge}
+          <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-12 md:px-10 lg:grid-cols-2 lg:items-center lg:py-18">
+            <Reveal variant="left">
+              <div className="min-w-0">
+                <div className="mb-5 inline-flex rounded-full border border-sky-200 bg-white/90 px-4 py-2 text-sm font-semibold text-sky-700 shadow-sm backdrop-blur">
+                  {t.topBadge}
                 </div>
 
-                <h1 className="max-w-3xl text-4xl font-bold leading-[0.98] tracking-tight text-slate-950 md:text-6xl lg:text-7xl">
-                  <span className="block">{t.hero.titleTop}</span>
-                  <span className="block text-sky-700">{t.hero.titleAccent}</span>
-                  <span className="block">{t.hero.titleBottom}</span>
+                <h1 className="max-w-3xl break-words text-4xl font-black leading-[0.96] tracking-tight text-slate-950 md:text-6xl">
+                  {t.brand} — {t.heroTitle1}
+                  <span className="block text-sky-700">{t.heroTitle2}</span>
+                  <span className="block">{t.heroTitle3}</span>
                 </h1>
 
-                <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 md:text-lg">
-                  {t.hero.description}
+                <p className="mt-5 max-w-2xl break-words text-[17px] leading-7 text-slate-600 md:text-[19px]">
+                  {t.heroText}
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <div className="rounded-[1.6rem] bg-slate-950 px-5 py-4 text-white shadow-[0_20px_50px_rgba(15,23,42,0.25)]">
-                    <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/70">
-                      {t.hero.priceLabel}
+                <div className="mt-7 flex flex-wrap items-center gap-4">
+                  <div className="rounded-[1.5rem] bg-slate-950 px-5 py-4 text-white shadow-[0_16px_40px_rgba(15,23,42,0.18)]">
+                    <div className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">
+                      {t.priceLabel}
                     </div>
-                    <div className="mt-1 text-3xl font-bold">{t.hero.priceValue}</div>
+                    <div className="mt-1 text-3xl font-black">{t.price}</div>
                   </div>
 
-                  <div className="rounded-full border border-emerald-200 bg-emerald-50/90 px-6 py-4 text-sm font-semibold text-emerald-700 shadow-sm">
-                    {t.hero.availability}
+                  <div className="rounded-[1.5rem] border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-bold text-emerald-700">
+                    {t.permanent}
                   </div>
                 </div>
 
-                <div className="mt-8 flex flex-wrap gap-4">
+                <div className="mt-7 flex flex-col gap-4 sm:flex-row">
                   <a
-                    href={WHATSAPP_LINK}
+                    href={whatsappMain}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-2xl bg-emerald-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(16,185,129,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-emerald-600"
+                    className="inline-flex items-center justify-center gap-3 rounded-2xl bg-green-500 px-7 py-4 text-base font-bold text-white shadow-[0_14px_35px_rgba(34,197,94,0.30)] transition duration-300 hover:-translate-y-0.5 hover:bg-green-600"
                   >
-                    {t.hero.whatsapp}
+                    <WhatsAppIcon />
+                    {t.whatsapp}
                   </a>
 
                   <a
-                    href={INSTAGRAM_LINK}
+                    href={instagramLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-4 text-sm font-semibold text-slate-700 ring-1 ring-slate-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-slate-50"
+                    className="inline-flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white px-7 py-4 text-base font-bold text-slate-700 shadow-sm transition duration-300 hover:border-pink-300 hover:text-pink-600"
                   >
-                    {t.hero.instagram}
+                    <InstagramIcon />
+                    {t.instagram}
                   </a>
+                </div>
+
+                <div className="mt-8 grid max-w-2xl grid-cols-2 gap-3 md:grid-cols-4">
+                  {t.facts.map(([value, label], i) => (
+                    <motion.div
+                      key={value}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.25 }}
+                      transition={{ duration: 0.9, delay: i * 0.06, ease }}
+                      whileHover={{ y: -4, scale: 1.01 }}
+                      className="min-w-0 rounded-[1.3rem] border border-white/80 bg-white/90 p-4 shadow-sm backdrop-blur"
+                    >
+                      <div className="break-words text-lg font-black text-slate-950 md:text-xl">
+                        {value}
+                      </div>
+                      <div className="mt-1 break-words text-sm leading-5 text-slate-500">
+                        {label}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="mt-6 text-sm font-semibold text-slate-400">
+                  {t.scrollHint}
                 </div>
               </div>
-            </FadeIn>
+            </Reveal>
 
-            <FadeIn delay={0.08}>
+            <Reveal variant="right">
               <div className="relative">
-                <div className="absolute -inset-6 rounded-[2.5rem] bg-white/40 blur-2xl" />
-                <VisualCard
-                  src={heroImage}
-                  alt="aireco hero"
-                  className="relative rounded-[2.4rem]"
-                  imageClassName="h-[420px] w-full object-cover object-center md:h-[560px]"
-                />
+                <div className="mx-auto max-w-[430px] overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+                  <motion.img
+                    src={heroImage}
+                    alt="aireco"
+                    initial={{ scale: 1.03, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.4, ease }}
+                    className="block w-full h-auto rounded-[1.5rem] object-contain object-center"
+                  />
+                </div>
 
-                <div className="pointer-events-none absolute bottom-5 left-5 right-5 hidden items-center justify-between gap-4 md:flex">
-                  <div className="rounded-full bg-white/92 px-5 py-3 text-sm font-semibold text-slate-700 shadow-lg backdrop-blur">
-                    {t.hero.priceValue}
-                  </div>
-                  <div className="flex gap-3">
-                    <a
-                      href={INSTAGRAM_LINK}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="pointer-events-auto rounded-full bg-white/92 px-5 py-3 text-sm font-semibold text-pink-600 shadow-lg backdrop-blur"
-                    >
-                      {t.hero.instagram}
-                    </a>
-                    <a
-                      href={WHATSAPP_LINK}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="pointer-events-auto rounded-full bg-emerald-500 px-5 py-3 text-sm font-semibold text-white shadow-lg"
-                    >
-                      WhatsApp
-                    </a>
-                  </div>
+                <div className="absolute -bottom-3 left-4 rounded-[1.3rem] bg-white px-4 py-3 shadow-xl ring-1 ring-slate-200">
+                  <div className="text-sm text-slate-500">night mode</div>
+                  <div className="text-base font-black text-slate-950">&lt; 45 дБ</div>
                 </div>
               </div>
-            </FadeIn>
+            </Reveal>
           </div>
+        </section>
 
-          <div className="mx-auto mt-2 grid max-w-7xl grid-cols-2 gap-4 px-4 pb-16 md:grid-cols-4 md:px-6 lg:px-8">
-            {t.stats.map((item, idx) => (
-              <FadeIn key={item.label} delay={idx * 0.04}>
-                <div className="rounded-[1.7rem] border border-white/70 bg-white/85 p-5 shadow-[0_18px_45px_rgba(15,23,42,0.06)] backdrop-blur">
-                  <div className="text-2xl font-bold text-slate-950">{item.value}</div>
-                  <div className="mt-2 text-sm leading-6 text-slate-500">{item.label}</div>
-                </div>
-              </FadeIn>
+        <section className="mx-auto max-w-7xl px-6 py-10 md:px-10">
+          <Reveal>
+            <div className="mb-6 max-w-3xl">
+              <h2 className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">
+                {t.featureGridTitle}
+              </h2>
+            </div>
+          </Reveal>
+
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {t.featureGrid.map(([title, text], i) => (
+              <Reveal key={title} delay={i * 0.04}>
+                <motion.div
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm transition-colors duration-300 hover:border-sky-200 hover:bg-sky-50/40"
+                >
+                  <div className="text-lg font-black text-slate-950">{title}</div>
+                  <div className="mt-3 leading-7 text-slate-600">{text}</div>
+                </motion.div>
+              </Reveal>
             ))}
           </div>
         </section>
 
-        <section id="technology" className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-            <FadeIn>
-              <SectionHeading
-                eyebrow={t.sections.technology.eyebrow}
-                title={t.sections.technology.title}
-                text={t.sections.technology.text}
-              />
-            </FadeIn>
+        <section id="technology" className="mx-auto max-w-7xl px-6 py-10 md:px-10">
+          <Reveal>
+            <SectionTitle
+              tag={t.sections.technologyTag}
+              title={t.sections.technologyTitle}
+              text={t.sections.technologyText}
+            />
+          </Reveal>
 
-            <FadeIn delay={0.08}>
-              <div className="grid gap-5 md:grid-cols-2">
-                <VisualCard
-                  src={uvImage}
-                  alt="uv sterilization"
-                  className="md:col-span-2"
-                  imageClassName="h-[300px] w-full object-cover object-center md:h-[380px]"
-                />
-              </div>
-            </FadeIn>
-          </div>
+          <Reveal>
+            <UvGallery src={uvImage} />
+          </Reveal>
         </section>
 
-        <section id="filter" className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-            <FadeIn delay={0.04}>
+        <section id="filtration" className="bg-white/40 backdrop-blur-[2px]">
+          <div className="mx-auto grid max-w-7xl gap-6 px-6 py-10 md:px-10 lg:grid-cols-2 lg:items-center">
+            <Reveal variant="left">
+              <div className="min-w-0">
+                <SectionTitle
+                  tag={t.sections.filtrationTag}
+                  title={t.sections.filtrationTitle}
+                  text={t.sections.filtrationText}
+                />
+
+                <div className="mt-6 grid gap-3">
+                  {t.bullets.map((item, i) => (
+                    <motion.div
+                      key={item}
+                      initial={{ opacity: 0, x: -18 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.8, delay: i * 0.05, ease }}
+                      className="min-w-0 rounded-xl bg-white px-4 py-3 text-slate-700 shadow-sm ring-1 ring-slate-200"
+                    >
+                      <span className="break-words">{item}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal variant="right">
               <VisualCard
                 src={filterSystemImage}
-                alt="filter system"
-                imageClassName="h-[360px] w-full object-cover object-center md:h-[520px]"
+                alt="система фильтрации aireco"
+                maxWidth="max-w-[360px]"
+                imageClassName="h-[280px] w-full object-cover object-[center_28%]"
               />
-            </FadeIn>
-
-            <FadeIn>
-              <SectionHeading
-                eyebrow={t.sections.filtration.eyebrow}
-                title={t.sections.filtration.title}
-                text={t.sections.filtration.text}
-              />
-            </FadeIn>
+            </Reveal>
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
-            <FadeIn>
-              <SectionHeading
-                eyebrow={t.sections.family.eyebrow}
-                title={t.sections.family.title}
-                text={t.sections.family.text}
-              />
-            </FadeIn>
-
-            <FadeIn delay={0.04}>
+        <section id="comfort" className="mx-auto max-w-7xl px-6 py-10 md:px-10">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-center">
+            <Reveal variant="left">
               <VisualCard
                 src={familyImage}
-                alt="family allergy"
-                imageClassName="h-[360px] w-full object-cover object-center md:h-[500px]"
+                alt="aireco помогает снижать уровень аллергенов"
+                maxWidth="max-w-[350px]"
+                imageClassName="h-[280px] w-full object-cover object-[center_62%]"
               />
-            </FadeIn>
-          </div>
-        </section>
+            </Reveal>
 
-        <section id="comfort" className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-            <FadeIn delay={0.04}>
-              <VisualCard
-                src={heatingImage}
-                alt="heated top"
-                imageClassName="h-[360px] w-full object-cover object-center md:h-[500px]"
-              />
-            </FadeIn>
+            <Reveal variant="right">
+              <div className="min-w-0">
+                <SectionTitle
+                  tag={t.sections.comfortTag}
+                  title={t.sections.comfortTitle}
+                  text={t.sections.comfortText}
+                />
 
-            <FadeIn>
-              <SectionHeading
-                eyebrow={t.sections.comfort.eyebrow}
-                title={t.sections.comfort.title}
-                text={t.sections.comfort.text}
-              />
-            </FadeIn>
-          </div>
-        </section>
-
-        <section id="control" className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
-            <FadeIn>
-              <SectionHeading
-                eyebrow={t.sections.control.eyebrow}
-                title={t.sections.control.title}
-                text={t.sections.control.text}
-              />
-            </FadeIn>
-
-            <FadeIn delay={0.04}>
-              <VisualCard
-                src={appControlImage}
-                alt="app control"
-                imageClassName="h-[360px] w-full object-cover object-center md:h-[500px]"
-              />
-            </FadeIn>
-          </div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-            <FadeIn delay={0.04}>
-              <VisualCard
-                src={warrantyImage}
-                alt="warranty"
-                imageClassName="h-[360px] w-full object-cover object-center md:h-[500px]"
-              />
-            </FadeIn>
-
-            <FadeIn>
-              <SectionHeading
-                eyebrow={t.sections.warranty.eyebrow}
-                title={t.sections.warranty.title}
-                text={t.sections.warranty.text}
-              />
-            </FadeIn>
-          </div>
-        </section>
-
-        <section id="specs" className="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:px-8 lg:py-20">
-          <FadeIn>
-            <SectionHeading
-              eyebrow="specs"
-              title={t.specsTitle}
-              text={lang === "ru"
-                ? "Ключевые параметры устройства для выбора и сравнения."
-                : lang === "kz"
-                ? "Құрылғыны таңдау мен салыстыруға арналған негізгі параметрлер."
-                : "Key device parameters for selection and comparison."}
-              align="center"
-            />
-          </FadeIn>
-
-          <FadeIn delay={0.05} className="mt-10">
-            <div className="overflow-hidden rounded-[2rem] border border-white/70 bg-white/90 shadow-[0_24px_80px_rgba(15,23,42,0.08)] backdrop-blur">
-              {t.specs.map(([label, value], idx) => (
-                <div
-                  key={label}
-                  className={`grid grid-cols-1 gap-2 px-6 py-5 md:grid-cols-[0.9fr_1.1fr] md:px-8 ${
-                    idx !== t.specs.length - 1 ? "border-b border-slate-100" : ""
-                  }`}
-                >
-                  <div className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-400">
-                    {label}
-                  </div>
-                  <div className="text-base font-medium text-slate-800">{value}</div>
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {t.comfortCards.map(([a, b]) => (
+                    <div
+                      key={a}
+                      className="min-w-0 rounded-[1.2rem] bg-sky-50 p-4 ring-1 ring-sky-100"
+                    >
+                      <div className="break-words text-lg font-black">{a}</div>
+                      <div className="mt-2 break-words text-slate-600">{b}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-6 py-10 md:px-10">
+          <Reveal>
+            <div className="mb-6 max-w-3xl">
+              <h2 className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">
+                {t.useCasesTitle}
+              </h2>
             </div>
-          </FadeIn>
-        </section>
+          </Reveal>
 
-        <section id="faq" className="mx-auto max-w-7xl px-4 py-12 md:px-6 lg:px-8 lg:py-20">
-          <FadeIn>
-            <SectionHeading
-              eyebrow="faq"
-              title={t.faqTitle}
-              text={
-                lang === "ru"
-                  ? "Коротко ответили на самые важные вопросы перед покупкой."
-                  : lang === "kz"
-                  ? "Сатып алмас бұрын ең маңызды сұрақтарға қысқаша жауап."
-                  : "Short answers to the most important questions before purchase."
-              }
-              align="center"
-            />
-          </FadeIn>
-
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {t.faq.map((item, idx) => (
-              <FadeIn key={item.q} delay={idx * 0.05}>
-                <div className="rounded-[1.8rem] border border-white/70 bg-white/90 p-6 shadow-[0_20px_60px_rgba(15,23,42,0.06)] backdrop-blur">
-                  <h3 className="text-lg font-bold text-slate-900">{item.q}</h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">{item.a}</p>
-                </div>
-              </FadeIn>
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+            {t.useCases.map((item, i) => (
+              <Reveal key={item} delay={i * 0.04}>
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="rounded-[1.5rem] border border-slate-200 bg-white px-5 py-4 text-base font-bold text-slate-800 shadow-sm transition-colors duration-300 hover:border-sky-200 hover:bg-sky-50/40"
+                >
+                  {item}
+                </motion.div>
+              </Reveal>
             ))}
           </div>
         </section>
 
-        <section
-          id="order"
-          className="mx-auto max-w-7xl px-4 pb-20 pt-8 md:px-6 lg:px-8 lg:pb-24"
-        >
-          <FadeIn>
-            <div className="relative overflow-hidden rounded-[2.4rem] border border-white/70 bg-[linear-gradient(135deg,#0f172a_0%,#15324f_40%,#1d4f70_100%)] px-6 py-10 text-white shadow-[0_30px_100px_rgba(15,23,42,0.28)] md:px-10 md:py-14">
-              <div className="absolute inset-0 opacity-20">
-                <FloatingParticles />
-              </div>
+        <section className="bg-white/40 backdrop-blur-[2px]">
+          <div className="mx-auto grid max-w-7xl gap-6 px-6 py-10 md:px-10 lg:grid-cols-2 lg:items-center">
+            <Reveal variant="left">
+              <div className="min-w-0">
+                <SectionTitle
+                  tag={t.sections.heatingTag}
+                  title={t.sections.heatingTitle}
+                  text={t.sections.heatingText}
+                />
 
-              <div className="relative z-10 max-w-3xl">
-                <div className="mb-4 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-sky-100">
-                  aireco
+                <div className="mt-6 space-y-3">
+                  {t.heatingCards.map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-200"
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal variant="right">
+              <VisualCard
+                src={heatingImage}
+                alt="heating"
+                maxWidth="max-w-[360px]"
+                imageClassName="h-[280px] w-full object-cover object-[center_34%]"
+              />
+            </Reveal>
+          </div>
+        </section>
+
+        <section id="control" className="mx-auto max-w-7xl px-6 py-10 md:px-10">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-center">
+            <Reveal variant="left" className="lg:order-2">
+              <VisualCard
+                src={appControlImage}
+                alt="управление aireco через приложение и пульт"
+                maxWidth="max-w-[360px]"
+                imageClassName="h-[270px] w-full object-cover object-[center_38%]"
+              />
+            </Reveal>
+
+            <Reveal variant="right" className="lg:order-1">
+              <div className="min-w-0">
+                <SectionTitle
+                  tag={t.sections.controlTag}
+                  title={t.sections.controlTitle}
+                  text={t.sections.controlText}
+                />
+
+                <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                  {t.controlCards.map(([a, b]) => (
+                    <div
+                      key={a}
+                      className="min-w-0 rounded-[1.2rem] bg-white p-4 shadow-sm ring-1 ring-slate-200"
+                    >
+                      <div className="break-words text-lg font-black">{a}</div>
+                      <div className="mt-2 break-words text-slate-600">{b}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section id="specs" className="bg-slate-950 text-white">
+          <div className="mx-auto max-w-7xl px-6 py-10 md:px-10">
+            <Reveal>
+              <SectionTitle
+                tag={t.sections.specsTag}
+                title={t.sections.specsTitle}
+              />
+            </Reveal>
+
+            <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              {t.specs.map((item, i) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.75, delay: i * 0.035, ease }}
+                  className="min-w-0 rounded-xl bg-white/5 px-4 py-3 text-slate-100 ring-1 ring-white/10"
+                >
+                  <span className="break-words">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-6 py-10 md:px-10">
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-center">
+            <Reveal variant="left">
+              <div className="min-w-0">
+                <SectionTitle
+                  tag={t.sections.trustTag}
+                  title={t.sections.trustTitle}
+                  text={t.sections.trustText}
+                />
+
+                <div className="mt-6 rounded-[1.5rem] bg-sky-50 p-5 ring-1 ring-sky-100">
+                  <div className="text-2xl font-black text-slate-950">
+                    +7 706 606 0985
+                  </div>
+                  <div className="mt-2 text-slate-600">{t.trustPhoneLabel}</div>
+
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <a
+                      href={whatsappMain}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-xl bg-green-500 px-4 py-3 font-bold text-white transition hover:bg-green-600"
+                    >
+                      <WhatsAppIcon />
+                      WhatsApp
+                    </a>
+                    <a
+                      href={instagramLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-4 py-3 font-bold text-pink-600 transition hover:bg-pink-50"
+                    >
+                      <InstagramIcon />
+                      Instagram
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal variant="right">
+              <VisualCard
+                src={warrantyImage}
+                alt="гарантия на очиститель воздуха aireco"
+                maxWidth="max-w-[320px]"
+                imageClassName="h-[250px] w-full object-cover object-center"
+              />
+            </Reveal>
+          </div>
+        </section>
+
+        <section id="faq" className="bg-white/50 backdrop-blur-[2px]">
+          <div className="mx-auto max-w-5xl px-6 py-10 md:px-10">
+            <Reveal>
+              <SectionTitle
+                tag={t.sections.faqTag}
+                title={t.sections.faqTitle}
+              />
+            </Reveal>
+
+            <div className="grid gap-3">
+              {t.faq.map(([q, a], i) => (
+                <Reveal key={q} delay={i * 0.03}>
+                  <FAQItem q={q} a={a} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="px-6 py-10 md:px-10">
+          <Reveal>
+            <div className="mx-auto max-w-6xl rounded-[2rem] bg-[linear-gradient(135deg,#0f172a_0%,#0f2d4d_55%,#075985_100%)] p-8 text-white shadow-[0_24px_70px_rgba(2,6,23,0.28)] md:p-10">
+              <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+                <div className="min-w-0">
+                  <div className="text-sm font-bold uppercase tracking-[0.22em] text-sky-200">
+                    {t.sections.finalTag}
+                  </div>
+                  <h2 className="mt-3 break-words text-3xl font-black md:text-5xl">
+                    {t.sections.finalTitle}
+                  </h2>
+                  <p className="mt-5 max-w-2xl break-words text-lg leading-8 text-slate-200">
+                    {t.sections.finalText}
+                  </p>
                 </div>
 
-                <h2 className="text-3xl font-bold leading-tight md:text-5xl">
-                  {t.cta.title}
-                </h2>
-                <p className="mt-5 max-w-2xl text-base leading-8 text-slate-200 md:text-lg">
-                  {t.cta.text}
-                </p>
+                <div className="rounded-[1.7rem] bg-white/10 p-5 backdrop-blur">
+                  <div className="text-lg font-black">{t.finalCardTitle}</div>
+                  <div className="mt-3 text-slate-200">
+                    {t.finalCardPrice}: {t.price}
+                  </div>
+                  <div className="mt-1 text-slate-200">
+                    {t.finalCardWhatsApp}: +7 706 606 0985
+                  </div>
 
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <a
-                    href={WHATSAPP_LINK}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-2xl bg-emerald-500 px-6 py-4 text-sm font-semibold text-white shadow-[0_16px_40px_rgba(16,185,129,0.28)] transition-all duration-300 hover:-translate-y-1 hover:bg-emerald-600"
-                  >
-                    {t.cta.primary}
-                  </a>
+                  <div className="mt-6 flex flex-col gap-3">
+                    <a
+                      href={whatsappOrder}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-green-500 px-6 py-4 text-base font-black text-white transition hover:bg-green-600"
+                    >
+                      <WhatsAppIcon />
+                      {t.goWhatsApp}
+                    </a>
 
-                  <a
-                    href={INSTAGRAM_LINK}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-2xl bg-white px-6 py-4 text-sm font-semibold text-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:bg-slate-100"
-                  >
-                    {t.cta.secondary}
-                  </a>
+                    <a
+                      href={instagramLink}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-base font-black text-white transition hover:bg-white/15"
+                    >
+                      <InstagramIcon />
+                      {t.openInstagram}
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
-          </FadeIn>
+          </Reveal>
         </section>
       </main>
 
-      <footer className="border-t border-slate-200/70 bg-white/75 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-8 text-sm text-slate-500 md:flex-row md:items-center md:justify-between md:px-6 lg:px-8">
-          <div className="font-semibold text-slate-900">aireco</div>
-          <div>{t.footer.made}</div>
-          <div>© 2026 aireco. {t.footer.rights}</div>
-        </div>
-      </footer>
+      <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-3 md:bottom-6 md:right-6">
+        <a
+          href={instagramLink}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center gap-3 rounded-full bg-white px-5 py-4 text-sm font-black text-pink-600 shadow-[0_20px_50px_rgba(0,0,0,0.10)] ring-1 ring-slate-200 transition duration-300 hover:scale-[1.03]"
+        >
+          <InstagramIcon />
+          Instagram
+        </a>
+
+        <a
+          href={whatsappMain}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center gap-3 rounded-full bg-green-500 px-5 py-4 text-sm font-black text-white shadow-[0_20px_50px_rgba(34,197,94,0.30)] transition duration-300 hover:scale-[1.03] hover:bg-green-600"
+        >
+          <WhatsAppIcon />
+          WhatsApp
+        </a>
+      </div>
     </div>
   );
 }
-
-export default App;
