@@ -651,7 +651,116 @@ function InstagramIcon() {
     </svg>
   );
 }
+function TrustStrip() {
+  const items = [
+    "доставка по Казахстану",
+    "гарантия 12 месяцев",
+    "поддержка в WhatsApp",
+    "подходит для дома и офиса",
+  ];
 
+  return (
+    <div className="mx-auto mt-4 max-w-7xl px-6 md:px-10">
+      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+        {items.map((item, i) => (
+          <motion.div
+            key={item}
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: i * 0.05 }}
+            className="rounded-[1.3rem] border border-slate-200 bg-white/90 px-4 py-4 text-sm font-bold text-slate-700 shadow-sm backdrop-blur"
+          >
+            {item}
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ReviewsSection() {
+  const reviews = [
+    {
+      name: "Айгерим",
+      city: "Алматы",
+      text: "Поставили дома в спальне. Воздух ощущается свежее, ночью работает тихо, детям не мешает.",
+    },
+    {
+      name: "Нурсултан",
+      city: "Астана",
+      text: "Нравится, что можно управлять через приложение. Выглядит аккуратно и не портит интерьер.",
+    },
+    {
+      name: "Данияр",
+      city: "Шымкент",
+      text: "Брали для офиса. Работает стабильно, удобно что есть авто-режим и понятное управление.",
+    },
+  ];
+
+  return (
+    <section className="mx-auto max-w-7xl px-6 py-10 md:px-10">
+      <Reveal>
+        <div className="mb-6 max-w-3xl">
+          <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-sky-600">
+            отзывы
+          </div>
+          <h2 className="mt-3 text-3xl font-black leading-[1.05] tracking-tight text-slate-950 md:text-5xl">
+            Что говорят клиенты об aireco
+          </h2>
+          <p className="mt-4 max-w-2xl text-[16px] leading-7 text-slate-500">
+            Короткие реальные сценарии использования дома и в офисе.
+          </p>
+        </div>
+      </Reveal>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        {reviews.map((review, i) => (
+          <Reveal key={review.name} delay={i * 0.04}>
+            <motion.div
+              whileHover={{ y: -4 }}
+              className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-sm"
+            >
+              <div className="mb-3 flex items-center gap-1 text-amber-400">
+                <span>★</span>
+                <span>★</span>
+                <span>★</span>
+                <span>★</span>
+                <span>★</span>
+              </div>
+
+              <p className="text-slate-600 leading-7">{review.text}</p>
+
+              <div className="mt-4 border-t border-slate-100 pt-4">
+                <div className="font-black text-slate-950">{review.name}</div>
+                <div className="text-sm text-slate-500">{review.city}</div>
+              </div>
+            </motion.div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function StickyMobileCTA() {
+  const whatsappMain =
+    "https://wa.me/77066060985?text=Здравствуйте,%20интересует%20очиститель%20воздуха%20aireco";
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-[90] border-t border-slate-200 bg-white/95 p-3 backdrop-blur md:hidden">
+      <a
+        href={whatsappMain}
+        target="_blank"
+        rel="noreferrer"
+        className="flex w-full items-center justify-center gap-3 rounded-2xl bg-green-500 px-5 py-4 text-base font-black text-white shadow-[0_16px_35px_rgba(34,197,94,0.28)]"
+      >
+        <WhatsAppIcon />
+        заказать в WhatsApp
+      </a>
+    </div>
+  );
+}
 export default function App() {
   const [lang, setLang] = useState("ru");
   const t = useMemo(() => DICT[lang], [lang]);
