@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import heroImage from "./assets/hero.webp";
 import uvImage from "./assets/uv-sterilization.webp";
@@ -62,9 +62,10 @@ const CONTENT = {
       "Помогает уничтожать бактерии и вирусы в паре с фотокаталитическим фильтром и усиливает общий эффект фильтрации.",
 
     filtrationTag: "система очистки",
-    filtrationTitle: "5 ступеней фильтрации",
+    filtrationTitle: "Как работает наш фильтр",
+    filtrationSubtitle: "Интеллектуальная очистка в три этапа",
     filtrationText:
-      "Моющийся пре-фильтр задерживает шерсть, крупную пыль и волосы. Основной HEPA H13 улавливает мелкие частицы, а фотокаталитический слой работает внутри системы.",
+      "Нажмите на плюсик, чтобы увидеть описание каждого слоя фильтрации.",
 
     familyTag: "для семьи",
     familyTitle: "Комфортный воздух для дома, детей и аллергиков",
@@ -102,15 +103,15 @@ const CONTENT = {
       "aireco рассчитан на постоянное использование дома и в офисе. Это полноценная система очистки с акцентом на безопасность, ресурс и удобство.",
 
     reviewsTag: "отзывы",
-    reviewsTitle: "Что говорят клиенты",
+    reviewsTitle: "Отзывы покупателей",
     reviewsText:
-      "Реальные впечатления о том, как aireco ощущается в использовании дома и в офисе.",
+      "Живые отзывы, которые уже оставили покупатели после использования aireco.",
 
-    faqTag: "частые вопросы",
+    faqTag: "вопрос / ответ",
     faqTitle: "Всё, что важно знать перед покупкой",
 
-    ctaTag: "заказать aireco",
-    ctaTitle: "Готовы заказать очиститель воздуха?",
+    ctaTag: "aireco",
+    ctaTitle: "заказать",
     ctaText:
       "Напишите в WhatsApp или Instagram, и мы быстро подскажем по наличию, доставке и ответим на вопросы.",
 
@@ -137,47 +138,60 @@ const CONTENT = {
   ],
   reviews: [
     {
-      name: "Алва",
-      city: "Караганда",
-      text: "Воздух дома стал ощущаться чище уже в первые дни. Нравится, что прибор работает тихо и не мешает ночью.",
-    },
-    {
-      name: "Карина",
-      city: "Астана",
-      text: "Очень удобно, что есть приложение и пульт. Выглядит аккуратно и хорошо вписался в интерьер.",
+      name: "Ангелина",
+      city: "Алматы",
+      date: "11.02.2026",
+      text:
+        "Брала по рекомендации подруги, приятно удивило качество сборки и размер очистителя. Почти за неделю использования стало реально легче дышать, меньше пыли в доме, покупкой очень довольна.",
     },
     {
       name: "Сергей",
       city: "Алматы",
-      text: "Брал для квартиры. Хорошо убирает ощущение пыли в комнате, управление понятное, работает стабильно.",
+      date: "17.02.2026",
+      text:
+        "Площадка с подогревом стала любимым местом нашего кота, каждый день собирает приличное количество шерсти и пыли. Ночной режим не мешает сну.",
     },
     {
-      name: "Ангелина",
-      city: "Алматы",
-      text: "Понравилось, что aireco не только полезный, но и красивый. Для дома с детьми и питомцами вообще отличный вариант.",
+      name: "Алуа",
+      city: "Караганда",
+      date: "20.02.2026",
+      text:
+        "Для нашей семьи аллергиков приобретение очистителя было необходимостью, с выбором не ошиблась, теперь в квартире заметно меньше пыли, у детей реже стали появляться сопли.",
+    },
+    {
+      name: "Карина",
+      city: "Астана",
+      date: "15.02.2026",
+      text:
+        "Приобрела данный очиститель на днях, хочу сказать что уже заметен результат. На утро в квартире появилось ощущение свежести, также удобно что есть пульт и продуманы колесики поэтому удобно его переносить. Спасибо большое!",
     },
   ],
   faq: [
-    [
-      "Подходит ли для квартиры?",
-      "Да. aireco подходит для квартиры, дома, спальни, детской и офиса.",
-    ],
-    [
-      "Можно ли использовать постоянно?",
-      "Да. Устройство подходит для постоянной работы.",
-    ],
-    [
-      "Безопасен ли УФ-модуль?",
-      "Да. УФ-модуль находится внутри корпуса и полностью изолирован.",
-    ],
-    [
-      "Как управлять устройством?",
-      "Через сенсорную панель, пульт или мобильное приложение.",
-    ],
-    [
-      "Есть ли напоминание о замене фильтра?",
-      "Да, система напоминает о необходимости обслуживания.",
-    ],
+    {
+      q: "Зачем нужна ионизация?",
+      a:
+        "Ионизация способствует осаждению мелких частиц, делая воздух более свежим и комфортным. Многие отмечают ощущение свежести, сравнимое с воздухом после грозы. Функцию можно включать и отключать при необходимости.",
+    },
+    {
+      q: "Справляется ли очиститель с аллергенами?",
+      a:
+        "Да. Фильтр HEPA H13 эффективно задерживает мелкие частицы, включая пыльцу, бытовые аллергены и PM2.5, снижая их концентрацию в воздухе. Это делает дыхание более комфортным в период сезонных и бытовых аллергий.",
+    },
+    {
+      q: "Как часто нужно менять фильтр?",
+      a:
+        "В нашем очистителе HEPA-фильтр имеет повышенный ресурс работы. Моющийся пре-фильтр задерживает крупную пыль и продлевает срок службы основного фильтра. Устройство автоматически уведомляет о необходимости замены.",
+    },
+    {
+      q: "Подходит ли очиститель для семей с детьми и домашними животными?",
+      a:
+        "Да. Очиститель безопасен для использования в жилых помещениях. УФ-излучение полностью изолировано внутри корпуса и не контактирует с людьми и животными. Фильтрация эффективно снижает количество пыли, аллергенов и бытовых загрязнений в воздухе.",
+    },
+    {
+      q: "Помогает ли очиститель устранять запахи?",
+      a:
+        "Да. Фотокаталитический фильтр с УФ способствует разложению молекул запахов и органических загрязнений, включая бытовые запахи и запахи, связанные с домашними животными.",
+    },
   ],
   contact: {
     phoneLabel: "связь и заказ через WhatsApp",
@@ -194,20 +208,26 @@ const FILTER_POINTS = [
   {
     id: "pre",
     title: "Предфильтр",
-    text: "Захватывает крупные частицы: пыль, волосы, шерсть животных и ворс. Увеличивает срок службы основного фильтра.",
-    desktop: { left: "18%", top: "58%" },
+    text:
+      "Захватывает крупные частицы: пыль, волосы, шерсть животных и ворс. Увеличивает срок службы основного фильтра.",
+    desktop: { left: "18%", top: "60%" },
+    mobile: { left: "18%", top: "60%", align: "left" },
   },
   {
     id: "hepa",
-    title: "Основной HEPA H13",
-    text: "Улавливает мелкие частицы, пыль и аллергены и делает воздух в помещении заметно чище.",
-    desktop: { left: "49%", top: "58%" },
+    title: "HEPA H13",
+    text:
+      "Эффективно задерживает мелкие частицы, пыль, аллергены и PM2.5, делая воздух заметно чище и комфортнее.",
+    desktop: { left: "50%", top: "60%" },
+    mobile: { left: "50%", top: "60%", align: "center" },
   },
   {
     id: "photo",
     title: "Фотокаталитический слой",
-    text: "Работает внутри системы и помогает усиливать общий эффект очистки в паре с УФ-модулем.",
-    desktop: { left: "80%", top: "58%" },
+    text:
+      "Работает внутри системы и помогает уменьшать запахи и органические загрязнения в паре с УФ-модулем.",
+    desktop: { left: "82%", top: "60%" },
+    mobile: { left: "82%", top: "60%", align: "right" },
   },
 ];
 
@@ -323,7 +343,7 @@ function FAQItem({ q, a }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="rounded-[1.4rem] border border-slate-200 bg-white shadow-sm">
+    <div className="rounded-[1.6rem] border border-slate-200 bg-white shadow-sm">
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
@@ -338,7 +358,9 @@ function FAQItem({ q, a }) {
         transition={{ duration: 0.28, ease }}
         className="overflow-hidden"
       >
-        <div className="px-6 pb-5 text-[16px] leading-7 text-slate-600">{a}</div>
+        <div className="px-6 pb-6 text-[16px] leading-8 text-slate-600">
+          {a}
+        </div>
       </motion.div>
     </div>
   );
@@ -358,22 +380,20 @@ function ReviewsSection({ t }) {
 
       <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         {t.reviews.map((review, i) => (
-          <Reveal key={review.name + review.city} delay={i * 0.05}>
+          <Reveal key={review.name + review.date} delay={i * 0.05}>
             <SoftCard className="h-full p-6">
-              <div className="mb-3 flex gap-1 text-amber-400">
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
-                <span>★</span>
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <div>
+                  <div className="font-black text-slate-950">{review.name}</div>
+                  <div className="text-sm text-slate-500">{review.city}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-red-500">★★★★★</div>
+                  <div className="text-xs text-slate-400">{review.date}</div>
+                </div>
               </div>
 
               <p className="leading-7 text-slate-600">{review.text}</p>
-
-              <div className="mt-5 border-t border-slate-100 pt-4">
-                <div className="font-black text-slate-950">{review.name}</div>
-                <div className="text-sm text-slate-500">{review.city}</div>
-              </div>
             </SoftCard>
           </Reveal>
         ))}
@@ -661,105 +681,81 @@ function CalculatorModal({ open, onClose, t }) {
   );
 }
 
-function FilterHotspotsMobile() {
-  const [active, setActive] = useState("pre");
-  const activeData = useMemo(
-    () => FILTER_POINTS.find((item) => item.id === active) ?? FILTER_POINTS[0],
-    [active]
-  );
+function FilterTooltip({ title, text, align = "center" }) {
+  const alignClass =
+    align === "left"
+      ? "left-0 translate-x-0"
+      : align === "right"
+      ? "right-0 translate-x-0"
+      : "left-1/2 -translate-x-1/2";
 
   return (
-    <div className="lg:hidden">
-      <div className="relative mx-auto w-full max-w-[420px]">
-        <img
-          src={filterSystemImage}
-          alt="filter system"
-          className="block h-auto w-full object-contain"
-        />
-
-        {FILTER_POINTS.map((point) => {
-          const mobilePositions = {
-            pre: { left: "18%", top: "58%" },
-            hepa: { left: "50%", top: "58%" },
-            photo: { left: "82%", top: "58%" },
-          };
-
-          return (
-            <button
-              key={point.id}
-              onClick={() => setActive(point.id)}
-              className="absolute flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#D9842D] text-3xl font-medium text-white shadow-[0_12px_30px_rgba(217,132,45,0.35)] transition hover:scale-105"
-              style={mobilePositions[point.id]}
-            >
-              +
-            </button>
-          );
-        })}
-      </div>
-
-      <motion.div
-        key={activeData.id}
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35, ease }}
-        className="mt-5"
-      >
-        <SoftCard className="p-5">
-          <div className="text-2xl font-black text-slate-950">
-            {activeData.title}
-          </div>
-          <p className="mt-3 text-[16px] leading-8 text-slate-700">
-            {activeData.text}
-          </p>
-        </SoftCard>
-      </motion.div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: 14, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.28, ease }}
+      className={`absolute top-[calc(100%+14px)] z-20 w-[220px] rounded-[1.3rem] border border-slate-200 bg-white p-4 shadow-[0_18px_50px_rgba(15,23,42,0.14)] ${alignClass}`}
+    >
+      <div className="text-lg font-black text-slate-950">{title}</div>
+      <div className="mt-2 text-[15px] leading-7 text-slate-600">{text}</div>
+    </motion.div>
   );
 }
 
-function FilterHotspotsDesktop() {
-  const [active, setActive] = useState("hepa");
-  const activeData = useMemo(
-    () => FILTER_POINTS.find((item) => item.id === active) ?? FILTER_POINTS[1],
-    [active]
-  );
+function FilterHotspots() {
+  const [active, setActive] = useState("pre");
 
   return (
-    <div className="hidden gap-7 lg:grid lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-      <Reveal variant="left">
-        <div className="relative mx-auto w-full max-w-[520px]">
-          <img
-            src={filterSystemImage}
-            alt="filter system"
-            className="block h-auto w-full object-contain"
-          />
-
-          {FILTER_POINTS.map((point) => (
-            <button
-              key={point.id}
-              onClick={() => setActive(point.id)}
-              className="absolute flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#D9842D] text-3xl font-medium text-white shadow-[0_12px_30px_rgba(217,132,45,0.35)] transition hover:scale-105"
-              style={point.desktop}
-            >
-              +
-            </button>
-          ))}
+    <div className="mx-auto max-w-[860px]">
+      <div className="text-center">
+        <div className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">
+          {CONTENT.sections.filtrationTitle}
         </div>
-      </Reveal>
+        <div className="mt-4 text-2xl font-medium text-slate-600 md:text-3xl">
+          {CONTENT.sections.filtrationSubtitle}
+        </div>
+      </div>
 
-      <Reveal variant="right">
-        <SoftCard className="p-6">
-          <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-sky-600">
-            как работает фильтрация
+      <div className="mt-8 relative mx-auto w-full max-w-[720px]">
+        <img
+          src={filterSystemImage}
+          alt="filter system"
+          className="block w-full object-contain"
+        />
+
+        {FILTER_POINTS.map((point) => (
+          <div
+            key={point.id}
+            className="absolute"
+            style={{
+              left: point.desktop.left,
+              top: point.desktop.top,
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <button
+              onClick={() =>
+                setActive((prev) => (prev === point.id ? "" : point.id))
+              }
+              className="flex h-12 w-12 items-center justify-center rounded-full bg-[#D9842D] text-3xl font-medium text-white shadow-[0_12px_30px_rgba(217,132,45,0.35)] transition hover:scale-105"
+            >
+              {active === point.id ? "−" : "+"}
+            </button>
+
+            {active === point.id ? (
+              <FilterTooltip
+                title={point.title}
+                text={point.text}
+                align={point.mobile.align}
+              />
+            ) : null}
           </div>
-          <h3 className="mt-3 text-3xl font-black text-slate-950">
-            {activeData.title}
-          </h3>
-          <p className="mt-4 text-[17px] leading-8 text-slate-600">
-            {activeData.text}
-          </p>
-        </SoftCard>
-      </Reveal>
+        ))}
+      </div>
+
+      <p className="mx-auto mt-20 max-w-2xl text-center text-[16px] leading-7 text-slate-500">
+        {CONTENT.sections.filtrationText}
+      </p>
     </div>
   );
 }
@@ -944,16 +940,15 @@ export default function App() {
         <section id="filtration" className="bg-white/40 py-10 backdrop-blur-[2px]">
           <div className="mx-auto max-w-7xl px-6 md:px-10">
             <Reveal>
-              <SectionTitle
-                tag={t.sections.filtrationTag}
-                title={t.sections.filtrationTitle}
-                text={t.sections.filtrationText}
-              />
+              <div className="max-w-3xl">
+                <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-sky-600">
+                  {t.sections.filtrationTag}
+                </div>
+              </div>
             </Reveal>
 
-            <div className="mt-7">
-              <FilterHotspotsDesktop />
-              <FilterHotspotsMobile />
+            <div className="mt-4">
+              <FilterHotspots />
             </div>
           </div>
         </section>
@@ -1142,9 +1137,9 @@ export default function App() {
             </Reveal>
 
             <div className="mt-7 grid gap-4">
-              {t.faq.map(([q, a], i) => (
-                <Reveal key={q} delay={i * 0.03}>
-                  <FAQItem q={q} a={a} />
+              {t.faq.map((item, i) => (
+                <Reveal key={item.q} delay={i * 0.03}>
+                  <FAQItem q={item.q} a={item.a} />
                 </Reveal>
               ))}
             </div>
@@ -1156,10 +1151,10 @@ export default function App() {
             <div className="mx-auto max-w-6xl rounded-[2.2rem] bg-[linear-gradient(135deg,#0f172a_0%,#0f2d4d_55%,#075985_100%)] p-8 text-white shadow-[0_24px_70px_rgba(2,6,23,0.28)] md:p-10">
               <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
                 <div className="min-w-0">
-                  <div className="text-sm font-bold uppercase tracking-[0.22em] text-sky-200">
+                  <div className="text-sm font-medium uppercase tracking-[0.3em] text-sky-200">
                     {t.sections.ctaTag}
                   </div>
-                  <h2 className="mt-3 break-words text-4xl font-black leading-tight md:text-6xl">
+                  <h2 className="mt-3 break-words text-5xl font-black leading-none md:text-7xl">
                     {t.sections.ctaTitle}
                   </h2>
                   <p className="mt-5 max-w-2xl break-words text-lg leading-8 text-slate-200">
@@ -1169,10 +1164,15 @@ export default function App() {
 
                 <div className="rounded-[1.7rem] bg-white/10 p-6 backdrop-blur">
                   <div className="text-2xl font-black">{t.contact.cardTitle}</div>
-                  <div className="mt-4 text-slate-200">
-                    {t.contact.priceLabel}: 129 000 ₸
+
+                  <div className="mt-5 text-sm uppercase tracking-[0.22em] text-slate-300">
+                    {t.contact.priceLabel}
                   </div>
-                  <div className="mt-1 text-slate-200">WhatsApp: +7 706 606 0985</div>
+                  <div className="mt-2 text-5xl font-black leading-none text-white md:text-6xl">
+                    129 000 ₸
+                  </div>
+
+                  <div className="mt-4 text-slate-200">WhatsApp: +7 706 606 0985</div>
 
                   <div className="mt-6 flex flex-col gap-3">
                     <a
