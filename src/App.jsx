@@ -54,42 +54,36 @@ const CONTENT = {
   premiumCards: [
     [
       "Моющийся пре-фильтр",
-      "Задерживает крупную пыль, волосы и шерсть питомцев.",
+      "Задерживает крупную пыль, волосы и шерсть питомцев. Легко обслуживается и служит годами.",
       "◉",
     ],
     [
       "Тихий ночной режим",
-      "Не мешает комфортному сну, сравним с тихим шепотом.",
+      "Работает почти бесшумно — уровень звука сравним с едва уловимым шёпотом.",
       "◌",
     ],
     [
-      "Ионизация воздуха",
-      "Осаждает частицы пыли, создает ощущение свежести как после грозы.",
-      "◎",
-    ],
-    [
-      "Защита от детей и питомцев",
-      "Автоотключение при случайном опрокидывании, защита от замыканий.",
+      "Безопасность для семьи",
+      "Автоотключение при опрокидывании и надёжная защита от замыканий — полная уверенность, когда рядом дети или домашние животные.",
       "✦",
     ],
     [
-      "Колесики для перемещения",
-      "Удобно перемещать по дому без усилий — с заботой о каждой маме.",
+      "Мобильность",
+      "Очиститель оснащён плавными колёсиками, поэтому его легко перемещать по дому без усилий — с заботой о каждой маме.",
       "▣",
     ],
     [
-      "Таймер 1–24 часа",
-      "Гибкое планирование через панель, пульт ДУ или приложение.",
+      "Гибкий таймер",
+      "Настраивайте работу устройства от 1 до 24 часов через мобильное приложение, пульт ДУ или сенсорную панель.",
       "◷",
     ],
   ],
 
   sections: {
     technologyTag: "Технология защиты",
-    technologyTitle:
-      "Излучение полностью изолировано внутри корпуса и безопасно для окружающей среды.",
+    technologyTitle: "Абсолютная безопасность",
     technologyText:
-      "Эффективность 99.9%: Совместная работа УФ-модуля и фотокатализа разрушает вирусы, бактерии и грибки на молекулярном уровне.",
+      "Эффективное уничтожение 99,9% вирусов, бактерий и грибков. Сочетание УФ-модуля и фотокатализа разрушает микроорганизмы на молекулярном уровне, обеспечивая полную безопасность и стерильность в вашем доме.",
 
     filtrationTag: "система очистки",
     filtrationTitle: "Как работает наш фильтр",
@@ -110,7 +104,7 @@ const CONTENT = {
 
     controlTag: "Комфорт и технологии",
     controlTitle:
-      "Мягкий свет создаст уют в спальне, а при необходимости подсветку можно отключить для глубокого сна.",
+      "Мягкий свет создаст уют в спальне. Подсветку можно отключить для глубокого сна.",
     controlText:
       "Очистка на 360°: Круговой забор воздуха обеспечивает мощное всасывание со всех сторон, очищая пространство комнаты максимально быстро.",
 
@@ -198,9 +192,9 @@ const CONTENT = {
 
   contact: {
     priceLabel: "цена",
-    whatsapp: "Перейти в WhatsApp",
-    instagram: "Открыть Instagram",
-    mobile: "Заказать",
+    whatsapp: "WhatsApp",
+    instagram: "Instagram",
+    mobile: "WhatsApp",
     calc: "Калькулятор",
     installment: "Доступна беспроцентная рассрочка на 12 месяцев",
   },
@@ -294,7 +288,7 @@ function SoftCard({ children, className = "" }) {
 
 function PremiumGrid({ items }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
       {items.map(([title, text, icon], i) => (
         <Reveal key={title} delay={i * 0.04}>
           <SoftCard className="h-full p-6 transition hover:border-sky-200 hover:bg-sky-50/40">
@@ -445,13 +439,16 @@ function CalcIcon() {
   );
 }
 
-function KaspiIcon() {
+function KaspiBadge() {
   return (
-    <img
-      src={kaspiIcon}
-      alt="Kaspi"
-      className="h-8 w-8 rounded-full object-cover"
-    />
+    <div className="flex items-center gap-3 text-slate-200">
+      <img
+        src={kaspiIcon}
+        alt="Kaspi"
+        className="h-8 w-12 rounded-xl object-cover"
+      />
+      <span>{CONTENT.contact.installment}</span>
+    </div>
   );
 }
 
@@ -711,10 +708,14 @@ export default function App() {
   const [calcOpen, setCalcOpen] = useState(false);
   const t = CONTENT;
 
-  const whatsappMain =
-    "https://api.whatsapp.com/send?phone=77066860985&text=Здравствуйте,%20интересует%20очиститель%20aireco";
-  const whatsappOrder =
-    "https://api.whatsapp.com/send?phone=77066860985&text=Здравствуйте,%20хочу%20заказать%20aireco";
+  const whatsappMessage =
+    "Здравствуйте, интересует очиститель воздуха aireco";
+  const whatsappMain = `https://api.whatsapp.com/send?phone=77066860985&text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
+  const whatsappOrder = `https://api.whatsapp.com/send?phone=77066860985&text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
   const instagramLink =
     "https://www.instagram.com/aireco.kz?igsh=MWY1OHUycHIwYWJ3aQ==";
 
@@ -1063,9 +1064,8 @@ export default function App() {
                     129 000 ₸
                   </div>
 
-                  <div className="mt-4 flex items-center gap-3 text-slate-200">
-                    <KaspiIcon />
-                    <span>{t.contact.installment}</span>
+                  <div className="mt-4">
+                    <KaspiBadge />
                   </div>
 
                   <div className="mt-6 flex flex-col gap-3">
