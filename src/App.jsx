@@ -717,11 +717,13 @@ function FilterHotspots() {
       </div>
 
       <div className="mt-8 relative mx-auto w-full max-w-[720px]">
-        <img
-          src={filterSystemImage}
-          alt="filter system"
-          className="block w-full object-contain"
-        />
+      <div className="overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+  <img
+    src={filterSystemImage}
+    alt="filter system"
+    className="block w-full rounded-[1.5rem] object-contain bg-white"
+  />
+</div>
 
         {FILTER_POINTS.map((point) => (
           <div
@@ -927,12 +929,17 @@ export default function App() {
 
           <div className="mt-7">
             <Reveal>
-              <ImageCard
-                src={uvImage}
-                alt="uv sterilization"
-                className="mx-auto max-w-5xl"
-                imageClassName="object-contain bg-white h-auto max-h-[700px]"
-              />
+            <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+  <motion.img
+    src={uvImage}
+    alt="uv sterilization"
+    initial={{ scale: 1.02, opacity: 0 }}
+    whileInView={{ scale: 1, opacity: 1 }}
+    viewport={{ once: true }}
+    transition={{ duration: 1.1, ease }}
+    className="block w-full rounded-[1.5rem] object-contain object-center bg-white"
+  />
+</div>
             </Reveal>
           </div>
         </section>
