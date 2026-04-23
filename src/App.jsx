@@ -12,6 +12,7 @@ const ease = [0.16, 1, 0.3, 1];
 
 const CONTENT = {
   brand: "aireco",
+
   nav: {
     advantages: "преимущества",
     technology: "технология",
@@ -23,75 +24,105 @@ const CONTENT = {
     faq: "вопросы",
     order: "заказать",
   },
+
   hero: {
     badge: "очиститель воздуха нового поколения",
     title1: "чистый воздух",
-    title2: "дома и в офисе",
+    title2: "без аллергии",
+    title3: "и пыли",
     text:
-      "5-ступенчатая система очистки, фильтр HEPA H13, датчик PM2.5 и удобное управление через мобильное приложение.",
-    primary: "написать в WhatsApp",
-    secondary: "instagram",
-    calc: "расчёт",
-    scroll: "листай ниже",
+      "Профессиональная 5-ступенчатая система очистки. Автоматический контроль качества воздуха и управление через ваш смартфон.",
+    primary: "Получить консультацию",
+    secondary: "Instagram",
+    calc: "Расчёт",
   },
+
   trust: [
-    "бесплатная доставка по Казахстану и России",
-    "гарантия 12 месяцев",
-    "поддержка и сервисное обслуживание",
-    "управление в одно касание",
+    "Бесплатная доставка по Казахстану",
+    "Официальная гарантия 1 год",
+    "Сервисное обслуживание и поддержка",
   ],
+
   stats: [
-    ["500 м³/ч", "производительность"],
-    ["HEPA H13", "фильтрация"],
-    ["PM2.5", "умный датчик"],
-    ["Wi-Fi", "управление"],
+    ["500 м³/ч", "Высокая производительность"],
+    ["HEPA H13", "Медицинская фильтрация"],
+    ["PM2.5", "Умный датчик"],
+    ["Wi-Fi", "Дистанционный контроль"],
   ],
-  premiumTitle: "Почему aireco ощущается как премиальное решение",
+
+  premiumTitle: "aireco — Технологичность в каждой детали",
+
   premiumCards: [
-    ["реальный авто-режим", "PM2.5 датчик сам регулирует мощность", "◉"],
-    ["тихая работа", "комфортно для спальни и детской", "◌"],
-    ["удобное перемещение", "колёсики и продуманная конструкция", "◎"],
-    ["полный контроль", "каждая функция управляется отдельно", "✦"],
-    ["современное управление", "приложение, сенсорная панель и пульт", "▣"],
-    ["безопасность", "УФ-модуль полностью внутри корпуса", "◈"],
+    [
+      "Моющийся пре-фильтр",
+      "Задерживает крупную пыль, волосы и шерсть питомцев.",
+      "◉",
+    ],
+    [
+      "Тихий ночной режим",
+      "Не мешает комфортному сну, сравним с тихим шепотом.",
+      "◌",
+    ],
+    [
+      "Ионизация воздуха",
+      "Осаждает частицы пыли, создает ощущение свежести как после грозы.",
+      "◎",
+    ],
+    [
+      "Защита от детей и питомцев",
+      "Автоотключение при случайном опрокидывании, защита от замыканий.",
+      "✦",
+    ],
+    [
+      "Колесики для перемещения",
+      "Удобно перемещать по дому без усилий — с заботой о каждой маме.",
+      "▣",
+    ],
+    [
+      "HEPA H13 с повышенным ресурсом",
+      "Автоматическое уведомление о необходимости замены фильтра.",
+      "◈",
+    ],
+    [
+      "Таймер 1–24 часа",
+      "Гибкое планирование через панель, пульт ДУ или приложение.",
+      "✳",
+    ],
   ],
+
   sections: {
-    technologyTag: "главная технология",
-    technologyTitle: "УФ-стерилизация воздуха внутри очистителя",
+    technologyTag: "Технология защиты",
+    technologyTitle:
+      "Излучение полностью изолировано внутри корпуса и безопасно для окружающей среды.",
     technologyText:
-      "Помогает уничтожать бактерии и вирусы в паре с фотокаталитическим фильтром и усиливает общий эффект фильтрации.",
+      "Эффективность 99.9%: Совместная работа УФ-модуля и фотокатализа разрушает вирусы, бактерии и грибки на молекулярном уровне.",
 
     filtrationTag: "система очистки",
     filtrationTitle: "Как работает наш фильтр",
     filtrationSubtitle: "Интеллектуальная очистка в три этапа",
-    filtrationText:
-      "Нажмите на плюсик, чтобы увидеть описание каждого слоя фильтрации.",
+    filtrationText: "",
 
     familyTag: "для семьи",
-    familyTitle: "Комфортный воздух для дома, детей и аллергиков",
+    familyTitle: "aireco — Комфортный воздух дома для детей и аллергиков",
     familyText:
-      "aireco помогает поддерживать более чистый воздух в помещении и создавать более комфортную среду дома.",
-    familyCards: [
-      ["HEPA H13", "улавливает пыль, аллергены и мелкие частицы"],
-      ["PM2.5 датчик", "контролирует качество воздуха в комнате"],
-    ],
+      "• Интеллектуальный контроль: Датчик PM2.5 непрерывно анализирует состояние воздуха и мгновенно регулирует мощность очистки в зависимости от уровня загрязнения.\n\n• Абсолютная защита: HEPA-фильтр H13 (медицинский стандарт) удерживает 99,9% аллергенов, не оставляя им ни единого шанса.\n\n• Природная свежесть: Ионизация осаждает мельчайшие частицы пыли, выделяя отрицательно заряженные ионы и наполняя пространство чистотой и ощущением свежести.",
 
-    heatingTag: "особенность модели",
-    heatingTitle: "Подогреваемая верхняя площадка",
-    heatingText:
-      "Верхнюю площадку можно использовать как дополнительную удобную функцию или отключить и оставить прибор как стильный элемент интерьера.",
-    heatingItems: [
-      "функцию можно отключить",
-      "подходит и для повседневного использования, и для интерьера",
-    ],
+      heatingTag: "Инновация в деталях",
+      heatingTitle: "Подогреваемая верхняя площадка",
+      heatingText:
+        "Верхняя панель устройства оснащена функцией подогрева, создающей идеальное место для отдыха ваших питомцев.",
+      heatingItems: [
+        "Функцию можно отключить, превратив площадку в стильную подставку для декора или аксессуаров.",
+        "Кабель питания находится в специальной защитной оплетке и работает на безопасной мощности 24V, исключая любые риски для вашего питомца.",
+      ],
 
     controlTag: "управление",
     controlTitle: "Полный контроль через приложение, пульт и сенсорную панель",
     controlText:
       "Удобный пульт, сенсорное управление на корпусе и мобильное приложение. Можно включать и выключать нужные функции, выбирать режимы и использовать таймер.",
     controlCards: [
-      ["Wi-Fi", "управление со смартфона"],
-      ["таймер 1–24 ч", "автоматическое отключение по расписанию"],
+      ["Wi-Fi", "Управление со смартфона"],
+      ["Таймер 1–24 ч", "Автоматическое отключение по расписанию"],
     ],
 
     specsTag: "характеристики",
@@ -111,7 +142,7 @@ const CONTENT = {
     faqTitle: "Всё, что важно знать перед покупкой",
 
     ctaTag: "aireco",
-    ctaTitle: "заказать",
+    ctaTitle: "Заказать",
     ctaText:
       "Напишите в WhatsApp или Instagram, и мы быстро подскажем по наличию, доставке и ответим на вопросы.",
 
@@ -120,22 +151,24 @@ const CONTENT = {
     calcText:
       "Введите площадь комнаты, и калькулятор покажет, за сколько минут устройство полностью прогонит и обновит воздух. Расчёт сделан при высоте потолка 3 м.",
   },
+
   specs: [
     "CADR: до 500 м³/ч",
-    "датчик PM2.5",
+    "Датчик PM2.5",
     "HEPA H13",
-    "моющийся пре-фильтр",
-    "фотокаталитический фильтр",
+    "Моющийся пре-фильтр",
+    "Фотокаталитический фильтр",
     "УФ-стерилизация",
-    "ионизация воздуха",
+    "Ионизация воздуха",
     "Wi-Fi",
-    "пульт дистанционного управления",
-    "сенсорная панель на корпусе",
-    "таймер 1–24 часа",
-    "тихий ночной режим",
-    "подсветка с возможностью отключения",
-    "напоминание о замене фильтра",
+    "Пульт дистанционного управления",
+    "Сенсорная панель на корпусе",
+    "Таймер 1–24 часа",
+    "Тихий ночной режим",
+    "Подсветка с возможностью отключения",
+    "Напоминание о замене фильтра",
   ],
+
   reviews: [
     {
       name: "Ангелина",
@@ -166,6 +199,7 @@ const CONTENT = {
         "Приобрела данный очиститель на днях, хочу сказать что уже заметен результат. На утро в квартире появилось ощущение свежести, также удобно что есть пульт и продуманы колесики поэтому удобно его переносить. Спасибо большое!",
     },
   ],
+
   faq: [
     {
       q: "Зачем нужна ионизация?",
@@ -193,41 +227,45 @@ const CONTENT = {
         "Да. Фотокаталитический фильтр с УФ способствует разложению молекул запахов и органических загрязнений, включая бытовые запахи и запахи, связанные с домашними животными.",
     },
   ],
+
   contact: {
-    phoneLabel: "связь и заказ через WhatsApp",
-    cardTitle: "связаться сейчас",
+    phoneLabel: "Связь и заказ через WhatsApp",
+    cardTitle: "Связаться сейчас",
     priceLabel: "цена",
-    whatsapp: "перейти в WhatsApp",
-    instagram: "открыть Instagram",
-    mobile: "заказать",
-    calc: "расчёт",
+    whatsapp: "Перейти в WhatsApp",
+    instagram: "Открыть Instagram",
+    mobile: "Заказать",
+    calc: "Расчёт",
   },
 };
 
 const FILTER_POINTS = [
   {
     id: "pre",
-    title: "Предфильтр",
+    title: "Моющийся пре-фильтр",
     text:
-      "Захватывает крупные частицы: пыль, волосы, шерсть животных и ворс. Увеличивает срок службы основного фильтра.",
-    desktop: { left: "18%", top: "60%" },
-    mobile: { left: "18%", top: "60%", align: "left" },
+      "Увеличивает срок службы основного фильтра. Улавливает крупную пыль, ворс и шерсть питомцев.",
+    left: "18%",
+    top: "60%",
+    align: "left",
   },
   {
     id: "hepa",
-    title: "HEPA H13",
+    title: "Фильтр HEPA H13",
     text:
-      "Эффективно задерживает мелкие частицы, пыль, аллергены и PM2.5, делая воздух заметно чище и комфортнее.",
-    desktop: { left: "50%", top: "60%" },
-    mobile: { left: "50%", top: "60%", align: "center" },
+      "Медицинский стандарт очистки. Задерживает 99,9% микрочастиц: аллергены, пыльцу, перхоть и мелкодисперсную пыль PM2.5.",
+    left: "50%",
+    top: "60%",
+    align: "center",
   },
   {
     id: "photo",
-    title: "Фотокаталитический слой",
+    title: "Фотокатализ + УФ",
     text:
-      "Работает внутри системы и помогает уменьшать запахи и органические загрязнения в паре с УФ-модулем.",
-    desktop: { left: "82%", top: "60%" },
-    mobile: { left: "82%", top: "60%", align: "right" },
+      "Не накапливает загрязнения и неприятные запахи, а полностью нейтрализует их. В том числе стойкие запахи от домашних питомцев.",
+    left: "82%",
+    top: "60%",
+    align: "right",
   },
 ];
 
@@ -267,7 +305,7 @@ function SectionTitle({ tag, title, text, center = false }) {
         {title}
       </h2>
       {text ? (
-        <p className="mt-4 max-w-2xl break-words text-[16px] leading-7 text-slate-500">
+        <p className="mt-4 max-w-2xl break-words whitespace-pre-line text-[16px] leading-8 text-slate-500">
           {text}
         </p>
       ) : null}
@@ -287,27 +325,9 @@ function SoftCard({ children, className = "" }) {
   );
 }
 
-function ImageCard({ src, alt, className = "", imageClassName = "" }) {
-  return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.35, ease }}
-      className={`overflow-hidden rounded-[1.8rem] border border-white/80 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.08)] ${className}`}
-    >
-      <motion.img
-        src={src}
-        alt={alt}
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.6, ease }}
-        className={`block w-full h-auto ${imageClassName}`}
-      />
-    </motion.div>
-  );
-}
-
 function PremiumGrid({ items }) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
       {items.map(([title, text, icon], i) => (
         <Reveal key={title} delay={i * 0.04}>
           <SoftCard className="h-full p-6 transition hover:border-sky-200 hover:bg-sky-50/40">
@@ -326,7 +346,7 @@ function PremiumGrid({ items }) {
 function TrustStrip({ items }) {
   return (
     <div className="mx-auto max-w-7xl px-6 md:px-10">
-      <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3 md:grid-cols-3">
         {items.map((item, i) => (
           <Reveal key={item} delay={i * 0.04}>
             <SoftCard className="px-4 py-4 text-center text-sm font-black text-slate-700">
@@ -392,7 +412,6 @@ function ReviewsSection({ t }) {
                   <div className="text-xs text-slate-400">{review.date}</div>
                 </div>
               </div>
-
               <p className="leading-7 text-slate-600">{review.text}</p>
             </SoftCard>
           </Reveal>
@@ -446,12 +465,7 @@ function FogLayers() {
 
 function CalcIcon() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-5 w-5 fill-none stroke-current"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-current" strokeWidth="2" aria-hidden="true">
       <rect x="5" y="3" width="14" height="18" rx="2" />
       <path d="M8 7h8" />
       <path d="M8 11h2" />
@@ -475,12 +489,7 @@ function WhatsAppIcon() {
 
 function InstagramIcon() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className="h-5 w-5 fill-none stroke-current"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
+    <svg viewBox="0 0 24 24" className="h-5 w-5 fill-none stroke-current" strokeWidth="2" aria-hidden="true">
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
@@ -488,7 +497,7 @@ function InstagramIcon() {
   );
 }
 
-function FloatingDesktop({ whatsapp, instagram, onCalc, calcLabel }) {
+function FloatingDesktop({ whatsapp, onCalc, calcLabel }) {
   return (
     <div className="fixed bottom-5 right-5 z-50 hidden flex-col gap-3 md:flex">
       <button
@@ -498,16 +507,6 @@ function FloatingDesktop({ whatsapp, instagram, onCalc, calcLabel }) {
         <CalcIcon />
         {calcLabel}
       </button>
-
-      <a
-        href={instagram}
-        target="_blank"
-        rel="noreferrer"
-        className="inline-flex items-center justify-center gap-3 rounded-full bg-white px-5 py-4 text-sm font-black text-pink-600 shadow-[0_20px_50px_rgba(0,0,0,0.10)] ring-1 ring-slate-200 transition duration-300 hover:scale-[1.03]"
-      >
-        <InstagramIcon />
-        Instagram
-      </a>
 
       <a
         href={whatsapp}
@@ -541,7 +540,7 @@ function StickyMobileCTA({ label, href, calcLabel, onCalc }) {
           className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-4 text-sm font-black text-pink-600"
         >
           <InstagramIcon />
-          insta
+          Insta
         </a>
 
         <a
@@ -630,9 +629,7 @@ function CalculatorModal({ open, onClose, t }) {
 
               <div className="mt-5 rounded-[1.2rem] bg-sky-50 px-4 py-4 text-[16px] leading-7 text-slate-700 ring-1 ring-sky-100">
                 {cleanArea > 0
-                  ? `Комната ${cleanArea} м² будет полностью прогнана и освежена примерно за ${formatMinutes(
-                      minutes
-                    )}.`
+                  ? `Комната ${cleanArea} м² будет полностью прогнана и освежена примерно за ${formatMinutes(minutes)}.`
                   : "Введите площадь комнаты."}
               </div>
             </SoftCard>
@@ -684,9 +681,9 @@ function CalculatorModal({ open, onClose, t }) {
 function FilterTooltip({ title, text, align = "center" }) {
   const alignClass =
     align === "left"
-      ? "left-0 translate-x-0"
+      ? "left-0"
       : align === "right"
-      ? "right-0 translate-x-0"
+      ? "right-0"
       : "left-1/2 -translate-x-1/2";
 
   return (
@@ -694,7 +691,7 @@ function FilterTooltip({ title, text, align = "center" }) {
       initial={{ opacity: 0, y: 14, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.28, ease }}
-      className={`absolute top-[calc(100%+14px)] z-20 w-[220px] rounded-[1.3rem] border border-slate-200 bg-white p-4 shadow-[0_18px_50px_rgba(15,23,42,0.14)] ${alignClass}`}
+      className={`absolute top-[calc(100%+14px)] z-20 w-[240px] rounded-[1.3rem] border border-slate-200 bg-white p-4 shadow-[0_18px_50px_rgba(15,23,42,0.14)] ${alignClass}`}
     >
       <div className="text-lg font-black text-slate-950">{title}</div>
       <div className="mt-2 text-[15px] leading-7 text-slate-600">{text}</div>
@@ -717,47 +714,37 @@ function FilterHotspots() {
       </div>
 
       <div className="mt-8 relative mx-auto w-full max-w-[720px]">
-      <div className="overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
-  <img
-    src={filterSystemImage}
-    alt="filter system"
-    className="block w-full rounded-[1.5rem] object-contain bg-white"
-  />
-</div>
+        <div className="overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+          <img
+            src={filterSystemImage}
+            alt="filter system"
+            className="block w-full rounded-[1.5rem] object-contain bg-white"
+          />
+        </div>
 
         {FILTER_POINTS.map((point) => (
           <div
             key={point.id}
             className="absolute"
             style={{
-              left: point.desktop.left,
-              top: point.desktop.top,
+              left: point.left,
+              top: point.top,
               transform: "translate(-50%, -50%)",
             }}
           >
             <button
-              onClick={() =>
-                setActive((prev) => (prev === point.id ? "" : point.id))
-              }
+              onClick={() => setActive((prev) => (prev === point.id ? "" : point.id))}
               className="flex h-12 w-12 items-center justify-center rounded-full bg-[#D9842D] text-3xl font-medium text-white shadow-[0_12px_30px_rgba(217,132,45,0.35)] transition hover:scale-105"
             >
               {active === point.id ? "−" : "+"}
             </button>
 
             {active === point.id ? (
-              <FilterTooltip
-                title={point.title}
-                text={point.text}
-                align={point.mobile.align}
-              />
+              <FilterTooltip title={point.title} text={point.text} align={point.align} />
             ) : null}
           </div>
         ))}
       </div>
-
-      <p className="mx-auto mt-20 max-w-2xl text-center text-[16px] leading-7 text-slate-500">
-        {CONTENT.sections.filtrationText}
-      </p>
     </div>
   );
 }
@@ -822,6 +809,7 @@ export default function App() {
                 <h1 className="max-w-3xl break-words text-4xl font-black leading-[0.96] tracking-tight text-slate-950 md:text-6xl">
                   {t.brand} — {t.hero.title1}
                   <span className="block text-sky-700">{t.hero.title2}</span>
+                  <span className="block">{t.hero.title3}</span>
                 </h1>
 
                 <p className="mt-5 max-w-2xl break-words text-[17px] leading-7 text-slate-600 md:text-[19px]">
@@ -843,14 +831,14 @@ export default function App() {
                     href={instagramLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white px-7 py-4 text-base font-bold text-slate-700 shadow-sm transition duration-300 hover:border-pink-300 hover:text-pink-600"
+                    className="inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-7 py-4 text-base font-bold text-white shadow-lg transition duration-300 hover:opacity-90"
                   >
                     <InstagramIcon />
                     {t.hero.secondary}
                   </a>
                 </div>
 
-                <div className="mt-7 grid max-w-2xl grid-cols-2 gap-3 md:grid-cols-4">
+                <div className="mt-7 grid gap-4 grid-cols-2 xl:grid-cols-4">
                   {t.stats.map(([value, label], i) => (
                     <motion.div
                       key={value}
@@ -859,20 +847,16 @@ export default function App() {
                       viewport={{ once: true, amount: 0.25 }}
                       transition={{ duration: 0.9, delay: i * 0.06, ease }}
                       whileHover={{ y: -4, scale: 1.01 }}
-                      className="min-w-0 rounded-[1.3rem] border border-white/80 bg-white/90 p-4 shadow-sm backdrop-blur"
+                      className="min-w-0 rounded-[1.4rem] border border-white/80 bg-white/90 px-6 py-6 shadow-sm backdrop-blur"
                     >
-                      <div className="break-words text-lg font-black text-slate-950 md:text-xl">
+                      <div className="text-[28px] font-black leading-none text-slate-950">
                         {value}
                       </div>
-                      <div className="mt-1 break-words text-sm leading-5 text-slate-500">
+                      <div className="mt-3 text-[16px] leading-7 text-slate-500">
                         {label}
                       </div>
                     </motion.div>
                   ))}
-                </div>
-
-                <div className="mt-5 text-sm font-semibold text-slate-400">
-                  {t.hero.scroll}
                 </div>
               </div>
             </Reveal>
@@ -929,17 +913,17 @@ export default function App() {
 
           <div className="mt-7">
             <Reveal>
-            <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
-  <motion.img
-    src={uvImage}
-    alt="uv sterilization"
-    initial={{ scale: 1.02, opacity: 0 }}
-    whileInView={{ scale: 1, opacity: 1 }}
-    viewport={{ once: true }}
-    transition={{ duration: 1.1, ease }}
-    className="block w-full rounded-[1.5rem] object-contain object-center bg-white"
-  />
-</div>
+              <div className="mx-auto max-w-5xl overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+                <motion.img
+                  src={uvImage}
+                  alt="uv sterilization"
+                  initial={{ scale: 1.02, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.1, ease }}
+                  className="block w-full rounded-[1.5rem] object-contain object-center bg-white"
+                />
+              </div>
             </Reveal>
           </div>
         </section>
@@ -961,14 +945,19 @@ export default function App() {
         </section>
 
         <section id="family" className="mx-auto max-w-7xl px-6 py-10 md:px-10">
-          <div className="grid gap-7 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <div className="grid gap-7 lg:grid-cols-[1fr_1fr] lg:items-start">
             <Reveal variant="left">
-              <ImageCard
-                src={familyImage}
-                alt="family comfort"
-                className="mx-auto max-w-[520px]"
-                imageClassName="h-[470px] object-cover object-center"
-              />
+              <div className="mx-auto max-w-[520px] overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+                <motion.img
+                  src={familyImage}
+                  alt="family comfort"
+                  initial={{ scale: 1.02, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.1, ease }}
+                  className="block h-[500px] w-full rounded-[1.5rem] object-cover object-[center_62%] bg-white"
+                />
+              </div>
             </Reveal>
 
             <Reveal variant="right">
@@ -978,23 +967,13 @@ export default function App() {
                   title={t.sections.familyTitle}
                   text={t.sections.familyText}
                 />
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  {t.sections.familyCards.map(([title, text], i) => (
-                    <Reveal key={title} delay={i * 0.05}>
-                      <SoftCard className="p-5">
-                        <div className="text-2xl font-black text-slate-950">{title}</div>
-                        <div className="mt-3 leading-7 text-slate-600">{text}</div>
-                      </SoftCard>
-                    </Reveal>
-                  ))}
-                </div>
               </div>
             </Reveal>
           </div>
         </section>
 
         <section className="mx-auto max-w-7xl px-6 py-10 md:px-10">
-          <div className="grid gap-7 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <div className="grid gap-7 lg:grid-cols-[1fr_1fr] lg:items-start">
             <Reveal variant="left">
               <div className="min-w-0">
                 <SectionTitle
@@ -1015,12 +994,17 @@ export default function App() {
             </Reveal>
 
             <Reveal variant="right">
-              <ImageCard
-                src={heatingImage}
-                alt="heated top"
-                className="mx-auto max-w-[420px]"
-                imageClassName="h-[360px] object-cover object-center"
-              />
+              <div className="mx-auto max-w-[420px] overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+                <motion.img
+                  src={heatingImage}
+                  alt="heated top"
+                  initial={{ scale: 1.02, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.1, ease }}
+                  className="block h-[360px] w-full rounded-[1.5rem] object-cover object-[center_16%] bg-white"
+                />
+              </div>
             </Reveal>
           </div>
         </section>
@@ -1028,12 +1012,17 @@ export default function App() {
         <section id="control" className="bg-white/40 py-10 backdrop-blur-[2px]">
           <div className="mx-auto grid max-w-7xl gap-7 px-6 md:px-10 lg:grid-cols-[1fr_1fr] lg:items-center">
             <Reveal variant="left" className="lg:order-2">
-              <ImageCard
-                src={appControlImage}
-                alt="app control"
-                className="mx-auto max-w-[420px]"
-                imageClassName="h-[360px] object-cover object-center"
-              />
+              <div className="mx-auto max-w-[420px] overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+                <motion.img
+                  src={appControlImage}
+                  alt="app control"
+                  initial={{ scale: 1.02, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.1, ease }}
+                  className="block h-[360px] w-full rounded-[1.5rem] object-cover object-center bg-white"
+                />
+              </div>
             </Reveal>
 
             <Reveal variant="right" className="lg:order-1">
@@ -1121,12 +1110,17 @@ export default function App() {
             </Reveal>
 
             <Reveal variant="right">
-              <ImageCard
-                src={warrantyImage}
-                alt="warranty"
-                className="mx-auto max-w-[360px]"
-                imageClassName="h-[420px] object-cover object-center"
-              />
+              <div className="mx-auto max-w-[360px] overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
+                <motion.img
+                  src={warrantyImage}
+                  alt="warranty"
+                  initial={{ scale: 1.02, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.1, ease }}
+                  className="block h-[420px] w-full rounded-[1.5rem] object-cover object-center bg-white"
+                />
+              </div>
             </Reveal>
           </div>
         </section>
@@ -1158,7 +1152,7 @@ export default function App() {
             <div className="mx-auto max-w-6xl rounded-[2.2rem] bg-[linear-gradient(135deg,#0f172a_0%,#0f2d4d_55%,#075985_100%)] p-8 text-white shadow-[0_24px_70px_rgba(2,6,23,0.28)] md:p-10">
               <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
                 <div className="min-w-0">
-                  <div className="text-sm font-medium uppercase tracking-[0.3em] text-sky-200">
+                  <div className="text-sm font-medium tracking-[0.3em] text-sky-200">
                     {t.sections.ctaTag}
                   </div>
                   <h2 className="mt-3 break-words text-5xl font-black leading-none md:text-7xl">
@@ -1211,7 +1205,6 @@ export default function App() {
 
       <FloatingDesktop
         whatsapp={whatsappMain}
-        instagram={instagramLink}
         onCalc={() => setCalcOpen(true)}
         calcLabel={t.contact.calc}
       />
