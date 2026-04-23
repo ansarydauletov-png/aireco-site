@@ -79,7 +79,7 @@ const CONTENT = {
     [
       "Таймер 1–24 часа",
       "Гибкое планирование через панель, пульт ДУ или приложение.",
-      "✳",
+      "◷",
     ],
   ],
 
@@ -110,12 +110,9 @@ const CONTENT = {
 
     controlTag: "Комфорт и технологии",
     controlTitle:
-      "Мягкий свет создаст уют в спальне, а при необходимости подсветку можно отключить для глубокого сна.",
+      "Атмосферная подсветка: Мягкий свет создаст уют в спальне, а при необходимости подсветку можно полностью отключить для глубокого сна.",
     controlText:
       "Очистка на 360°: Круговой забор воздуха обеспечивает мощное всасывание со всех сторон, очищая пространство комнаты максимально быстро.",
-    controlCardTitle: "Полный контроль",
-    controlCardText:
-      "Управляйте очистителем через приложение, пульт ДУ или сенсорную панель. Настраивайте каждую функцию, выбирайте режимы и адаптируйте работу устройства под свои нужды в один клик.",
 
     warrantyTag: "Качество и сервис",
     warrantyTitle: "aireco — гарантия вашего комфорта",
@@ -124,8 +121,7 @@ const CONTENT = {
 
     reviewsTag: "Доверие",
     reviewsTitle: "Отзывы покупателей",
-    reviewsText:
-      "Живые отзывы, которые уже оставили покупатели после использования aireco.",
+    reviewsText: "",
 
     faqTag: "вопрос / ответ",
     faqTitle: "Всё, что важно знать перед покупкой",
@@ -449,6 +445,14 @@ function CalcIcon() {
   );
 }
 
+function KaspiIcon() {
+  return (
+    <div className="flex h-8 min-w-8 items-center justify-center rounded-full bg-[#E84545] px-2 text-xs font-black text-white">
+      K
+    </div>
+  );
+}
+
 function WhatsAppIcon() {
   return (
     <svg viewBox="0 0 32 32" className="h-5 w-5 fill-current" aria-hidden="true">
@@ -495,7 +499,7 @@ function FloatingDesktop({ whatsapp, onCalc, calcLabel }) {
 function StickyMobileCTA({ label, href, calcLabel, onCalc }) {
   return (
     <div className="fixed inset-x-0 bottom-0 z-[90] border-t border-slate-200 bg-white/95 p-3 backdrop-blur md:hidden">
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <button
           onClick={onCalc}
           className="flex items-center justify-center gap-2 rounded-2xl bg-slate-950 px-3 py-4 text-sm font-black text-white"
@@ -503,16 +507,6 @@ function StickyMobileCTA({ label, href, calcLabel, onCalc }) {
           <CalcIcon />
           {calcLabel}
         </button>
-
-        <a
-          href="https://www.instagram.com/aireco.kz?igsh=MWY1OHUycHIwYWJ3aQ=="
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-4 text-sm font-black text-pink-600"
-        >
-          <InstagramIcon />
-          Insta
-        </a>
 
         <a
           href={href}
@@ -719,9 +713,9 @@ export default function App() {
   const t = CONTENT;
 
   const whatsappMain =
-  "https://wa.me/87066860985?text=Здравствуйте,%20интересует%20очиститель%20воздуха%20aireco";
-const whatsappOrder =
-  "https://wa.me/87066860985?text=Здравствуйте,%20хочу%20заказать%20aireco";
+    "https://wa.me/87066860985?text=Здравствуйте,%20интересует%20очиститель%20воздуха%20aireco";
+  const whatsappOrder =
+    "https://wa.me/87066860985?text=Здравствуйте,%20хочу%20заказать%20aireco";
   const instagramLink =
     "https://www.instagram.com/aireco.kz?igsh=MWY1OHUycHIwYWJ3aQ==";
 
@@ -795,7 +789,7 @@ const whatsappOrder =
                     href={instagramLink}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-7 py-4 text-base font-bold text-white shadow-lg transition duration-300 hover:opacity-90"
+                    className="inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] px-7 py-4 text-base font-bold text-white shadow-lg transition duration-300 hover:opacity-90"
                   >
                     <InstagramIcon />
                     {t.hero.secondary}
@@ -905,7 +899,17 @@ const whatsappOrder =
 
         <section id="family" className="mx-auto max-w-7xl px-6 py-10 md:px-10">
           <div className="grid gap-7 lg:grid-cols-[1fr_1fr] lg:items-start">
-            <Reveal variant="left">
+            <Reveal variant="right" className="order-1">
+              <div className="min-w-0">
+                <SectionTitle
+                  tag={t.sections.familyTag}
+                  title={t.sections.familyTitle}
+                  text={t.sections.familyText}
+                />
+              </div>
+            </Reveal>
+
+            <Reveal variant="left" className="order-2">
               <div className="mx-auto max-w-[520px] overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
                 <motion.img
                   src={familyImage}
@@ -915,16 +919,6 @@ const whatsappOrder =
                   viewport={{ once: true }}
                   transition={{ duration: 1.1, ease }}
                   className="block h-[500px] w-full rounded-[1.5rem] object-cover object-[center_76%] bg-white"
-                />
-              </div>
-            </Reveal>
-
-            <Reveal variant="right">
-              <div className="min-w-0">
-                <SectionTitle
-                  tag={t.sections.familyTag}
-                  title={t.sections.familyTitle}
-                  text={t.sections.familyText}
                 />
               </div>
             </Reveal>
@@ -969,8 +963,18 @@ const whatsappOrder =
         </section>
 
         <section id="control" className="bg-white/40 py-10 backdrop-blur-[2px]">
-          <div className="mx-auto grid max-w-7xl gap-7 px-6 md:px-10 lg:grid-cols-[1fr_1fr] lg:items-center">
-            <Reveal variant="left" className="lg:order-2">
+          <div className="mx-auto grid max-w-7xl gap-7 px-6 md:px-10 lg:grid-cols-[1fr_1fr] lg:items-start">
+            <Reveal variant="right" className="order-1">
+              <div className="min-w-0">
+                <SectionTitle
+                  tag={t.sections.controlTag}
+                  title={t.sections.controlTitle}
+                  text={t.sections.controlText}
+                />
+              </div>
+            </Reveal>
+
+            <Reveal variant="left" className="order-2 mt-2 md:mt-4">
               <div className="mx-auto max-w-[420px] overflow-hidden rounded-[2rem] bg-white/70 p-2 shadow-[0_24px_60px_rgba(2,132,199,0.10)] ring-1 ring-slate-100 backdrop-blur">
                 <motion.img
                   src={appControlImage}
@@ -979,28 +983,8 @@ const whatsappOrder =
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.1, ease }}
-                  className="block h-[360px] w-full rounded-[1.5rem] object-cover object-center bg-white"
+                  className="block h-[360px] w-full rounded-[1.5rem] object-cover object-[center_58%] bg-white"
                 />
-              </div>
-            </Reveal>
-
-            <Reveal variant="right" className="lg:order-1">
-              <div className="min-w-0">
-                <SectionTitle
-                  tag={t.sections.controlTag}
-                  title={t.sections.controlTitle}
-                  text={t.sections.controlText}
-                />
-                <div className="mt-6">
-                  <SoftCard className="p-6">
-                    <div className="text-2xl font-black text-slate-950">
-                      {t.sections.controlCardTitle}
-                    </div>
-                    <div className="mt-3 leading-8 text-slate-600">
-                      {t.sections.controlCardText}
-                    </div>
-                  </SoftCard>
-                </div>
               </div>
             </Reveal>
           </div>
@@ -1076,12 +1060,13 @@ const whatsappOrder =
                   <div className="mt-5 text-sm uppercase tracking-[0.22em] text-slate-300">
                     {t.contact.priceLabel}
                   </div>
-                  <div className="mt-2 text-[42px] font-black leading-none text-white md:text-[54px]">
+                  <div className="mt-2 text-[40px] font-black leading-none text-white md:text-[52px]">
                     129 000 ₸
                   </div>
 
-                  <div className="mt-4 text-slate-200">
-                    {t.contact.installment}
+                  <div className="mt-4 flex items-center gap-3 text-slate-200">
+                    <KaspiIcon />
+                    <span>{t.contact.installment}</span>
                   </div>
 
                   <div className="mt-6 flex flex-col gap-3">
@@ -1099,7 +1084,7 @@ const whatsappOrder =
                       href={instagramLink}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex w-full items-center justify-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-base font-black text-white transition hover:bg-white/15"
+                      className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] px-6 py-4 text-base font-black text-white transition hover:opacity-90"
                     >
                       <InstagramIcon />
                       {t.contact.instagram}
