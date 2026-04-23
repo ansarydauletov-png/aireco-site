@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import heroImage from "./assets/hero.webp";
 import uvImage from "./assets/uv-sterilization.webp";
@@ -12,223 +12,690 @@ import kaspiIcon from "./assets/kaspi.jpg";
 const ease = [0.16, 1, 0.3, 1];
 
 const CONTENT = {
-  brand: "aireco",
+  ru: {
+    brand: "aireco",
 
-  nav: {
-    advantages: "преимущества",
-    technology: "технология",
-    filtration: "фильтрация",
-    family: "для семьи",
-    control: "управление",
-    reviews: "отзывы",
-    faq: "вопросы",
-    order: "заказать",
+    nav: {
+      advantages: "преимущества",
+      technology: "технология",
+      filtration: "фильтрация",
+      family: "для семьи",
+      control: "управление",
+      reviews: "отзывы",
+      faq: "вопросы",
+      order: "заказать",
+    },
+
+    hero: {
+      badge: "очиститель воздуха нового поколения",
+      title1: "чистый воздух",
+      title2: "без аллергии",
+      title3: "и пыли",
+      text:
+        "Профессиональная 5-ступенчатая система очистки. Автоматический контроль качества воздуха и управление через смартфон.",
+      primary: "Получить консультацию",
+      secondary: "Instagram",
+      calc: "Калькулятор",
+    },
+
+    trust: [
+      "Бесплатная доставка по Казахстану",
+      "Сервисное обслуживание и поддержка",
+    ],
+
+    stats: [
+      ["500м³/ч", "Высокая Произв-ть"],
+      ["HEPA H13", "Медицинская фильтрация"],
+      ["PM2.5", "Умный датчик"],
+      ["Wi-Fi", "Дистанционный контроль"],
+    ],
+
+    premiumTitle: "Технологичность в каждой детали",
+
+    premiumCards: [
+      [
+        "Моющийся пре-фильтр",
+        "Задерживает крупную пыль, волосы и шерсть питомцев. Легко обслуживается и служит годами.",
+        "◉",
+      ],
+      [
+        "Тихий ночной режим",
+        "Работает почти бесшумно — уровень звука сравним с едва уловимым шёпотом.",
+        "◌",
+      ],
+      [
+        "Безопасность для семьи",
+        "Автоотключение при опрокидывании и надёжная защита от замыканий — полная уверенность, когда рядом дети или домашние животные.",
+        "✦",
+      ],
+      [
+        "Мобильность",
+        "Очиститель оснащён плавными колёсиками, поэтому его легко перемещать по дому без усилий — с заботой о каждой маме.",
+        "▣",
+      ],
+      [
+        "Гибкий таймер",
+        "Настраивайте работу устройства от 1 до 24 часов через мобильное приложение, пульт ДУ или сенсорную панель.",
+        "◷",
+      ],
+    ],
+
+    sections: {
+      technologyTag: "Технология защиты",
+      technologyTitle: "Абсолютная безопасность",
+      technologyText:
+        "Эффективное уничтожение 99,9% вирусов, бактерий и грибков. Сочетание УФ-модуля и фотокатализа разрушает микроорганизмы на молекулярном уровне, обеспечивая полную безопасность и стерильность в вашем доме.",
+
+      filtrationTag: "система очистки",
+      filtrationTitle: "Как работает наш фильтр",
+
+      familyTag: "Здоровье семьи",
+      familyTitle: "Комфортный воздух дома для детей и аллергиков",
+      familyText:
+        "• Интеллектуальный контроль: Датчик PM2.5 непрерывно анализирует состояние воздуха и мгновенно регулирует мощность очистки в зависимости от уровня загрязнения.\n\n• Абсолютная защита: HEPA-фильтр H13 задерживает 99,9% аллергенов и имеет повышенный ресурс работы до 3000 часов.\n\n• Природная свежесть: Ионизация осаждает мельчайшие частицы пыли, выделяя отрицательно заряженные ионы и наполняя пространство чистотой и ощущением свежести.",
+
+      heatingTag: "Инновация в деталях",
+      heatingTitle: "Подогреваемая верхняя площадка",
+      heatingText:
+        "Верхняя панель устройства оснащена функцией подогрева, создающей идеальное место для отдыха ваших питомцев.",
+      heatingItems: [
+        "Функцию можно отключить, превратив площадку в стильную подставку для декора или аксессуаров.",
+        "Антивандальный кабель: усиленная оплетка защищает провод от зубов, а безопасное напряжение 24V гарантирует полную защиту вашего питомца.",
+      ],
+
+      controlTag: "Комфорт и технологии",
+      controlTitle:
+        "Мягкий свет создаст уют в спальне. Подсветку можно отключить для глубокого сна.",
+      controlText:
+        "Очистка на 360°: Круговой забор воздуха обеспечивает мощное всасывание со всех сторон, очищая пространство комнаты максимально быстро.",
+
+      warrantyTag: "Качество и сервис",
+      warrantyTitle: "aireco — гарантия вашего комфорта",
+      warrantyText:
+        "Мы уверены в каждой детали нашего устройства: оно создано для долгой и эффективной работы как дома, так и в офисе. Мы берем на себя все обязательства по качеству, чтобы вы могли быть спокойны за чистоту воздуха каждый день.",
+
+      reviewsTag: "Доверие",
+      reviewsTitle: "Отзывы покупателей",
+      reviewsText: "",
+
+      faqTag: "вопрос / ответ",
+      faqTitle: "Всё, что важно знать перед покупкой",
+
+      ctaTag: "aireco",
+      ctaTitle: "Заказать",
+      ctaText:
+        "Напишите в WhatsApp, чтобы получить консультацию и оформить доставку.\n\nА в нашем Instagram мы делимся советами, как сделать дом местом, где дышится легко и свободно.",
+
+      calcTag: "Калькулятор",
+      calcTitle: "За сколько времени aireco обновит воздух в вашей комнате?",
+      calcText: "Введите площадь, чтобы узнать время полного цикла очистки.",
+      calcNote: "Учитывается стандартная высота потолка — 3 м.",
+      calcInput: "Площадь комнаты, м²",
+      calcPlaceholder: "Например, 20",
+      calcVolume: "объём комнаты",
+      calcTime: "время очистки",
+      calcCycles: "циклов в час",
+      calcPerf: "производительность",
+      calcEmpty: "Введите площадь, чтобы узнать время полного цикла очистки.",
+      calcResult: (area, minutes) =>
+        `Полное обновление воздуха в комнате ${area} м² займет около ${minutes} минут`,
+    },
+
+    reviews: [
+      {
+        name: "Ангелина",
+        city: "Алматы",
+        date: "11.02.2026",
+        text:
+          "Брала по рекомендации подруги, приятно удивило качество сборки и размер очистителя. Почти за неделю использования стало реально легче дышать, меньше пыли в доме, покупкой очень довольна.",
+      },
+      {
+        name: "Сергей",
+        city: "Алматы",
+        date: "17.02.2026",
+        text:
+          "Площадка с подогревом стала любимым местом нашего кота, каждый день собирает приличное количество шерсти и пыли. Ночной режим не мешает сну.",
+      },
+      {
+        name: "Алуа",
+        city: "Караганда",
+        date: "20.02.2026",
+        text:
+          "Для нашей семьи аллергиков приобретение очистителя было необходимостью, с выбором не ошиблась, теперь в квартире заметно меньше пыли, у детей реже стали появляться сопли.",
+      },
+      {
+        name: "Карина",
+        city: "Астана",
+        date: "15.02.2026",
+        text:
+          "Приобрела данный очиститель на днях, хочу сказать что уже заметен результат. На утро в квартире появилось ощущение свежести, также удобно что есть пульт и продуманы колесики, поэтому удобно его переносить. Спасибо большое!",
+      },
+    ],
+
+    faq: [
+      {
+        q: "Зачем нужна ионизация?",
+        a:
+          "Ионизация способствует осаждению мелких частиц, делая воздух более свежим и комфортным. Многие отмечают ощущение свежести, сравнимое с воздухом после грозы. Функцию можно включать и отключать при необходимости.",
+      },
+      {
+        q: "Справляется ли очиститель с аллергенами?",
+        a:
+          "Да. Фильтр HEPA H13 эффективно задерживает мелкие частицы, включая пыльцу, бытовые аллергены и PM2.5, снижая их концентрацию в воздухе. Это делает дыхание более комфортным в период сезонных и бытовых аллергий.",
+      },
+      {
+        q: "Как часто нужно менять фильтр?",
+        a:
+          "В нашем очистителе HEPA-фильтр имеет повышенный ресурс работы. Моющийся пре-фильтр задерживает крупную пыль и продлевает срок службы основного фильтра. Устройство автоматически уведомляет о необходимости замены.",
+      },
+      {
+        q: "Подходит ли очиститель для семей с детьми и домашними животными?",
+        a:
+          "Да. Очиститель безопасен для использования в жилых помещениях. УФ-излучение полностью изолировано внутри корпуса и не контактирует с людьми и животными. Фильтрация эффективно снижает количество пыли, аллергенов и бытовых загрязнений в воздухе.",
+      },
+      {
+        q: "Помогает ли очиститель устранять запахи?",
+        a:
+          "Да. Фотокаталитический фильтр с УФ способствует разложению молекул запахов и органических загрязнений, включая бытовые запахи и запахи, связанные с домашними животными.",
+      },
+    ],
+
+    filterPoints: [
+      {
+        id: "pre",
+        title: "Моющийся пре-фильтр",
+        text:
+          "Увеличивает срок службы основного фильтра. Улавливает крупную пыль, ворс и шерсть питомцев.",
+        left: "18%",
+        top: "60%",
+        align: "left",
+      },
+      {
+        id: "hepa",
+        title: "Фильтр HEPA H13",
+        text:
+          "Медицинский стандарт очистки. Задерживает 99,9% микрочастиц: аллергены, пыльцу, перхоть и мелкодисперсную пыль PM2.5.",
+        left: "50%",
+        top: "60%",
+        align: "center",
+      },
+      {
+        id: "photo",
+        title: "Фотокатализ + УФ",
+        text:
+          "Не накапливает загрязнения и неприятные запахи, а полностью нейтрализует их. В том числе стойкие запахи от домашних питомцев.",
+        left: "82%",
+        top: "60%",
+        align: "right",
+      },
+    ],
+
+    contact: {
+      priceLabel: "цена",
+      whatsapp: "WhatsApp",
+      instagram: "Instagram",
+      mobile: "WhatsApp",
+      calc: "Калькулятор",
+      installment: "Доступна беспроцентная рассрочка на 12 месяцев",
+    },
   },
 
-  hero: {
-    badge: "очиститель воздуха нового поколения",
-    title1: "чистый воздух",
-    title2: "без аллергии",
-    title3: "и пыли",
-    text:
-      "Профессиональная 5-ступенчатая система очистки. Автоматический контроль качества воздуха и управление через смартфон.",
-    primary: "Получить консультацию",
-    secondary: "Instagram",
-    calc: "Калькулятор",
+  kz: {
+    brand: "aireco",
+
+    nav: {
+      advantages: "артықшылықтар",
+      technology: "технология",
+      filtration: "сүзгілеу",
+      family: "отбасы",
+      control: "басқару",
+      reviews: "пікірлер",
+      faq: "сұрақтар",
+      order: "тапсырыс",
+    },
+
+    hero: {
+      badge: "жаңа буындағы ауа тазартқыш",
+      title1: "таза ауа",
+      title2: "аллергиясыз",
+      title3: "және шаңсыз",
+      text:
+        "Кәсіби 5 сатылы тазарту жүйесі. Ауа сапасын автоматты бақылау және смартфон арқылы басқару.",
+      primary: "Кеңес алу",
+      secondary: "Instagram",
+      calc: "Калькулятор",
+    },
+
+    trust: [
+      "Қазақстан бойынша тегін жеткізу",
+      "Сервистік қызмет және қолдау",
+    ],
+
+    stats: [
+      ["500м³/сағ", "Жоғары өнімд."],
+      ["HEPA H13", "Медициналық сүзгі"],
+      ["PM2.5", "Ақылды датчик"],
+      ["Wi-Fi", "Қашықтан басқару"],
+    ],
+
+    premiumTitle: "Әр бөлшектегі технология",
+
+    premiumCards: [
+      [
+        "Жуылатын пре-сүзгі",
+        "Ірі шаңды, шашты және үй жануарларының жүнін ұстайды. Күтуі оңай және ұзақ жылдар қызмет етеді.",
+        "◉",
+      ],
+      [
+        "Тыныш түнгі режим",
+        "Өте баяу жұмыс істейді — дыбыс деңгейі сыбырға жақын.",
+        "◌",
+      ],
+      [
+        "Отбасы үшін қауіпсіз",
+        "Құлаған кезде автоөшіру және қысқа тұйықталудан сенімді қорғаныс — балалар мен жануарлар қасында болса да сенімділік.",
+        "✦",
+      ],
+      [
+        "Қозғалғыштық",
+        "Тазартқыш жұмсақ дөңгелектермен жабдықталған, сондықтан оны үй ішінде күш жұмсамай оңай жылжытуға болады.",
+        "▣",
+      ],
+      [
+        "Икемді таймер",
+        "Құрылғы жұмысын 1-ден 24 сағатқа дейін мобильді қосымша, пульт немесе сенсорлық панель арқылы баптаңыз.",
+        "◷",
+      ],
+    ],
+
+    sections: {
+      technologyTag: "Қорғаныс технологиясы",
+      technologyTitle: "Абсолютті қауіпсіздік",
+      technologyText:
+        "Вирустар, бактериялар және саңырауқұлақтарды 99,9% тиімді жояды. УФ-модуль мен фотокатализдің үйлесімі микроорганизмдерді молекулалық деңгейде бұзады.",
+
+      filtrationTag: "тазарту жүйесі",
+      filtrationTitle: "Біздің сүзгі қалай жұмыс істейді",
+
+      familyTag: "Отбасы денсаулығы",
+      familyTitle: "Балалар мен аллергиясы барлар үшін үйдегі жайлы ауа",
+      familyText:
+        "• Интеллектуалды бақылау: PM2.5 датчигі ауаның жағдайын үздіксіз талдап, ластану деңгейіне қарай тазарту қуатын бірден реттейді.\n\n• Абсолютті қорғаныс: HEPA H13 сүзгісі аллергендердің 99,9%-ын ұстап, 3000 сағатқа дейін ұзартылған ресурсқа ие.\n\n• Табиғи сергектік: Ионизация шаңның ең ұсақ бөлшектерін шөгеріп, ауаны сергітеді.",
+
+      heatingTag: "Детальдағы инновация",
+      heatingTitle: "Жылытылатын жоғарғы алаң",
+      heatingText:
+        "Құрылғының жоғарғы панелі үй жануарларыңызға демалуға ыңғайлы жылы алаң жасайды.",
+      heatingItems: [
+        "Функцияны өшіріп, алаңды декорға немесе аксессуарларға арналған тұғырға айналдыруға болады.",
+        "Антивандал кабель: күшейтілген орама сымды тістен қорғайды, ал 24V қауіпсіз кернеу толық қорғаныс береді.",
+      ],
+
+      controlTag: "Жайлылық пен технология",
+      controlTitle:
+        "Жұмсақ жарық жатын бөлмеде жайлылық жасайды. Ұйқы үшін жарықты өшіруге болады.",
+      controlText:
+        "360° тазарту: Ауаның шеңберлі сорылуы бөлмені барынша жылдам тазартады.",
+
+      warrantyTag: "Сапа және сервис",
+      warrantyTitle: "aireco — жайлылығыңыздың кепілі",
+      warrantyText:
+        "Құрылғының әр бөлшегіне сенімдіміз: ол үйде де, кеңседе де ұзақ және тиімді жұмыс істеу үшін жасалған.",
+
+      reviewsTag: "Сенім",
+      reviewsTitle: "Сатып алушылар пікірі",
+      reviewsText: "",
+
+      faqTag: "сұрақ / жауап",
+      faqTitle: "Сатып алу алдында білу маңызды",
+
+      ctaTag: "aireco",
+      ctaTitle: "Тапсырыс беру",
+      ctaText:
+        "Кеңес алып, жеткізуді рәсімдеу үшін WhatsApp-қа жазыңыз.\n\nАл Instagram-да үйдегі ауаны жеңіл әрі таза ету туралы кеңестермен бөлісеміз.",
+
+      calcTag: "Калькулятор",
+      calcTitle: "aireco бөлмедегі ауаны қанша уақытта жаңартады?",
+      calcText: "Толық тазарту циклінің уақытын білу үшін аумақты енгізіңіз.",
+      calcNote: "Стандартты төбе биіктігі — 3 м.",
+      calcInput: "Бөлме ауданы, м²",
+      calcPlaceholder: "Мысалы, 20",
+      calcVolume: "бөлме көлемі",
+      calcTime: "тазарту уақыты",
+      calcCycles: "сағатына цикл",
+      calcPerf: "өнімділік",
+      calcEmpty: "Толық тазарту циклінің уақытын білу үшін аумақты енгізіңіз.",
+      calcResult: (area, minutes) =>
+        `${area} м² бөлмедегі ауаның толық жаңаруы шамамен ${minutes} минут алады`,
+    },
+
+    reviews: [
+      {
+        name: "Ангелина",
+        city: "Алматы",
+        date: "11.02.2026",
+        text:
+          "Құрбымның кеңесімен алдым. Құрылғының сапасы мен көлемі ұнады. Бір аптадан кейін үйде шаң азайып, тыныс алу жеңілдеді.",
+      },
+      {
+        name: "Сергей",
+        city: "Алматы",
+        date: "17.02.2026",
+        text:
+          "Жылытылатын алаң мысығымыздың сүйікті орнына айналды. Шаң мен жүнді жақсы жинайды. Түнгі режим ұйқыға кедергі келтірмейді.",
+      },
+      {
+        name: "Алуа",
+        city: "Қарағанды",
+        date: "20.02.2026",
+        text:
+          "Біздің отбасы үшін аллергияға байланысты тазартқыш қажет болды. Таңдауымызға өкінбедік — үйде шаң азайды.",
+      },
+      {
+        name: "Карина",
+        city: "Астана",
+        date: "15.02.2026",
+        text:
+          "Жақында сатып алдым, нәтижесі бірден байқалады. Таңертең үйде сергектік сезілді, пульті және дөңгелектері өте ыңғайлы.",
+      },
+    ],
+
+    faq: [
+      {
+        q: "Ионизация не үшін керек?",
+        a:
+          "Ионизация ұсақ бөлшектерді шөгеріп, ауаны сергек әрі жайлы етеді. Көп адам жаңбырдан кейінгі ауадай сергектік сезінеді.",
+      },
+      {
+        q: "Аллергендермен күресе ме?",
+        a:
+          "Иә. HEPA H13 сүзгісі тозаң, тұрмыстық аллергендер және PM2.5 бөлшектерін тиімді ұстайды.",
+      },
+      {
+        q: "Сүзгіні қаншалықты жиі ауыстыру керек?",
+        a:
+          "HEPA сүзгісінің ресурсы ұзартылған. Жуылатын пре-сүзгі ірі шаңды ұстап, негізгі сүзгінің қызмет мерзімін арттырады.",
+      },
+      {
+        q: "Балалар мен жануарлар бар үйге жарай ма?",
+        a:
+          "Иә. УФ-сәуле корпус ішінде оқшауланған. Құрылғы тұрғын үй жағдайында қауіпсіз қолдануға жарайды.",
+      },
+      {
+        q: "Иісті жоюға көмектесе ме?",
+        a:
+          "Иә. Фотокаталитикалық сүзгі және УФ тұрмыстық және жануарларға қатысты иістердің молекулаларын ыдыратуға көмектеседі.",
+      },
+    ],
+
+    filterPoints: [
+      {
+        id: "pre",
+        title: "Жуылатын пре-сүзгі",
+        text:
+          "Негізгі сүзгінің қызмет мерзімін ұзартады. Ірі шаңды, түкті және жүнді ұстайды.",
+        left: "18%",
+        top: "60%",
+        align: "left",
+      },
+      {
+        id: "hepa",
+        title: "HEPA H13 сүзгісі",
+        text:
+          "Медициналық тазарту стандарты. Аллергендер, тозаң және PM2.5 секілді ұсақ бөлшектердің 99,9%-ын ұстайды.",
+        left: "50%",
+        top: "60%",
+        align: "center",
+      },
+      {
+        id: "photo",
+        title: "Фотокатализ + УФ",
+        text:
+          "Ластағыштар мен жағымсыз иістерді жинамайды, оларды толық бейтараптайды.",
+        left: "82%",
+        top: "60%",
+        align: "right",
+      },
+    ],
+
+    contact: {
+      priceLabel: "бағасы",
+      whatsapp: "WhatsApp",
+      instagram: "Instagram",
+      mobile: "WhatsApp",
+      calc: "Калькулятор",
+      installment: "12 айға пайызсыз бөліп төлеу қолжетімді",
+    },
   },
 
-  trust: [
-    "Бесплатная доставка по Казахстану",
-    "Сервисное обслуживание и поддержка",
-  ],
+  en: {
+    brand: "aireco",
 
-  stats: [
-    ["500м³/ч", "Высокая Произв-ть"],
-    ["HEPA H13", "Медицинская фильтрация"],
-    ["PM2.5", "Умный датчик"],
-    ["Wi-Fi", "Дистанционный контроль"],
-  ],
+    nav: {
+      advantages: "advantages",
+      technology: "technology",
+      filtration: "filtration",
+      family: "family",
+      control: "control",
+      reviews: "reviews",
+      faq: "faq",
+      order: "order",
+    },
 
-  premiumTitle: "Технологичность в каждой детали",
-
-  premiumCards: [
-    [
-      "Моющийся пре-фильтр",
-      "Задерживает крупную пыль, волосы и шерсть питомцев. Легко обслуживается и служит годами.",
-      "◉",
-    ],
-    [
-      "Тихий ночной режим",
-      "Работает почти бесшумно — уровень звука сравним с едва уловимым шёпотом.",
-      "◌",
-    ],
-    [
-      "Безопасность для семьи",
-      "Автоотключение при опрокидывании и надёжная защита от замыканий — полная уверенность, когда рядом дети или домашние животные.",
-      "✦",
-    ],
-    [
-      "Мобильность",
-      "Очиститель оснащён плавными колёсиками, поэтому его легко перемещать по дому без усилий — с заботой о каждой маме.",
-      "▣",
-    ],
-    [
-      "Гибкий таймер",
-      "Настраивайте работу устройства от 1 до 24 часов через мобильное приложение, пульт ДУ или сенсорную панель.",
-      "◷",
-    ],
-  ],
-
-  sections: {
-    technologyTag: "Технология защиты",
-    technologyTitle: "Абсолютная безопасность",
-    technologyText:
-      "Эффективное уничтожение 99,9% вирусов, бактерий и грибков. Сочетание УФ-модуля и фотокатализа разрушает микроорганизмы на молекулярном уровне, обеспечивая полную безопасность и стерильность в вашем доме.",
-
-    filtrationTag: "система очистки",
-    filtrationTitle: "Как работает наш фильтр",
-
-    familyTag: "Здоровье семьи",
-    familyTitle: "Комфортный воздух дома для детей и аллергиков",
-    familyText:
-      "• Интеллектуальный контроль: Датчик PM2.5 непрерывно анализирует состояние воздуха и мгновенно регулирует мощность очистки в зависимости от уровня загрязнения.\n\n• Абсолютная защита: HEPA-фильтр H13 задерживает 99,9% аллергенов и имеет повышенный ресурс работы до 3000 часов.\n\n• Природная свежесть: Ионизация осаждает мельчайшие частицы пыли, выделяя отрицательно заряженные ионы и наполняя пространство чистотой и ощущением свежести.",
-
-    heatingTag: "Инновация в деталях",
-    heatingTitle: "Подогреваемая верхняя площадка",
-    heatingText:
-      "Верхняя панель устройства оснащена функцией подогрева, создающей идеальное место для отдыха ваших питомцев.",
-    heatingItems: [
-      "Функцию можно отключить, превратив площадку в стильную подставку для декора или аксессуаров.",
-      "Антивандальный кабель: усиленная оплетка защищает провод от зубов, а безопасное напряжение 24V гарантирует полную защиту вашего питомца.",
-    ],
-
-    controlTag: "Комфорт и технологии",
-    controlTitle:
-      "Мягкий свет создаст уют в спальне. Подсветку можно отключить для глубокого сна.",
-    controlText:
-      "Очистка на 360°: Круговой забор воздуха обеспечивает мощное всасывание со всех сторон, очищая пространство комнаты максимально быстро.",
-
-    warrantyTag: "Качество и сервис",
-    warrantyTitle: "aireco — гарантия вашего комфорта",
-    warrantyText:
-      "Мы уверены в каждой детали нашего устройства: оно создано для долгой и эффективной работы как дома, так и в офисе. Мы берем на себя все обязательства по качеству, чтобы вы могли быть спокойны за чистоту воздуха каждый день.",
-
-    reviewsTag: "Доверие",
-    reviewsTitle: "Отзывы покупателей",
-    reviewsText: "",
-
-    faqTag: "вопрос / ответ",
-    faqTitle: "Всё, что важно знать перед покупкой",
-
-    ctaTag: "aireco",
-    ctaTitle: "Заказать",
-    ctaText:
-      "Напишите в WhatsApp, чтобы получить консультацию и оформить доставку.\n\nА в нашем Instagram мы делимся советами, как сделать дом местом, где дышится легко и свободно.",
-
-    calcTag: "Калькулятор",
-    calcTitle: "За сколько времени aireco обновит воздух в вашей комнате?",
-    calcText: "Введите площадь, чтобы узнать время полного цикла очистки.",
-    calcNote: "Учитывается стандартная высота потолка — 3 м.",
-  },
-
-  reviews: [
-    {
-      name: "Ангелина",
-      city: "Алматы",
-      date: "11.02.2026",
+    hero: {
+      badge: "next-generation air purifier",
+      title1: "clean air",
+      title2: "without allergies",
+      title3: "and dust",
       text:
-        "Брала по рекомендации подруги, приятно удивило качество сборки и размер очистителя. Почти за неделю использования стало реально легче дышать, меньше пыли в доме, покупкой очень довольна.",
+        "Professional 5-stage purification system. Automatic air quality control and smartphone management.",
+      primary: "Get consultation",
+      secondary: "Instagram",
+      calc: "Calculator",
     },
-    {
-      name: "Сергей",
-      city: "Алматы",
-      date: "17.02.2026",
-      text:
-        "Площадка с подогревом стала любимым местом нашего кота, каждый день собирает приличное количество шерсти и пыли. Ночной режим не мешает сну.",
-    },
-    {
-      name: "Алуа",
-      city: "Караганда",
-      date: "20.02.2026",
-      text:
-        "Для нашей семьи аллергиков приобретение очистителя было необходимостью, с выбором не ошиблась, теперь в квартире заметно меньше пыли, у детей реже стали появляться сопли.",
-    },
-    {
-      name: "Карина",
-      city: "Астана",
-      date: "15.02.2026",
-      text:
-        "Приобрела данный очиститель на днях, хочу сказать что уже заметен результат. На утро в квартире появилось ощущение свежести, также удобно что есть пульт и продуманы колесики, поэтому удобно его переносить. Спасибо большое!",
-    },
-  ],
 
-  faq: [
-    {
-      q: "Зачем нужна ионизация?",
-      a:
-        "Ионизация способствует осаждению мелких частиц, делая воздух более свежим и комфортным. Многие отмечают ощущение свежести, сравнимое с воздухом после грозы. Функцию можно включать и отключать при необходимости.",
-    },
-    {
-      q: "Справляется ли очиститель с аллергенами?",
-      a:
-        "Да. Фильтр HEPA H13 эффективно задерживает мелкие частицы, включая пыльцу, бытовые аллергены и PM2.5, снижая их концентрацию в воздухе. Это делает дыхание более комфортным в период сезонных и бытовых аллергий.",
-    },
-    {
-      q: "Как часто нужно менять фильтр?",
-      a:
-        "В нашем очистителе HEPA-фильтр имеет повышенный ресурс работы. Моющийся пре-фильтр задерживает крупную пыль и продлевает срок службы основного фильтра. Устройство автоматически уведомляет о необходимости замены.",
-    },
-    {
-      q: "Подходит ли очиститель для семей с детьми и домашними животными?",
-      a:
-        "Да. Очиститель безопасен для использования в жилых помещениях. УФ-излучение полностью изолировано внутри корпуса и не контактирует с людьми и животными. Фильтрация эффективно снижает количество пыли, аллергенов и бытовых загрязнений в воздухе.",
-    },
-    {
-      q: "Помогает ли очиститель устранять запахи?",
-      a:
-        "Да. Фотокаталитический фильтр с УФ способствует разложению молекул запахов и органических загрязнений, включая бытовые запахи и запахи, связанные с домашними животными.",
-    },
-  ],
+    trust: [
+      "Free delivery across Kazakhstan",
+      "Service and support",
+    ],
 
-  contact: {
-    priceLabel: "цена",
-    whatsapp: "WhatsApp",
-    instagram: "Instagram",
-    mobile: "WhatsApp",
-    calc: "Калькулятор",
-    installment: "Доступна беспроцентная рассрочка на 12 месяцев",
+    stats: [
+      ["500m³/h", "High perform."],
+      ["HEPA H13", "Medical filtration"],
+      ["PM2.5", "Smart sensor"],
+      ["Wi-Fi", "Remote control"],
+    ],
+
+    premiumTitle: "Technology in every detail",
+
+    premiumCards: [
+      [
+        "Washable pre-filter",
+        "Captures coarse dust, hair and pet fur. Easy to maintain and built to last for years.",
+        "◉",
+      ],
+      [
+        "Quiet night mode",
+        "Operates almost silently — the sound level is comparable to a barely audible whisper.",
+        "◌",
+      ],
+      [
+        "Safety for family",
+        "Auto shut-off on tipping and reliable short-circuit protection — complete peace of mind with children or pets nearby.",
+        "✦",
+      ],
+      [
+        "Mobility",
+        "The purifier has smooth wheels, making it easy to move around the house with minimal effort.",
+        "▣",
+      ],
+      [
+        "Flexible timer",
+        "Set operation from 1 to 24 hours via the mobile app, remote control or touch panel.",
+        "◷",
+      ],
+    ],
+
+    sections: {
+      technologyTag: "Protection technology",
+      technologyTitle: "Absolute safety",
+      technologyText:
+        "Effective elimination of 99.9% of viruses, bacteria and fungi. The combination of a UV module and photocatalysis destroys microorganisms at the molecular level.",
+
+      filtrationTag: "purification system",
+      filtrationTitle: "How our filter works",
+
+      familyTag: "Family health",
+      familyTitle: "Comfortable air at home for children and allergy-sensitive users",
+      familyText:
+        "• Intelligent control: The PM2.5 sensor continuously analyzes the air and instantly adjusts purification power based on pollution level.\n\n• Absolute protection: The HEPA H13 filter captures 99.9% of allergens and offers an extended service life of up to 3000 hours.\n\n• Natural freshness: Ionization helps settle fine dust particles and fills the space with a clean, fresh feel.",
+
+      heatingTag: "Innovation in detail",
+      heatingTitle: "Heated top platform",
+      heatingText:
+        "The top panel features a heating function, creating an ideal resting place for your pets.",
+      heatingItems: [
+        "The function can be turned off, turning the platform into a stylish stand for decor or accessories.",
+        "Anti-vandal cable: reinforced braiding protects the wire from teeth, while safe 24V voltage guarantees complete protection for your pet.",
+      ],
+
+      controlTag: "Comfort and technology",
+      controlTitle:
+        "Soft light adds comfort to the bedroom. The backlight can be turned off for deeper sleep.",
+      controlText:
+        "360° purification: Circular air intake provides powerful suction from all sides for faster room cleaning.",
+
+      warrantyTag: "Quality and service",
+      warrantyTitle: "aireco — your comfort guaranteed",
+      warrantyText:
+        "We are confident in every detail of our device: it is designed for long and efficient operation at home and in the office.",
+
+      reviewsTag: "Trust",
+      reviewsTitle: "Customer reviews",
+      reviewsText: "",
+
+      faqTag: "q / a",
+      faqTitle: "Everything important before purchase",
+
+      ctaTag: "aireco",
+      ctaTitle: "Order",
+      ctaText:
+        "Write to us on WhatsApp to get consultation and arrange delivery.\n\nOn Instagram, we share tips on how to make your home a place where breathing feels light and easy.",
+
+      calcTag: "Calculator",
+      calcTitle: "How quickly will aireco refresh the air in your room?",
+      calcText: "Enter the room area to estimate the full air cycle time.",
+      calcNote: "Standard ceiling height considered — 3 m.",
+      calcInput: "Room area, m²",
+      calcPlaceholder: "For example, 20",
+      calcVolume: "room volume",
+      calcTime: "cleaning time",
+      calcCycles: "cycles per hour",
+      calcPerf: "performance",
+      calcEmpty: "Enter the room area to estimate the full air cycle time.",
+      calcResult: (area, minutes) =>
+        `Full air renewal in a ${area} m² room will take about ${minutes} minutes`,
+    },
+
+    reviews: [
+      {
+        name: "Angelina",
+        city: "Almaty",
+        date: "11.02.2026",
+        text:
+          "Bought it on a friend’s recommendation. The build quality and size impressed me. After a week, the air felt easier to breathe and there was less dust at home.",
+      },
+      {
+        name: "Sergey",
+        city: "Almaty",
+        date: "17.02.2026",
+        text:
+          "The heated platform became our cat’s favorite spot. It collects a noticeable amount of fur and dust. Night mode does not disturb sleep.",
+      },
+      {
+        name: "Alua",
+        city: "Karaganda",
+        date: "20.02.2026",
+        text:
+          "For our family with allergies, buying an air purifier was necessary. We did not make a wrong choice — there is visibly less dust now.",
+      },
+      {
+        name: "Karina",
+        city: "Astana",
+        date: "15.02.2026",
+        text:
+          "I bought it recently and the result is already noticeable. The apartment feels fresher in the morning, and the remote and wheels are very convenient.",
+      },
+    ],
+
+    faq: [
+      {
+        q: "Why is ionization needed?",
+        a:
+          "Ionization helps settle fine particles, making the air feel fresher and more comfortable. Many people compare it to the freshness after rain.",
+      },
+      {
+        q: "Does it help with allergens?",
+        a:
+          "Yes. The HEPA H13 filter effectively traps pollen, household allergens and PM2.5 particles.",
+      },
+      {
+        q: "How often should the filter be replaced?",
+        a:
+          "The HEPA filter has an extended service life. The washable pre-filter captures coarse dust and extends the life of the main filter.",
+      },
+      {
+        q: "Is it suitable for homes with children and pets?",
+        a:
+          "Yes. The UV radiation is fully isolated inside the body. The purifier is safe for regular home use.",
+      },
+      {
+        q: "Does it help eliminate odors?",
+        a:
+          "Yes. The photocatalytic filter with UV helps break down odor molecules, including household and pet-related smells.",
+      },
+    ],
+
+    filterPoints: [
+      {
+        id: "pre",
+        title: "Washable pre-filter",
+        text:
+          "Extends the life of the main filter. Captures coarse dust, lint and pet fur.",
+        left: "18%",
+        top: "60%",
+        align: "left",
+      },
+      {
+        id: "hepa",
+        title: "HEPA H13 filter",
+        text:
+          "Medical-grade purification. Captures 99.9% of micro-particles such as allergens, pollen and PM2.5 dust.",
+        left: "50%",
+        top: "60%",
+        align: "center",
+      },
+      {
+        id: "photo",
+        title: "Photocatalysis + UV",
+        text:
+          "Does not accumulate contaminants or unpleasant smells — it neutralizes them completely.",
+        left: "82%",
+        top: "60%",
+        align: "right",
+      },
+    ],
+
+    contact: {
+      priceLabel: "price",
+      whatsapp: "WhatsApp",
+      instagram: "Instagram",
+      mobile: "WhatsApp",
+      calc: "Calculator",
+      installment: "0% installment for 12 months available",
+    },
   },
 };
-
-const FILTER_POINTS = [
-  {
-    id: "pre",
-    title: "Моющийся пре-фильтр",
-    text:
-      "Увеличивает срок службы основного фильтра. Улавливает крупную пыль, ворс и шерсть питомцев.",
-    left: "18%",
-    top: "60%",
-    align: "left",
-  },
-  {
-    id: "hepa",
-    title: "Фильтр HEPA H13",
-    text:
-      "Медицинский стандарт очистки. Задерживает 99,9% микрочастиц: аллергены, пыльцу, перхоть и мелкодисперсную пыль PM2.5.",
-    left: "50%",
-    top: "60%",
-    align: "center",
-  },
-  {
-    id: "photo",
-    title: "Фотокатализ + УФ",
-    text:
-      "Не накапливает загрязнения и неприятные запахи, а полностью нейтрализует их. В том числе стойкие запахи от домашних питомцев.",
-    left: "82%",
-    top: "60%",
-    align: "right",
-  },
-];
 
 function Reveal({ children, delay = 0, className = "", variant = "up" }) {
   const initial =
@@ -439,7 +906,7 @@ function CalcIcon() {
   );
 }
 
-function KaspiBadge() {
+function KaspiBadge({ text }) {
   return (
     <div className="flex items-center gap-3 text-slate-200">
       <img
@@ -447,7 +914,7 @@ function KaspiBadge() {
         alt="Kaspi"
         className="h-8 w-12 rounded-xl object-cover"
       />
-      <span>{CONTENT.contact.installment}</span>
+      <span>{text}</span>
     </div>
   );
 }
@@ -471,7 +938,7 @@ function InstagramIcon() {
   );
 }
 
-function FloatingDesktop({ whatsapp, onCalc, calcLabel }) {
+function FloatingDesktop({ whatsapp, onCalc, calcLabel, whatsappLabel }) {
   return (
     <div className="fixed bottom-5 right-5 z-50 hidden flex-col gap-3 md:flex">
       <button
@@ -489,7 +956,7 @@ function FloatingDesktop({ whatsapp, onCalc, calcLabel }) {
         className="inline-flex items-center justify-center gap-3 rounded-full bg-green-500 px-5 py-4 text-sm font-black text-white shadow-[0_20px_50px_rgba(34,197,94,0.30)] transition duration-300 hover:scale-[1.03] hover:bg-green-600"
       >
         <WhatsAppIcon />
-        WhatsApp
+        {whatsappLabel}
       </a>
     </div>
   );
@@ -568,7 +1035,7 @@ function CalculatorModal({ open, onClose, t }) {
           <div className="grid gap-5">
             <SoftCard className="p-5">
               <label className="mb-3 block text-sm font-black uppercase tracking-[0.14em] text-slate-500">
-                Площадь комнаты, м²
+                {t.sections.calcInput}
               </label>
 
               <input
@@ -578,7 +1045,7 @@ function CalculatorModal({ open, onClose, t }) {
                 value={area}
                 onChange={(e) => setArea(e.target.value)}
                 className="w-full rounded-2xl border border-slate-200 bg-white px-4 py-4 text-2xl font-black text-slate-950 outline-none transition focus:border-sky-400"
-                placeholder="Например, 20"
+                placeholder={t.sections.calcPlaceholder}
               />
 
               <p className="mt-4 text-sm leading-7 text-slate-500">
@@ -587,15 +1054,15 @@ function CalculatorModal({ open, onClose, t }) {
 
               <div className="mt-5 rounded-[1.2rem] bg-sky-50 px-4 py-4 text-[16px] leading-7 text-slate-700 ring-1 ring-sky-100">
                 {cleanArea > 0
-                  ? `Полное обновление воздуха в комнате ${cleanArea} м² займет около ${minutes} минут`
-                  : "Введите площадь, чтобы узнать время полного цикла очистки."}
+                  ? t.sections.calcResult(cleanArea, minutes)
+                  : t.sections.calcEmpty}
               </div>
             </SoftCard>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <SoftCard className="p-5">
                 <div className="text-sm font-bold uppercase tracking-[0.18em] text-slate-400">
-                  объём комнаты
+                  {t.sections.calcVolume}
                 </div>
                 <div className="mt-3 text-4xl font-black text-slate-950">
                   {volume > 0 ? volume.toFixed(1) : "—"} м³
@@ -604,7 +1071,7 @@ function CalculatorModal({ open, onClose, t }) {
 
               <SoftCard className="p-5">
                 <div className="text-sm font-bold uppercase tracking-[0.18em] text-slate-400">
-                  время очистки
+                  {t.sections.calcTime}
                 </div>
                 <div className="mt-3 text-4xl font-black text-slate-950">
                   {minutes > 0 ? `${minutes} мин` : "—"}
@@ -613,7 +1080,7 @@ function CalculatorModal({ open, onClose, t }) {
 
               <SoftCard className="p-5">
                 <div className="text-sm font-bold uppercase tracking-[0.18em] text-slate-400">
-                  циклов в час
+                  {t.sections.calcCycles}
                 </div>
                 <div className="mt-3 text-4xl font-black text-slate-950">
                   {cycles > 0 ? cycles.toFixed(1) : "—"}
@@ -622,7 +1089,7 @@ function CalculatorModal({ open, onClose, t }) {
 
               <SoftCard className="p-5">
                 <div className="text-sm font-bold uppercase tracking-[0.18em] text-slate-400">
-                  производительность
+                  {t.sections.calcPerf}
                 </div>
                 <div className="mt-3 text-4xl font-black text-slate-950">
                   500 м³/ч
@@ -657,14 +1124,14 @@ function FilterTooltip({ title, text, align = "center" }) {
   );
 }
 
-function FilterHotspots() {
+function FilterHotspots({ t }) {
   const [active, setActive] = useState("pre");
 
   return (
     <div className="mx-auto max-w-[860px]">
       <div className="text-center">
         <div className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">
-          {CONTENT.sections.filtrationTitle}
+          {t.sections.filtrationTitle}
         </div>
       </div>
 
@@ -677,7 +1144,7 @@ function FilterHotspots() {
           />
         </div>
 
-        {FILTER_POINTS.map((point) => (
+        {t.filterPoints.map((point) => (
           <div
             key={point.id}
             className="absolute"
@@ -706,16 +1173,20 @@ function FilterHotspots() {
 
 export default function App() {
   const [calcOpen, setCalcOpen] = useState(false);
-  const t = CONTENT;
+  const [lang, setLang] = useState("ru");
+  const t = useMemo(() => CONTENT[lang], [lang]);
 
-  const whatsappMessage =
-    "Здравствуйте, интересует очиститель воздуха aireco";
+  const whatsappMessageByLang = {
+    ru: "Здравствуйте, интересует очиститель воздуха aireco",
+    kz: "Сәлеметсіз бе, aireco ауа тазартқышы қызықтырады",
+    en: "Hello, I am interested in the aireco air purifier",
+  };
+
+  const whatsappMessage = whatsappMessageByLang[lang];
   const whatsappMain = `https://api.whatsapp.com/send?phone=77066860985&text=${encodeURIComponent(
     whatsappMessage
   )}`;
-  const whatsappOrder = `https://api.whatsapp.com/send?phone=77066860985&text=${encodeURIComponent(
-    whatsappMessage
-  )}`;
+  const whatsappOrder = whatsappMain;
   const instagramLink =
     "https://www.instagram.com/aireco.kz?igsh=MWY1OHUycHIwYWJ3aQ==";
 
@@ -749,6 +1220,22 @@ export default function App() {
             <a href="#faq" className="hover:text-slate-950">{t.nav.faq}</a>
             <a href="#contact" className="hover:text-slate-950">{t.nav.order}</a>
           </nav>
+
+          <div className="flex items-center gap-2">
+            {["ru", "kz", "en"].map((code) => (
+              <button
+                key={code}
+                onClick={() => setLang(code)}
+                className={`rounded-xl px-3 py-2 text-sm font-bold transition ${
+                  lang === code
+                    ? "bg-slate-950 text-white"
+                    : "bg-white text-slate-600 ring-1 ring-slate-200 hover:text-slate-950"
+                }`}
+              >
+                {code.toUpperCase()}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
@@ -892,7 +1379,7 @@ export default function App() {
             </Reveal>
 
             <div className="mt-4">
-              <FilterHotspots />
+              <FilterHotspots t={t} />
             </div>
           </div>
         </section>
@@ -1065,7 +1552,7 @@ export default function App() {
                   </div>
 
                   <div className="mt-4">
-                    <KaspiBadge />
+                    <KaspiBadge text={t.contact.installment} />
                   </div>
 
                   <div className="mt-6 flex flex-col gap-3">
@@ -1100,6 +1587,7 @@ export default function App() {
         whatsapp={whatsappMain}
         onCalc={() => setCalcOpen(true)}
         calcLabel={t.contact.calc}
+        whatsappLabel={t.contact.whatsapp}
       />
 
       <StickyMobileCTA
