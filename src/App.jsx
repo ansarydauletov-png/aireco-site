@@ -19,7 +19,6 @@ const CONTENT = {
     filtration: "фильтрация",
     family: "для семьи",
     control: "управление",
-    specs: "характеристики",
     reviews: "отзывы",
     faq: "вопросы",
     order: "заказать",
@@ -34,23 +33,22 @@ const CONTENT = {
       "Профессиональная 5-ступенчатая система очистки. Автоматический контроль качества воздуха и управление через ваш смартфон.",
     primary: "Получить консультацию",
     secondary: "Instagram",
-    calc: "Расчёт",
+    calc: "Калькулятор",
   },
 
   trust: [
     "Бесплатная доставка по Казахстану",
-    "Официальная гарантия 1 год",
     "Сервисное обслуживание и поддержка",
   ],
 
   stats: [
-    ["500 м³/ч", "Высокая производительность"],
+    ["500м³/ч", "Высокая Произв-ть"],
     ["HEPA H13", "Медицинская фильтрация"],
     ["PM2.5", "Умный датчик"],
     ["Wi-Fi", "Дистанционный контроль"],
   ],
 
-  premiumTitle: "aireco — Технологичность в каждой детали",
+  premiumTitle: "Технологичность в каждой детали",
 
   premiumCards: [
     [
@@ -79,11 +77,6 @@ const CONTENT = {
       "▣",
     ],
     [
-      "HEPA H13 с повышенным ресурсом",
-      "Автоматическое уведомление о необходимости замены фильтра.",
-      "◈",
-    ],
-    [
       "Таймер 1–24 часа",
       "Гибкое планирование через панель, пульт ДУ или приложение.",
       "✳",
@@ -100,40 +93,36 @@ const CONTENT = {
     filtrationTag: "система очистки",
     filtrationTitle: "Как работает наш фильтр",
     filtrationSubtitle: "Интеллектуальная очистка в три этапа",
-    filtrationText: "",
 
-    familyTag: "для семьи",
-    familyTitle: "aireco — Комфортный воздух дома для детей и аллергиков",
+    familyTag: "Здоровье семьи",
+    familyTitle: "Комфортный воздух дома для детей и аллергиков",
     familyText:
-      "• Интеллектуальный контроль: Датчик PM2.5 непрерывно анализирует состояние воздуха и мгновенно регулирует мощность очистки в зависимости от уровня загрязнения.\n\n• Абсолютная защита: HEPA-фильтр H13 (медицинский стандарт) удерживает 99,9% аллергенов, не оставляя им ни единого шанса.\n\n• Природная свежесть: Ионизация осаждает мельчайшие частицы пыли, выделяя отрицательно заряженные ионы и наполняя пространство чистотой и ощущением свежести.",
+      "• Интеллектуальный контроль: Датчик PM2.5 непрерывно анализирует состояние воздуха и мгновенно регулирует мощность очистки в зависимости от уровня загрязнения.\n\n• Абсолютная защита: HEPA-фильтр H13 задерживает 99,9% аллергенов и имеет повышенный ресурс работы до 3000 часов.\n\n• Природная свежесть: Ионизация осаждает мельчайшие частицы пыли, выделяя отрицательно заряженные ионы и наполняя пространство чистотой и ощущением свежести.",
 
-      heatingTag: "Инновация в деталях",
-      heatingTitle: "Подогреваемая верхняя площадка",
-      heatingText:
-        "Верхняя панель устройства оснащена функцией подогрева, создающей идеальное место для отдыха ваших питомцев.",
-      heatingItems: [
-        "Функцию можно отключить, превратив площадку в стильную подставку для декора или аксессуаров.",
-        "Кабель питания находится в специальной защитной оплетке и работает на безопасной мощности 24V, исключая любые риски для вашего питомца.",
-      ],
-
-    controlTag: "управление",
-    controlTitle: "Полный контроль через приложение, пульт и сенсорную панель",
-    controlText:
-      "Удобный пульт, сенсорное управление на корпусе и мобильное приложение. Можно включать и выключать нужные функции, выбирать режимы и использовать таймер.",
-    controlCards: [
-      ["Wi-Fi", "Управление со смартфона"],
-      ["Таймер 1–24 ч", "Автоматическое отключение по расписанию"],
+    heatingTag: "Инновация в деталях",
+    heatingTitle: "Подогреваемая верхняя площадка",
+    heatingText:
+      "Верхняя панель устройства оснащена функцией подогрева, создающей идеальное место для отдыха ваших питомцев.",
+    heatingItems: [
+      "Функцию можно отключить, превратив площадку в стильную подставку для декора или аксессуаров.",
+      "Антивандальный кабель: усиленная оплетка защищает провод от зубов, а безопасное напряжение 24V гарантирует полную защиту вашего питомца.",
     ],
 
-    specsTag: "характеристики",
-    specsTitle: "Технические данные aireco",
+    controlTag: "Комфорт и технологии",
+    controlTitle:
+      "Атмосферная подсветка: Мягкий свет создаст уют в спальне, а при необходимости подсветку можно полностью отключить для глубокого сна.",
+    controlText:
+      "Очистка на 360°: Круговой забор воздуха обеспечивает мощное всасывание со всех сторон, очищая пространство комнаты максимально быстро.",
+    controlCardTitle: "Полный контроль",
+    controlCardText:
+      "Управляйте очистителем через приложение, пульт ДУ или сенсорную панель. Настраивайте каждую функцию, выбирайте режимы и адаптируйте работу устройства под свои нужды в один клик.",
 
-    warrantyTag: "гарантия и доверие",
-    warrantyTitle: "Гарантия 12 месяцев",
+    warrantyTag: "Качество и сервис",
+    warrantyTitle: "aireco — гарантия вашего комфорта",
     warrantyText:
-      "aireco рассчитан на постоянное использование дома и в офисе. Это полноценная система очистки с акцентом на безопасность, ресурс и удобство.",
+      "Мы уверены в каждой детали нашего устройства: оно создано для долгой и эффективной работы как дома, так и в офисе. Мы берем на себя все обязательства по качеству, чтобы вы могли быть спокойны за чистоту воздуха каждый день.",
 
-    reviewsTag: "отзывы",
+    reviewsTag: "Доверие",
     reviewsTitle: "Отзывы покупателей",
     reviewsText:
       "Живые отзывы, которые уже оставили покупатели после использования aireco.",
@@ -144,30 +133,13 @@ const CONTENT = {
     ctaTag: "aireco",
     ctaTitle: "Заказать",
     ctaText:
-      "Напишите в WhatsApp или Instagram, и мы быстро подскажем по наличию, доставке и ответим на вопросы.",
+      "Напишите в WhatsApp, чтобы получить консультацию и оформить доставку.\n\nА в нашем Instagram мы делимся советами, как сделать дом местом, где дышится легко и свободно.",
 
-    calcTag: "калькулятор очистки",
+    calcTag: "Калькулятор",
     calcTitle: "За сколько времени aireco обновит воздух в вашей комнате?",
-    calcText:
-      "Введите площадь комнаты, и калькулятор покажет, за сколько минут устройство полностью прогонит и обновит воздух. Расчёт сделан при высоте потолка 3 м.",
+    calcText: "Введите площадь, чтобы узнать время полного цикла очистки.",
+    calcNote: "Учитывается стандартная высота потолка — 3 м.",
   },
-
-  specs: [
-    "CADR: до 500 м³/ч",
-    "Датчик PM2.5",
-    "HEPA H13",
-    "Моющийся пре-фильтр",
-    "Фотокаталитический фильтр",
-    "УФ-стерилизация",
-    "Ионизация воздуха",
-    "Wi-Fi",
-    "Пульт дистанционного управления",
-    "Сенсорная панель на корпусе",
-    "Таймер 1–24 часа",
-    "Тихий ночной режим",
-    "Подсветка с возможностью отключения",
-    "Напоминание о замене фильтра",
-  ],
 
   reviews: [
     {
@@ -196,7 +168,7 @@ const CONTENT = {
       city: "Астана",
       date: "15.02.2026",
       text:
-        "Приобрела данный очиститель на днях, хочу сказать что уже заметен результат. На утро в квартире появилось ощущение свежести, также удобно что есть пульт и продуманы колесики поэтому удобно его переносить. Спасибо большое!",
+        "Приобрела данный очиститель на днях, хочу сказать что уже заметен результат. На утро в квартире появилось ощущение свежести, также удобно что есть пульт и продуманы колесики, поэтому удобно его переносить. Спасибо большое!",
     },
   ],
 
@@ -229,13 +201,12 @@ const CONTENT = {
   ],
 
   contact: {
-    phoneLabel: "Связь и заказ через WhatsApp",
-    cardTitle: "Связаться сейчас",
     priceLabel: "цена",
     whatsapp: "Перейти в WhatsApp",
     instagram: "Открыть Instagram",
     mobile: "Заказать",
-    calc: "Расчёт",
+    calc: "Калькулятор",
+    installment: "Доступна беспроцентная рассрочка на 12 месяцев",
   },
 };
 
@@ -346,7 +317,7 @@ function PremiumGrid({ items }) {
 function TrustStrip({ items }) {
   return (
     <div className="mx-auto max-w-7xl px-6 md:px-10">
-      <div className="grid gap-3 md:grid-cols-3">
+      <div className="grid gap-3 md:grid-cols-2">
         {items.map((item, i) => (
           <Reveal key={item} delay={i * 0.04}>
             <SoftCard className="px-4 py-4 text-center text-sm font-black text-slate-700">
@@ -562,7 +533,7 @@ function CalculatorModal({ open, onClose, t }) {
   const cleanArea = Number.isFinite(Number(area)) ? Number(area) : 0;
   const height = 3;
   const volume = cleanArea * height;
-  const minutes = volume > 0 ? (volume / 500) * 60 : 0;
+  const minutes = volume > 0 ? Math.ceil((volume / 500) * 60) : 0;
   const cycles = volume > 0 ? 500 / volume : 0;
 
   useEffect(() => {
@@ -573,12 +544,6 @@ function CalculatorModal({ open, onClose, t }) {
       document.body.style.overflow = original;
     };
   }, [open]);
-
-  const formatMinutes = (value) => {
-    if (!value || value <= 0) return "—";
-    if (value < 1) return "меньше 1 мин";
-    return `${Math.ceil(value)} мин`;
-  };
 
   if (!open) return null;
 
@@ -624,13 +589,13 @@ function CalculatorModal({ open, onClose, t }) {
               />
 
               <p className="mt-4 text-sm leading-7 text-slate-500">
-                Расчёт при высоте потолка 3 м
+                {t.sections.calcNote}
               </p>
 
               <div className="mt-5 rounded-[1.2rem] bg-sky-50 px-4 py-4 text-[16px] leading-7 text-slate-700 ring-1 ring-sky-100">
                 {cleanArea > 0
-                  ? `Комната ${cleanArea} м² будет полностью прогнана и освежена примерно за ${formatMinutes(minutes)}.`
-                  : "Введите площадь комнаты."}
+                  ? `Полное обновление воздуха в комнате ${cleanArea} м² займет около ${minutes} минут`
+                  : "Введите площадь, чтобы узнать время полного цикла очистки."}
               </div>
             </SoftCard>
 
@@ -649,7 +614,7 @@ function CalculatorModal({ open, onClose, t }) {
                   время очистки
                 </div>
                 <div className="mt-3 text-4xl font-black text-slate-950">
-                  {formatMinutes(minutes)}
+                  {minutes > 0 ? `${minutes} мин` : "—"}
                 </div>
               </SoftCard>
 
@@ -786,7 +751,6 @@ export default function App() {
             <a href="#filtration" className="hover:text-slate-950">{t.nav.filtration}</a>
             <a href="#family" className="hover:text-slate-950">{t.nav.family}</a>
             <a href="#control" className="hover:text-slate-950">{t.nav.control}</a>
-            <a href="#specs" className="hover:text-slate-950">{t.nav.specs}</a>
             <a href="#reviews" className="hover:text-slate-950">{t.nav.reviews}</a>
             <a href="#faq" className="hover:text-slate-950">{t.nav.faq}</a>
             <a href="#contact" className="hover:text-slate-950">{t.nav.order}</a>
@@ -874,11 +838,6 @@ export default function App() {
                     className="block w-full rounded-[1.5rem] object-contain object-center"
                   />
                 </div>
-
-                <div className="absolute -bottom-3 left-4 rounded-[1.3rem] bg-white px-4 py-3 shadow-xl ring-1 ring-slate-200">
-                  <div className="text-sm text-slate-500">night mode</div>
-                  <div className="text-base font-black text-slate-950">&lt; 45 дБ</div>
-                </div>
               </div>
             </Reveal>
           </div>
@@ -955,7 +914,7 @@ export default function App() {
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.1, ease }}
-                  className="block h-[500px] w-full rounded-[1.5rem] object-cover object-[center_62%] bg-white"
+                  className="block h-[500px] w-full rounded-[1.5rem] object-cover object-[center_76%] bg-white"
                 />
               </div>
             </Reveal>
@@ -1002,7 +961,7 @@ export default function App() {
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.1, ease }}
-                  className="block h-[360px] w-full rounded-[1.5rem] object-cover object-[center_16%] bg-white"
+                  className="block h-[360px] w-full rounded-[1.5rem] object-cover object-[center_34%] bg-white"
                 />
               </div>
             </Reveal>
@@ -1032,40 +991,18 @@ export default function App() {
                   title={t.sections.controlTitle}
                   text={t.sections.controlText}
                 />
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  {t.sections.controlCards.map(([title, text], i) => (
-                    <Reveal key={title} delay={i * 0.05}>
-                      <SoftCard className="p-5">
-                        <div className="text-2xl font-black text-slate-950">{title}</div>
-                        <div className="mt-3 leading-7 text-slate-600">{text}</div>
-                      </SoftCard>
-                    </Reveal>
-                  ))}
+                <div className="mt-6">
+                  <SoftCard className="p-6">
+                    <div className="text-2xl font-black text-slate-950">
+                      {t.sections.controlCardTitle}
+                    </div>
+                    <div className="mt-3 leading-8 text-slate-600">
+                      {t.sections.controlCardText}
+                    </div>
+                  </SoftCard>
                 </div>
               </div>
             </Reveal>
-          </div>
-        </section>
-
-        <section id="specs" className="bg-slate-950 py-12 text-white">
-          <div className="mx-auto max-w-7xl px-6 md:px-10">
-            <Reveal>
-              <SectionTitle
-                tag={t.sections.specsTag}
-                title={t.sections.specsTitle}
-                text=""
-              />
-            </Reveal>
-
-            <div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {t.specs.map((item, i) => (
-                <Reveal key={item} delay={i * 0.03}>
-                  <div className="rounded-[1.3rem] border border-white/10 bg-white/5 px-5 py-5 text-xl leading-8 text-white shadow-sm">
-                    {item}
-                  </div>
-                </Reveal>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -1078,34 +1015,6 @@ export default function App() {
                   title={t.sections.warrantyTitle}
                   text={t.sections.warrantyText}
                 />
-
-                <SoftCard className="mt-6 p-6">
-                  <div className="text-2xl font-black text-slate-950">+7 706 606 0985</div>
-                  <div className="mt-2 text-[17px] leading-7 text-slate-600">
-                    {t.contact.phoneLabel}
-                  </div>
-
-                  <div className="mt-5 flex flex-wrap gap-3">
-                    <a
-                      href={whatsappMain}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl bg-green-500 px-5 py-4 font-black text-white transition hover:bg-green-600"
-                    >
-                      <WhatsAppIcon />
-                      WhatsApp
-                    </a>
-                    <a
-                      href={instagramLink}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-xl border border-pink-200 bg-white px-5 py-4 font-black text-pink-600 transition hover:bg-pink-50"
-                    >
-                      <InstagramIcon />
-                      Instagram
-                    </a>
-                  </div>
-                </SoftCard>
               </div>
             </Reveal>
 
@@ -1158,22 +1067,22 @@ export default function App() {
                   <h2 className="mt-3 break-words text-5xl font-black leading-none md:text-7xl">
                     {t.sections.ctaTitle}
                   </h2>
-                  <p className="mt-5 max-w-2xl break-words text-lg leading-8 text-slate-200">
+                  <p className="mt-5 max-w-2xl break-words whitespace-pre-line text-lg leading-8 text-slate-200">
                     {t.sections.ctaText}
                   </p>
                 </div>
 
                 <div className="rounded-[1.7rem] bg-white/10 p-6 backdrop-blur">
-                  <div className="text-2xl font-black">{t.contact.cardTitle}</div>
-
                   <div className="mt-5 text-sm uppercase tracking-[0.22em] text-slate-300">
                     {t.contact.priceLabel}
                   </div>
-                  <div className="mt-2 text-5xl font-black leading-none text-white md:text-6xl">
+                  <div className="mt-2 text-[42px] font-black leading-none text-white md:text-[54px]">
                     129 000 ₸
                   </div>
 
-                  <div className="mt-4 text-slate-200">WhatsApp: +7 706 606 0985</div>
+                  <div className="mt-4 text-slate-200">
+                    {t.contact.installment}
+                  </div>
 
                   <div className="mt-6 flex flex-col gap-3">
                     <a
