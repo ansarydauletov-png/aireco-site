@@ -7,6 +7,7 @@ import heatingImage from "./assets/heating-top.webp";
 import appControlImage from "./assets/app-control.webp";
 import filterSystemImage from "./assets/filter-system.webp";
 import warrantyImage from "./assets/warranty.webp";
+import kaspiIcon from "./assets/kaspi.jpg";
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -92,7 +93,6 @@ const CONTENT = {
 
     filtrationTag: "система очистки",
     filtrationTitle: "Как работает наш фильтр",
-    filtrationSubtitle: "Интеллектуальная очистка в три этапа",
 
     familyTag: "Здоровье семьи",
     familyTitle: "Комфортный воздух дома для детей и аллергиков",
@@ -447,9 +447,11 @@ function CalcIcon() {
 
 function KaspiIcon() {
   return (
-    <div className="flex h-8 min-w-8 items-center justify-center rounded-full bg-[#E84545] px-2 text-xs font-black text-white">
-      K
-    </div>
+    <img
+      src={kaspiIcon}
+      alt="Kaspi"
+      className="h-8 w-8 rounded-full object-cover"
+    />
   );
 }
 
@@ -667,9 +669,6 @@ function FilterHotspots() {
         <div className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">
           {CONTENT.sections.filtrationTitle}
         </div>
-        <div className="mt-4 text-2xl font-medium text-slate-600 md:text-3xl">
-          {CONTENT.sections.filtrationSubtitle}
-        </div>
       </div>
 
       <div className="mt-8 relative mx-auto w-full max-w-[720px]">
@@ -713,9 +712,9 @@ export default function App() {
   const t = CONTENT;
 
   const whatsappMain =
-    "https://wa.me/87066860985?text=Здравствуйте,%20интересует%20очиститель%20воздуха%20aireco";
+    "https://api.whatsapp.com/send?phone=77066860985&text=Здравствуйте,%20интересует%20очиститель%20aireco";
   const whatsappOrder =
-    "https://wa.me/87066860985?text=Здравствуйте,%20хочу%20заказать%20aireco";
+    "https://api.whatsapp.com/send?phone=77066860985&text=Здравствуйте,%20хочу%20заказать%20aireco";
   const instagramLink =
     "https://www.instagram.com/aireco.kz?igsh=MWY1OHUycHIwYWJ3aQ==";
 
@@ -983,7 +982,7 @@ export default function App() {
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.1, ease }}
-                  className="block h-[360px] w-full rounded-[1.5rem] object-cover object-[center_58%] bg-white"
+                  className="block h-[360px] w-full rounded-[1.5rem] object-cover object-[center_44%] bg-white"
                 />
               </div>
             </Reveal>
