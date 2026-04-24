@@ -1,52 +1,23 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap");
 
+/* БАЗА */
 :root {
   font-family: "Montserrat", sans-serif;
-  color: #0f172a;
-  background: #fbfdff;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  min-width: 0;
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  background: #ffffff;
 }
 
+/* ПЛАВНЫЙ СКРОЛЛ */
 html {
   scroll-behavior: smooth;
 }
 
-html,
-body,
-#root {
-  margin: 0;
-  min-height: 100%;
-  width: 100%;
-}
-
-body {
-  font-family: "Montserrat", sans-serif;
-  background: #fbfdff;
-  color: #0f172a;
-  overflow-x: hidden;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-::selection {
-  background: rgba(56, 189, 248, 0.18);
+/* УБРАТЬ СТАНДАРТНЫЕ СТИЛИ */
+* {
+  box-sizing: border-box;
 }

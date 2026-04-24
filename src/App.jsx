@@ -11,6 +11,32 @@ import kaspiIcon from "./assets/kaspi.jpg";
 
 const ease = [0.16, 1, 0.3, 1];
 
+function trackPixel(eventName) {
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", eventName);
+  }
+}
+
+function trackCustomPixel(eventName) {
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("trackCustom", eventName);
+  }
+}
+
+function trackWhatsAppClick(e) {
+  e.preventDefault();
+
+  trackPixel("Contact");
+  trackCustomPixel("WhatsAppClick");
+
+  const href = e.currentTarget.href;
+
+  setTimeout(() => {
+    window.open(href, "_blank", "noopener,noreferrer");
+  }, 150);
+}
+
+
 const CONTENT = {
   ru: {
     brand: "aireco",
@@ -103,12 +129,13 @@ const CONTENT = {
         "Антивандальный кабель: усиленная оплетка защищает провод от зубов, а безопасное напряжение 24V гарантирует полную защиту вашего питомца.",
       ],
 
-      controlTag: "Комфорт и технологии",
-      controlTitle:
-        "Мягкий свет создаст уют в спальне",
-      controlText:
-        "Очистка на 360°: Круговой забор воздуха обеспечивает мощное всасывание со всех сторон, очищая пространство комнаты максимально быстро.",
+      controlTag: "Комфорт и эргономика",
 
+controlTitle:
+  "Мягкий свет создаст уют в спальне\nПодсветку можно легко отключить, если вы предпочитаете полную темноту для глубокого сна.",
+
+controlText:
+  "Очистка воздуха на 360°\nКонструкция прибора обеспечивает круговой забор воздуха. Мощное всасывание со всех сторон эффективно очищает пространство всей комнаты за считанные минуты.",
       warrantyTag: "Качество и сервис",
       warrantyTitle: "aireco — гарантия вашего комфорта",
       warrantyText:
@@ -953,6 +980,7 @@ function FloatingDesktop({ whatsapp, onCalc, calcLabel, whatsappLabel }) {
         href={whatsapp}
         target="_blank"
         rel="noreferrer"
+        onClick={trackWhatsAppClick}
         className="inline-flex items-center justify-center gap-3 rounded-full bg-green-500 px-5 py-4 text-sm font-black text-white shadow-[0_20px_50px_rgba(34,197,94,0.30)] transition duration-300 hover:scale-[1.03] hover:bg-green-600"
       >
         <WhatsAppIcon />
@@ -978,6 +1006,7 @@ function StickyMobileCTA({ label, href, calcLabel, onCalc }) {
           href={href}
           target="_blank"
           rel="noreferrer"
+          onClick={trackWhatsAppClick}
           className="flex items-center justify-center gap-2 rounded-2xl bg-green-500 px-3 py-4 text-sm font-black text-white"
         >
           <WhatsAppIcon />
@@ -1266,6 +1295,7 @@ export default function App() {
                     href={whatsappMain}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={trackWhatsAppClick}
                     className="inline-flex items-center justify-center gap-3 rounded-2xl bg-green-500 px-7 py-4 text-base font-bold text-white shadow-[0_14px_35px_rgba(34,197,94,0.30)] transition duration-300 hover:-translate-y-0.5 hover:bg-green-600"
                   >
                     <WhatsAppIcon />
@@ -1560,6 +1590,7 @@ export default function App() {
                       href={whatsappOrder}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={trackWhatsAppClick}
                       className="inline-flex w-full items-center justify-center gap-3 rounded-2xl bg-green-500 px-6 py-4 text-base font-black text-white transition hover:bg-green-600"
                     >
                       <WhatsAppIcon />
