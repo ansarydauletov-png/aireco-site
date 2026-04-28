@@ -130,12 +130,12 @@ const CONTENT = {
       ],
 
       controlTag: "Комфорт и эргономика",
-
-controlTitle:
-  "Мягкий свет создаст уют в спальне\nПодсветку можно легко отключить, если вы предпочитаете полную темноту для глубокого сна.",
-
-controlText:
-  "Очистка воздуха на 360°\nКонструкция прибора обеспечивает круговой забор воздуха. Мощное всасывание со всех сторон эффективно очищает пространство всей комнаты за считанные минуты.",
+      controlTitle: "Мягкий свет создаст уют в спальне",
+      controlText:
+        "Подсветку можно легко отключить, если вы предпочитаете полную темноту для глубокого сна.",
+      controlTitle2: "Очистка воздуха на 360°",
+      controlText2:
+        "Конструкция прибора обеспечивает круговой забор воздуха. Мощное всасывание со всех сторон эффективно очищает пространство всей комнаты за считанные минуты.",
       warrantyTag: "Качество и сервис",
       warrantyTitle: "aireco — гарантия вашего комфорта",
       warrantyText:
@@ -263,7 +263,7 @@ controlText:
       instagram: "Instagram",
       mobile: "WhatsApp",
       calc: "Калькулятор",
-      installment: "Доступна беспроцентная рассрочка на 12 месяцев",
+      installment: "Доступна беспроцентная рассрочка на 24 месяцев",
     },
   },
 
@@ -358,11 +358,13 @@ controlText:
         "Антивандал кабель: күшейтілген орама сымды тістен қорғайды, ал 24V қауіпсіз кернеу толық қорғаныс береді.",
       ],
 
-      controlTag: "Жайлылық пен технология",
-      controlTitle:
-        "Жұмсақ жарық жатын бөлмеде жайлылық жасайды. Ұйқы үшін жарықты өшіруге болады.",
+      controlTag: "Жайлылық пен эргономика",
+      controlTitle: "Жұмсақ жарық жатын бөлмеде жайлылық жасайды",
       controlText:
-        "360° тазарту: Ауаның шеңберлі сорылуы бөлмені барынша жылдам тазартады.",
+        "Егер сіз толық қараңғылықты қаласаңыз, жарықты оңай өшіруге болады.",
+      controlTitle2: "360° ауа тазарту",
+      controlText2:
+        "Құрылғының конструкциясы ауаны барлық жағынан тартып алады. Күшті сору бөлмені бірнеше минут ішінде тиімді тазартады.",
 
       warrantyTag: "Сапа және сервис",
       warrantyTitle: "aireco — жайлылығыңыздың кепілі",
@@ -491,7 +493,7 @@ controlText:
       instagram: "Instagram",
       mobile: "WhatsApp",
       calc: "Калькулятор",
-      installment: "12 айға пайызсыз бөліп төлеу қолжетімді",
+      installment: "24 айға пайызсыз бөліп төлеу қолжетімді",
     },
   },
 
@@ -586,11 +588,13 @@ controlText:
         "Anti-vandal cable: reinforced braiding protects the wire from teeth, while safe 24V voltage guarantees complete protection for your pet.",
       ],
 
-      controlTag: "Comfort and technology",
-      controlTitle:
-        "Soft light adds comfort to the bedroom. The backlight can be turned off for deeper sleep.",
+      controlTag: "Comfort and ergonomics",
+      controlTitle: "Soft light creates a cozy atmosphere in the bedroom",
       controlText:
-        "360° purification: Circular air intake provides powerful suction from all sides for faster room cleaning.",
+        "The backlight can be easily turned off if you prefer complete darkness for deep sleep.",
+      controlTitle2: "360° air purification",
+      controlText2:
+        "The device design ensures circular air intake. Powerful suction from all sides effectively cleans the entire room within minutes.",
 
       warrantyTag: "Quality and service",
       warrantyTitle: "aireco — your comfort guaranteed",
@@ -719,7 +723,7 @@ controlText:
       instagram: "Instagram",
       mobile: "WhatsApp",
       calc: "Calculator",
-      installment: "0% installment for 12 months available",
+      installment: "0% installment for 24 months available",
     },
   },
 };
@@ -939,7 +943,7 @@ function KaspiBadge({ text }) {
       <img
         src={kaspiIcon}
         alt="Kaspi"
-        className="h-8 w-12 rounded-xl object-cover"
+        className="h-12 w-20 rounded-2xl object-cover"
       />
       <span>{text}</span>
     </div>
@@ -1482,12 +1486,27 @@ export default function App() {
         <section id="control" className="bg-white/40 py-10 backdrop-blur-[2px]">
           <div className="mx-auto grid max-w-7xl gap-7 px-6 md:px-10 lg:grid-cols-[1fr_1fr] lg:items-start">
             <Reveal variant="right" className="order-1">
-              <div className="min-w-0">
-                <SectionTitle
-                  tag={t.sections.controlTag}
-                  title={t.sections.controlTitle}
-                  text={t.sections.controlText}
-                />
+              <div className="min-w-0 space-y-7">
+                <div>
+                  <div className="text-[11px] font-bold uppercase tracking-[0.28em] text-sky-600">
+                    {t.sections.controlTag}
+                  </div>
+                  <h2 className="mt-3 break-words text-3xl font-black leading-[1.05] tracking-tight text-slate-950 md:text-5xl">
+                    {t.sections.controlTitle}
+                  </h2>
+                  <p className="mt-4 max-w-2xl break-words text-[16px] leading-8 text-slate-500">
+                    {t.sections.controlText}
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="break-words text-2xl font-black leading-tight text-slate-950 md:text-4xl">
+                    {t.sections.controlTitle2}
+                  </h3>
+                  <p className="mt-4 max-w-2xl break-words text-[16px] leading-8 text-slate-500">
+                    {t.sections.controlText2}
+                  </p>
+                </div>
               </div>
             </Reveal>
 

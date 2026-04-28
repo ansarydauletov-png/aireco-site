@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* БАЗА */
 :root {
   font-family: "Montserrat", sans-serif;
 }
@@ -12,12 +11,10 @@ html, body {
   background: #ffffff;
 }
 
-/* ПЛАВНЫЙ СКРОЛЛ */
 html {
   scroll-behavior: smooth;
 }
 
-/* УБРАТЬ СТАНДАРТНЫЕ СТИЛИ */
 * {
   box-sizing: border-box;
 }
